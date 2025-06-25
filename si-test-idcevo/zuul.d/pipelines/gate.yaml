@@ -1,0 +1,9 @@
+- project:
+    gate:
+      jobs:
+        - gitlint
+        - zuullint
+        - shellcheck
+        - run-tox-si
+        - build-push-docs
+        - si-testing-build-tee-packaging

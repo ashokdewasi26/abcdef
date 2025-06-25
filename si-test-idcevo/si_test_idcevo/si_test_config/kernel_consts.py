@@ -1,0 +1,42 @@
+# Copyright (C) 2023. BMW CTW PT. All rights reserved.
+"""Kernel tests related constant variables"""
+
+# Configurations related to debug snapshot driver.
+DEBUG_SNAPSHOT_DRIVER_CONFIGS = [
+    "CONFIG_DEBUG_SNAPSHOT=y",
+    "CONFIG_DEBUG_SNAPSHOT_SFRDUMP=y",
+    "CONFIG_DEBUG_SNAPSHOT_FREQ_DOMAIN_NUM=32",
+    "CONFIG_DEBUG_SNAPSHOT_LOG_NR_CPUS=10",
+    "CONFIG_DEBUG_SNAPSHOT_DEBUG_KINFO=y",
+    "CONFIG_DEBUG_SNAPSHOT_LOG_ITEM_SIZE=1024",
+    "CONFIG_DEBUG_SNAPSHOT_USE_ANDROID_VH_LOGBUF=y",
+]
+
+
+# Kernel configuration required for process crash
+KERNEL_PROCESS_CRASH_CONFIGS = [
+    "CONFIG_COREDUMP=y",
+    "CONFIG_ELF_CORE=y",
+    "CONFIG_STATIC_USERMODEHELPER is not set",
+    "CONFIG_ALLOW_DEV_COREDUMP=y",
+]
+
+# Kernel Configurations related to log and trace
+KERNEL_LOG_TRACE_CONFIGS = [
+    "CONFIG_PRINTK=y",
+    "CONFIG_PRINTK_TIME=y",
+    "CONFIG_PRINTK_CALLER=y",
+    "CONFIG_LOG_BUF_SHIFT=21",
+    "CONFIG_PRINTK_SAFE_LOG_BUF_SHIFT=13",
+    "CONFIG_EXYNOS_DRAM_BOOTLOG=y",
+    "CONFIG_CONSOLE_LOGLEVEL_DEFAULT=7",
+    "CONFIG_CONSOLE_LOGLEVEL_QUIET=4",
+    "CONFIG_MESSAGE_LOGLEVEL_DEFAULT=3",
+]
+
+# Configurations related to Samsung Exynos.
+SAMSUNG_EXYNOS_CONFIGS = [
+    "CONFIG_EXYNOS_HARDLOCKUP_WATCHDOG=y",
+    "CONFIG_EXYNOS_DEBUG=y",
+    "CONFIG_EXYNOS_EHLD=y",
+]

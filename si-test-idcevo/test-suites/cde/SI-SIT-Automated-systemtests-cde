@@ -1,0 +1,12 @@
+si-test-idcevo/si_test_package_basic
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_linuxos
+!!si-test-idcevo/si_test_package_linuxos/systemtests/linuxos_already_automated_tests.py
+!!si-test-idcevo/si_test_package_linuxos/systemtests/spi_bus_config_tests.py
+si-test-idcevo/si_test_package_network/systemtests/verify_ethernet_tests.py
+si-test-idcevo/si_test_package_rtos/systemtests/rtos_infrastructure_tests.py
+si-test-idcevo/si_test_package_system_functions
+!!si-test-idcevo/si_test_package_system_functions/systemtests/system_functions_already_automated_tests.py
+si-test-idcevo/si_test_package_system_software/systemtests/general_system_software_tests.py
+si-test-idcevo/si_test_package_system_software/systemtests/key_performance_indicators_tests.py
+si-test-idcevo/si_test_package_custom_virtio/systemtests/virtio-fs_tests.py

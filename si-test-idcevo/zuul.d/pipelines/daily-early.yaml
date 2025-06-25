@@ -1,0 +1,11 @@
+- project:
+    daily-early: # This pipeline is executed at 8:00 UTC.
+      jobs:
+        # - noop
+        - idcevo-test-summarizer
+        - idcevo-sp21-test-summarizer
+        - idcevo-pu2507-test-summarizer
+        - cde-test-summarizer
+        - rse26-test-summarizer
+        - traas-test-summarizer
+        - traas-pu2507-test-summarizer

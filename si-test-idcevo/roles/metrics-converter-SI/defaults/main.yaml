@@ -1,0 +1,12 @@
+metrics_converter_config_file_name: "sofya_converter_config_SI.yaml"
+metrics_converter_template_file_name: "sofya_converter_template_SI.j2"
+metrics_converter:
+  config_file: "{{ metrics_converter_config_file_name }}"
+  output_file: "{{ zuul_logs_dir }}/SOFYA/\
+    SOFYA-resource-consumption-measurements-SI.json"
+  organisation_project: "{{ zuul.tenant }}"
+  schema_version: "https://common.artifactory.cc.bmwgroup.net/\
+    artifactory/software-factory-sofya/schemas/v0.0.1/resource-consumption.schema.json"
+  debug: true
+  location: "{{ extracted_files_location | \
+    default(zuul_logs_dir + '/test-artifacts/results/extracted_files') }}"

@@ -1,0 +1,72 @@
+- project:
+    nightly-post: # This pipeline is build triggered, meaning when a new tag is available
+      jobs:
+        # - noop
+        - idcevo_tag_trigger_mainline
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance: &idcevo_upload_metrics_jira
+        #     dependencies:
+        #       - idcevo_tag_trigger_mainline
+        #     vars:
+        #       artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+        #       kpi_upload: true
+        #       enable_jira_xrayctl_upload: true
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-STR-SIT-Automated:
+            dependencies:
+              - idcevo_tag_trigger_mainline
+            vars:
+              artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+              kpi_upload: true
+              enable_jira_xrayctl_upload: true
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle: &idcevo_upload_jira
+        #     dependencies:
+        #       - idcevo_tag_trigger_mainline
+        #     vars:
+        #       artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+        #       enable_jira_xrayctl_upload: true
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle-domains: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated: &idcevo_upload_jira
+            dependencies:
+              - idcevo_tag_trigger_mainline
+            vars:
+              artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+              enable_jira_xrayctl_upload: true
+            nodeset:
+              nodes:
+                name: 160gb_storage_nodes
+                label: idcevo-ubuntu2204-16-core
+            # We are overriding this label due to base node only having 80GB of storage and this having 160GB
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains-sys-sw: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-IDCevo-SI-PDX-flashing-stress: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-production: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-rtos-crash-cases: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated-domains: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-NA: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-G: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-GED4K: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-test:
+        #     dependencies:
+        #       - idcevo_tag_trigger_mainline
+        #     vars:
+        #       artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+        # # TRAAS
+        # - si-idcevo-ee25-traas-SI-performance: &idcevo_upload_metrics_jira_traas
+        #     dependencies:
+        #       - idcevo_tag_trigger_mainline
+        #     vars:
+        #       kpi_upload: true
+        #       enable_jira_xrayctl_upload: true
+        #       gl_folder: "{{ triggered_date_pattern }}"
+        # - si-idcevo-ee25-traas-SI-android: &idcevo_upload_traas
+        #     dependencies:
+        #       - idcevo_tag_trigger_mainline
+        #     vars:
+        #       enable_jira_xrayctl_upload: true
+        #       gl_folder: "{{ triggered_date_pattern }}"

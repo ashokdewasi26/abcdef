@@ -1,0 +1,8 @@
+traas_repo_url: https://cc-github.bmwgroup.net/node0/traas.git
+traas_install_url: git+{{ traas_repo_url }}@{{ traas_version }}
+traas_version: "master"
+traas_refspec: "master"
+reporting_repo_url: https://cc-github.bmwgroup.net/software-factory/validation-python-htmlresults
+reporting_install_url: git+{{ reporting_repo_url }}@{{ reporting_version }}
+reporting_version: master
+reporting_refspec:

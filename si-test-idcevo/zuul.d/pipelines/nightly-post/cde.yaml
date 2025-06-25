@@ -1,0 +1,19 @@
+- project:
+    nightly-post: # This pipeline is build triggered, meaning when a new tag is available
+      jobs:
+        - noop
+        - cde_tag_trigger_mainline
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI: &cde_upload_jira
+            dependencies:
+              - cde_tag_trigger_mainline
+            vars:
+              artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+              enable_jira_xrayctl_upload: true
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-long: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-diag: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated-domains: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-performance: *cde_upload_jira
+        - ta-cde-hw-mtf3-cde-SI-PDX-flashing-stress: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-lifecycle: *cde_upload_jira
+        - ta-cde-hw-mtf3-flash-and-validate-cde-SI-android: *cde_upload_jira

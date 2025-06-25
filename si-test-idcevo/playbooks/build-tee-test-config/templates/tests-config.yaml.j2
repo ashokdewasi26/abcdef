@@ -1,0 +1,464 @@
+
+test-suites:
+  # si-test-idcevo
+  - repo: si-test-idcevo
+    url: "https://cc-github.bmwgroup.net/idcevo/si-test-idcevo.git"
+    version: "{{ si_test_idcevo_si_version }}"
+    path: test-suites/{{ build_test_suite_folder }}  # Path where files are located in the repository
+    test-suite-list:
+      - SI
+      - PDX
+
+tests:
+  - repo: si-test-idcevo
+    component: si-test-idcevo
+    url: "https://cc-github.bmwgroup.net/idcevo/si-test-idcevo.git"
+    version: "{{ si_test_idcevo_si_version }}"
+    path: si_test_idcevo/**/systemtests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 2 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_kpi_metrics_config.py"
+        to: si-test-idcevo/si_test_package_performance/systemtests/kpi_metrics_config.py
+      - from: si_test_idcevo/si_test_config/kpi_threshold_config.py
+        to: si-test-idcevo/si_test_package_performance/systemtests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_stability/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_common/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_basic/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_performance/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_diagnostic/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_performance_monitoring/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_android/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_cde_android/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_rse_android/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_modes_moments/systemtests/features_config.ini
+      - from: si_test_idcevo/si_test_package_a_monkey/systemtests/ref_files/monkey.script  # Origin path of file or directory. Path relative to package root
+        to: si-test-idcevo/si_test_package_a_monkey/systemtests
+      - from: si_test_idcevo/si_test_package_a_monkey/systemtests/ref_files/monkey_packages.json
+        to: si-test-idcevo/si_test_package_a_monkey/systemtests
+      - from: si_test_idcevo/si_test_package_a_monkey/systemtests/ref_files/performance_reference_actions
+        to: si-test-idcevo/si_test_package_a_monkey/systemtests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_health/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_custom_virtio/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_interior_light/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_linuxos/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_navigation_row/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_network/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_rtos/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_rtos_crash_cases/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_system_software/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_a_dmverity/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_phud/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_kpi_reboots/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_production/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_lifecycle/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_system_functions/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_kpi_metrics_config.py"
+        to: si-test-idcevo/si_test_package_kpi_reboots/systemtests/kpi_metrics_config.py
+      - from: si_test_idcevo/si_test_config/kpi_threshold_config.py
+        to: si-test-idcevo/si_test_package_kpi_reboots/systemtests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_multicoding/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_ged4k/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_perso/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_perso_worker/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_audio_worker/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_updatecenter/systemtests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_entertainment/systemtests/features_config.ini
+    type: systemtests
+
+  - repo: si-test-idcevo
+    component: si-test-idcevo
+    url: "https://cc-github.bmwgroup.net/idcevo/si-test-idcevo.git"
+    version: "{{ si_test_idcevo_si_version }}"
+    path: si_test_idcevo/**/posttests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 2 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_kpi_metrics_config.py"
+        to: si-test-idcevo/si_test_package_performance/posttests/kpi_metrics_config.py
+      - from: si_test_idcevo/si_test_config/kpi_threshold_config.py
+        to: si-test-idcevo/si_test_package_performance/posttests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_search_dlt_log_config.py"
+        to: si-test-idcevo/si_test_package_basic/posttests/search_dlt_log_config.py
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_stability/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_common/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_basic/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_performance/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_diagnostic/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_performance_monitoring/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_navigation_row/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_rtos/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_a_dmverity/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_multicoding/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_system_software/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_perso/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_perso_worker/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_audio_worker/posttests/features_config.ini
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-test-idcevo/si_test_package_updatecenter/posttests/features_config.ini
+      - repo: test-automation
+        url: https://cc-github.bmwgroup.net/idcevo/test-automation.git
+        version: master
+        from: scripts/lib/apinext-crash-parser.py
+        to: si-test-idcevo/si_test_package_common/posttests/apinext-crash-parser.py
+      - repo: meta-idcevo
+        url: https://cc-github.bmwgroup.net/idcevo/meta-idcevo
+        version: {{ branch_node0 }}
+        from: recipes-testing/idcevo-test-execution-environment/files/services-whitelist-{{ product_type }}
+        to: si-test-idcevo/si_test_data/services-whitelist-{{ product_type }}
+      - repo: cv-daily-operations
+        url: https://cc-github.bmwgroup.net/idcevo/cv-daily-operations.git
+        version: master
+{% if product_type=='idcevo' %}
+        from: whitelist/android/crash_whitelist
+{% else %}
+        from: "whitelist/android/{{ product_type }}/crash_whitelist"
+{% endif %}
+        to: si-test-idcevo/si_test_package_common/posttests/crash_whitelist
+      - repo: cv-daily-operations
+        url: https://cc-github.bmwgroup.net/idcevo/cv-daily-operations.git
+        version: master
+{% if product_type=='idcevo' %}
+        from: whitelist/android/crash_process_whitelist
+{% else %}
+        from: "whitelist/android/{{ product_type }}/crash_process_whitelist"
+{% endif %}
+        to: si-test-idcevo/si_test_package_common/posttests/crash_process_whitelist
+    type: posttests
+
+{% if tee_test_suite is defined and ('SI-domains' in tee_test_suite or 'SI-staging' in tee_test_suite) %}
+  - repo: bat-automation-tests-systemsw
+    component: system-software-kf-bat
+    url: "https://cc-github.bmwgroup.net/idcevo/bat-automation-tests-systemsw.git"
+    version: "{{ bat_automation_tests_systemsw_version }}"
+    path: tests/systemsoftware  # Glob syntax can be used to match all subfolders recursively
+    extra_files:
+      - from: tests/systemsoftware/common_helpers/utils.py
+        to: system-software-kf-bat/systemtests/common_helpers/utils.py
+      - from: tests/systemsoftware/common_helpers/__init__.py
+        to: system-software-kf-bat/systemtests/common_helpers/__init__.py
+      - from: tests/systemsoftware_harman/test_helpers/test_helpers.py
+        to: system-software-kf-bat/systemtests/test_helpers/test_helpers.py
+      - from: tests/systemsoftware/shell_scripts/*
+        to: system-software-kf-bat/systemtests/shell_scripts/
+      - from: tests/systemsoftware/ipks/*
+        to: system-software-kf-bat/systemtests/ipks/
+    type: systemtests
+
+  - repo: bat-automation-tests-systemsw
+    component: system-software-harman
+    url: "https://cc-github.bmwgroup.net/idcevo/bat-automation-tests-systemsw.git"
+    version: "{{ bat_automation_tests_systemsw_version }}"
+    path: tests/systemsoftware_harman  # Glob syntax can be used to match all subfolders recursively
+    extra_files:
+      - from: tests/systemsoftware_harman/test_helpers/test_helpers.py
+        to: system-software-harman/systemtests/test_helpers/test_helpers.py
+      - from: tests/systemsoftware_harman/test_helpers/__init__.py
+        to: system-software-harman/systemtests/test_helpers/__init__.py
+      - from: tests/systemsoftware_harman/ipk
+        to: system-software-harman/systemtests/ipk
+      - from: tests/systemsoftware_harman/shell_scripts
+        to: system-software-harman/systemtests/shell_scripts
+    type: systemtests
+
+  - repo: bat-automation-tests
+    component: system-software-kf-bat-automation
+    url: "https://cc-github.bmwgroup.net/idcevo/bat-automation-tests.git"
+    version: "{{ bat_automation_tests_version }}"
+    path: tests/systemsoftware  # Glob syntax can be used to match all subfolders recursively
+    extra_files:
+      - from: test_helpers/test_helpers.py
+        to: system-software-kf-bat-automation/systemtests/helpers/test_helpers.py
+    type: systemtests
+{% endif %}
+
+{% if tee_test_suite is defined and 'BAT' in tee_test_suite %}
+  - repo: si-test-idcevo
+    component: si-performance
+    url: https://cc-github.bmwgroup.net/idcevo/si-test-idcevo
+    version: "{{ si_test_idcevo_si_version }}"
+    path: si_test_idcevo/si_test_package_performance/systemtests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 1 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_kpi_metrics_config.py"
+        to: si-performance/systemtests/kpi_metrics_config.py
+      - from: si_test_idcevo/si_test_config/kpi_threshold_config.py
+        to: si-performance/systemtests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-performance/systemtests/features_config.ini
+    type: systemtests
+
+  - repo: si-test-idcevo
+    component: si-performance
+    url: https://cc-github.bmwgroup.net/idcevo/si-test-idcevo
+    version: "{{ si_test_idcevo_si_version }}"
+    path: si_test_idcevo/si_test_package_performance/posttests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 1 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_kpi_metrics_config.py"
+        to: si-performance/posttests/kpi_metrics_config.py
+      - from: si_test_idcevo/si_test_config/kpi_threshold_config.py
+        to: si-performance/posttests
+      - from: "si_test_idcevo/si_test_config/{{ product_type }}_config.ini"
+        to: si-performance/posttests/features_config.ini
+    type: posttests
+{% endif %}
+
+{% if tee_test_suite is defined and tee_test_suite=='PDX' %}
+  - repo: si-test-idcevo
+    component: si-test-package-flashing
+    url: https://cc-github.bmwgroup.net/idcevo/si-test-idcevo
+    version: "{{ si_test_idcevo_si_version }}"
+    path: si_test_idcevo/si_test_package_flashing/systemtests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 1 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+{% endif %}
+
+{% if sysman_testing_version %}
+  - repo: sysman_testing
+    component: coredumper-systemtests
+    output_name: coredumper-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "coredumper/systemtests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: helpers/*  # Origin path of file or directory. Path relative to package root
+        to: coredumper-systemtests/systemtests
+      - from: coredumper/systemtests/gen22/coredumper_config.ini
+        to: coredumper-systemtests/systemtests
+    output_name: coredumper-systemtests
+
+  - repo: sysman_testing
+    component: coredumper-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "coredumper/posttests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: posttests
+    extra_files:
+      - from: helpers/*  # Origin path of file or directory. Path relative to package root
+        to: coredumper-systemtests/posttests
+      - from: coredumper/systemtests/gen22/coredumper_config.ini
+        to: coredumper-systemtests/posttests
+
+  - repo: sysman_testing
+    component: lifecycle-components-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "lifecycle-components/systemtests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: lifecycle-components-systemtests/systemtests
+      - from: lifecycle-components/systemtests/gen22/test_lc_config.ini
+        to: lifecycle-components-systemtests/systemtests
+      - from: lifecycle-components/lifecycle_exclusive_helper.py
+        to: lifecycle-components-systemtests/systemtests
+    output_name: lifecycle-components-systemtests
+
+  - repo: sysman_testing
+    component: lifecycle-components-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "lifecycle-components/posttests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: posttests
+    extra_files:
+      - from: helpers/*  # Origin path of file or directory. Path relative to package root
+        to: lifecycle-components-systemtests/posttests
+      - from: lifecycle-components/systemtests/gen22/test_lc_config.ini
+        to: lifecycle-components-systemtests/posttests
+      - from: lifecycle-components/lifecycle_exclusive_helper.py
+        to: lifecycle-components-systemtests/systemtests
+
+  - repo: sysman_testing
+    component: recovery-manager-systemtests
+    output_name: recovery-manager-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "recovery-manager/systemtests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: helpers/*  # Origin path of file or directory. Path relative to package root
+        to: recovery-manager-systemtests/systemtests
+      - from: recovery-manager/systemtests/gen22/rec_Manager_config.ini
+        to: recovery-manager-systemtests/systemtests
+      - from: crashscreen/systemtests/gen22/crashscreen_config.ini
+        to: recovery-manager-systemtests/systemtests
+      - from: recovery-manager/systemtests/gen22/helper_dlt.py
+        to: recovery-manager-systemtests/systemtests
+
+  - repo: sysman_testing
+    component: recovery-manager-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    update_submodules: False
+    path: "recovery-manager/posttests/gen22/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: posttests
+    extra_files:
+      - from: helpers/*  # Origin path of file or directory. Path relative to package root
+        to: recovery-manager-systemtests/posttests
+      - from: recovery-manager/systemtests/gen22/rec_Manager_config.ini
+        to: recovery-manager-systemtests/posttests
+      - from: crashscreen/systemtests/gen22/crashscreen_config.ini
+        to: recovery-manager-systemtests/systemtests
+      - from: recovery-manager/systemtests/gen22/helper_dlt.py
+        to: recovery-manager-systemtests/systemtests  
+
+  - repo: sysman_testing
+    component: str-simple-systemtests
+    output_name: str-simple-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version }}"
+    path: "lifecycle-components/str/systemtests/node0"
+    path_level: 0
+    type: systemtests
+    extra_files:
+      - repo: meta-idcevo
+        url: https://cc-github.bmwgroup.net/idcevo/meta-idcevo
+        version: {{ branch_node0 }}
+        from: recipes-extended/lifecycle-components/files/test_lc_config.ini
+        to: str-simple-systemtests/systemtests/test_lc_config.ini
+      - repo: si-test-idcevo
+        url: https://cc-github.bmwgroup.net/idcevo/si-test-idcevo.git
+        version: "{{ si_test_idcevo_si_version }}"
+        from: si_test_idcevo/si_test_config/config_str.ini
+        to: str-simple-systemtests/systemtests/test_input_config.ini
+{% endif %}
+
+{% if deletion_handler_version %}
+  - repo: deletion_handler
+    component: deletion-handler-systemtests
+    output_name: deletion-handler-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/deletion-handler.git"
+    version: "{{ deletion_handler_version }}"
+    update_submodules: False
+    path: "systemtests/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: systemtests/test_config.yaml  # Origin path of fille or directory. Path relative to package root
+        to: deletion-handler-systemtests/systemtests/test_config.yaml
+      - from: systemtests/*.py
+        to: deletion-handler-systemtests/systemtests
+{% endif %}
+
+{% if system_telemetry_version %}
+  - repo: system_telemetry
+    component: system-telemetry
+    output_name: system-telemetry
+    url: "https://cc-github.bmwgroup.net/node0/system-telemetry.git"
+    version: "{{ system_telemetry_version }}"
+    update_submodules: False
+    path: "systemtests/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: systemtests/test_config.yaml
+        to: system-telemetry/systemtests/test_config.yaml
+      - from: systemtests/*.py
+        to: system-telemetry/systemtests
+      - from: systemtests/targetfiles/services/unique_id_crash.service
+        to: system-telemetry/systemtests
+{% endif %}
+
+{% if partition_manager_version %}
+  - repo: partition_manager
+    component: partition-manager-systemtests
+    output_name: partition-manager-systemtests
+    url: "https://cc-github.bmwgroup.net/node0/partition-manager.git"
+    version: "{{ partition_manager_version }}"
+    update_submodules: False
+    path: "feature-tests/systemtests/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: feature-tests/systemtests/partman_config.ini  # Origin path of fille or directory. Path relative to package root
+        to: partition-manager-systemtests/systemtests/partman_config.ini
+      - from: feature-tests/systemtests/*.py
+        to: partition-manager-systemtests/systemtests
+      - repo: meta-idcevo  # Fetch files from another repo
+        url: https://cc-github.bmwgroup.net/idcevo/meta-idcevo
+        version: {{ branch_node0 }}
+        from: recipes-extended/partition-manager/files/partitions_config_tests.ini
+        to: partition-manager-systemtests/systemtests/partitions_config_tests.ini
+{% endif %}
+
+{% if cde_launcher_app_version %}
+  - repo: cde-launcher-app
+    component: zzz-cde-launcher-app-systemtests
+    output_name: zzz-cde-launcher-app-systemtests
+    url: "https://cc-github.bmwgroup.net/apinext/cde-launcher-app.git"
+    update_submodules: False
+    path: "extra_tests/tests/systemtests/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+    extra_files:
+      - from: extra_tests/tests/utils/
+        to: zzz-cde-launcher-app-systemtests/
+{% endif %}
+
+{% if rse_launcher_app_version %}
+  - repo: rse-launcher-app
+    component: zzz-rse-launcher-app-systemtests
+    output_name: zzz-rse-launcher-app-systemtests
+    url: "https://cc-github.bmwgroup.net/apinext/rse-launcher-app.git"
+    update_submodules: False
+    path: "systemTestsUI/"
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    type: systemtests
+{% endif %}

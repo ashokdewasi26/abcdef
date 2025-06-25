@@ -1,0 +1,8 @@
+0XB7F324 # ECall speaker: Short circuit to plus
+0XB7F342 # ECall speaker: Short circuit between the lines
+0XB7F804 # PHUD0 - Warping Engine Error
+0XB7F80A # PHUD0 - Image Data Invalid or Incorrect Error
+0XB7F820 # PHUD0 - Backlight Calculation Error
+0XB7F82F # PHUD0 - PHUD Driver not calibrated
+0XE1D400 # DTC for Ecall unavailable to be further checked
+0XE1D409 # Communication of the DISP_CC_BYPA_02 message from AAG to IDCEVO is failed/faulty.

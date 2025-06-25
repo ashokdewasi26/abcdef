@@ -1,0 +1,27 @@
+# This file purpose is to be a platform between our SI jobs and the test automation jobs which we inherit from.
+# Every test-automation job that we use must have a base job defined here.
+# 'job_environment' and 'job_environment_base' variable changes should be done here.
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-env
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo
+    attempts: 1
+    # vars:
+      # job_environment_base:
+        # FLASH_NODE0_ARGUMENTS: "" This argument is currently being ignored in test-automation because "tee-idcevo needs more control over the low level flashing process". See flash_and_validate.sh in test-automation repo.
+      # job_environment:
+        # DISABLE_CODING: "false"
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-env
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-sp21
+    attempts: 1
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-env
+    parent: ta-cde-hw-mtf3-flash-and-validate
+    attempts: 1
+
+- job:
+    name: ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-env
+    parent: ta-rse26-hw-mtf3-flash-and-validate-base
+    attempts: 1

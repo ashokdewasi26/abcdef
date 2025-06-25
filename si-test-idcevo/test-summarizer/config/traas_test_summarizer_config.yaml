@@ -1,0 +1,40 @@
+jira_url: "https://jira.cc.bmwgroup.net/"
+test_plans:
+  # TRAAS
+  - issue: "IDCEVODEV-260050"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "SI-performance-traas"
+
+  - issue: "IDCEVODEV-322039"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "SI-android-traas"
+
+  - issue: "IDCEVODEV-279763"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "SI-staging-traas"
+
+  - issue: "IDCEVODEV-279767"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "SI-dummy-traas"
+
+  - issue: "IDCEVODEV-379405"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "SI-perso-traas"
+
+  - issue: "IDCEVODEV-491599"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "ee25-traas-SI-Spider"
+
+publisher:
+  confluence:
+    publish: true
+    space_key: "idcevo"
+    parent_page_name: "TRAAS SIT results"
+    title: "TRAAS SIT results"
+    confluence_wiki: "https://confluence.cc.bmwgroup.net/"

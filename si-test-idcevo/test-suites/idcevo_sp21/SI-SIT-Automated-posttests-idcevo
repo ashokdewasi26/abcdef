@@ -1,0 +1,11 @@
+si-test-idcevo/si_test_package_a_dmverity
+si-test-idcevo/si_test_package_common
+!!core-test-suite/posttests/posttests_extract_metrics_tests.py
+core-test-suite
+!!core-test-suite/posttests/posttests_post_crash_tests.py
+!!core-test-suite/posttests/posttests_post_recovery_event_tests.py
+!!si-test-idcevo/si_test_package_common/posttests/posttests_trace_load_monitoring_tests.py
+si-test-idcevo/si_test_package_basic
+si-test-idcevo/si_test_package_phud
+si-test-idcevo/si_test_package_rtos/posttests/posttests_sfi_dlt_tests.py
+si-test-idcevo/si_test_package_rtos/posttests/posttests_sfi_error_tests.py

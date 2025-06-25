@@ -1,0 +1,6289 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 104,
+  "iteration": 1748950127892,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 76,
+      "options": {
+        "content": "# Useful Information\n[IDCEvo Wiki: Add new elements into Grafana](https://asc.bmwgroup.net/wiki/display/IDCEVO/4.12%29+Add+new+elements+into+Grafana)\\\n[Grafana Documentation](https://grafana.com/docs/grafana/latest/panels-visualizations/)\n\nFor this dashboard, there's a time filter activated for every kpi. If a given kpi has not been published within a certain time range, the panel corresponding to that kpi will not be shown.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.5.15",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 7,
+        "x": 8,
+        "y": 0
+      },
+      "id": 36,
+      "options": {
+        "content": "# [RESET Dashboard vars](https://mgu-gen22-si-metrics.bmwgroup.net/grafana/d/oXi3zG9Vz/idcevo-generic-performance-kpis?orgId=1)\r\nYou probably need to refresh the page after click here",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.5.15",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Jobs List",
+      "type": "row"
+    },
+    {
+      "datasource": "IDCEvo-Node0-prod",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "noValue": "-",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Finish Time"
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "build_url"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "﻿${__value.raw}"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-blue",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "release"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              },
+              {
+                "id": "custom.width",
+                "value": 115
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hardware_revision"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              },
+              {
+                "id": "custom.width",
+                "value": 146
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "branch"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              },
+              {
+                "id": "custom.width",
+                "value": 121
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "job_timestamp"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 306
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "build"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "https://mgu-gen22-si-metrics.bmwgroup.net/grafana/d/oXi3zG9Vz?var-build_id=${__value.text}&${__data.fields.job_timestamp}"
+                  }
+                ]
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "text": "click here",
+                    "to": "",
+                    "type": 1,
+                    "value": "logs"
+                  }
+                ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-blue",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "displayName",
+                "value": "Filter by job"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "type_number"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "variant"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Finish Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 434
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "job"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 360
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Filter by job"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 466
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "variant"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 62
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hardware_variant"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 123
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "build_type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 95
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 34,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Finish Time"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.15",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"job\", \"build_url\", \"release\", \"build_type\", \"branch\", \"hardware_revision\", \"hardware_variant\", \"build\", \"job_timestamp\" FROM \"job_duration\" WHERE (\"hardware_revision\" =~ /^$hardware_revision$/) AND (\"job\" =~ /^$job_name$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Job History",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "^.*",
+            "renamePattern": "kdts"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "job_timestamp": false
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 4,
+      "panels": [],
+      "repeat": "kpi_name",
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "account_data_proxy_available",
+          "value": "account_data_proxy_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 15
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "account_data_proxy_available",
+          "value": "account_data_proxy_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 77,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "account_protections_proxy_available",
+          "value": "account_protections_proxy_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 78,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "account_protections_proxy_available",
+          "value": "account_protections_proxy_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 79,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_duration",
+          "value": "android_boot_animation_duration"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 35
+      },
+      "hiddenSeries": false,
+      "id": 80,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_duration",
+          "value": "android_boot_animation_duration"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "id": 81,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_end",
+          "value": "android_boot_animation_end"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 45
+      },
+      "hiddenSeries": false,
+      "id": 82,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_end",
+          "value": "android_boot_animation_end"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
+      "id": 83,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_start",
+          "value": "android_boot_animation_start"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 55
+      },
+      "hiddenSeries": false,
+      "id": 84,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_boot_animation_start",
+          "value": "android_boot_animation_start"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "id": 85,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_kernel_boot_duration",
+          "value": "android_kernel_boot_duration"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 65
+      },
+      "hiddenSeries": false,
+      "id": 86,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_kernel_boot_duration",
+          "value": "android_kernel_boot_duration"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 74
+      },
+      "id": 87,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_kernel_start",
+          "value": "android_kernel_start"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 75
+      },
+      "hiddenSeries": false,
+      "id": 88,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_kernel_start",
+          "value": "android_kernel_start"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 84
+      },
+      "id": 89,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_launcher_all_widgets_drawn",
+          "value": "android_launcher_all_widgets_drawn"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 85
+      },
+      "hiddenSeries": false,
+      "id": 90,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_launcher_all_widgets_drawn",
+          "value": "android_launcher_all_widgets_drawn"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 94
+      },
+      "id": 91,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_pid1",
+          "value": "android_pid1"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 95
+      },
+      "hiddenSeries": false,
+      "id": 92,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "android_pid1",
+          "value": "android_pid1"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 104
+      },
+      "id": 93,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "deadreckoning_pos_calc_after_cold_boot",
+          "value": "deadreckoning_pos_calc_after_cold_boot"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 105
+      },
+      "hiddenSeries": false,
+      "id": 94,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "deadreckoning_pos_calc_after_cold_boot",
+          "value": "deadreckoning_pos_calc_after_cold_boot"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 114
+      },
+      "id": 95,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "digitalkey_proxy_available",
+          "value": "digitalkey_proxy_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 115
+      },
+      "hiddenSeries": false,
+      "id": 96,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "digitalkey_proxy_available",
+          "value": "digitalkey_proxy_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 124
+      },
+      "id": 97,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_first_image",
+          "value": "early_cluster_first_image"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 125
+      },
+      "hiddenSeries": false,
+      "id": 98,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_first_image",
+          "value": "early_cluster_first_image"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 134
+      },
+      "id": 99,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_full_content",
+          "value": "early_cluster_full_content"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 135
+      },
+      "hiddenSeries": false,
+      "id": 100,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_full_content",
+          "value": "early_cluster_full_content"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 144
+      },
+      "id": 101,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_initialized",
+          "value": "early_cluster_initialized"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 145
+      },
+      "hiddenSeries": false,
+      "id": 102,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "early_cluster_initialized",
+          "value": "early_cluster_initialized"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 154
+      },
+      "id": 103,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "first_udp_message_received",
+          "value": "first_udp_message_received"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 155
+      },
+      "hiddenSeries": false,
+      "id": 104,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "first_udp_message_received",
+          "value": "first_udp_message_received"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 164
+      },
+      "id": 105,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "full_cluster_available",
+          "value": "full_cluster_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 165
+      },
+      "hiddenSeries": false,
+      "id": 106,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "full_cluster_available",
+          "value": "full_cluster_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 174
+      },
+      "id": 107,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "interior_light_available",
+          "value": "interior_light_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 175
+      },
+      "hiddenSeries": false,
+      "id": 108,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "interior_light_available",
+          "value": "interior_light_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 184
+      },
+      "id": 109,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "interior_light_caf_loaded",
+          "value": "interior_light_caf_loaded"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 185
+      },
+      "hiddenSeries": false,
+      "id": 110,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "interior_light_caf_loaded",
+          "value": "interior_light_caf_loaded"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 194
+      },
+      "id": 111,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_kernel_boot_duration_time",
+          "value": "node0_kernel_boot_duration_time"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 195
+      },
+      "hiddenSeries": false,
+      "id": 112,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_kernel_boot_duration_time",
+          "value": "node0_kernel_boot_duration_time"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 204
+      },
+      "id": 113,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_kernel_kpi_start_kernel",
+          "value": "node0_kernel_kpi_start_kernel"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 205
+      },
+      "hiddenSeries": false,
+      "id": 114,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_kernel_kpi_start_kernel",
+          "value": "node0_kernel_kpi_start_kernel"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 214
+      },
+      "id": 115,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_pid1_kpi_msg_processed_time",
+          "value": "node0_pid1_kpi_msg_processed_time"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 215
+      },
+      "hiddenSeries": false,
+      "id": 116,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "node0_pid1_kpi_msg_processed_time",
+          "value": "node0_pid1_kpi_msg_processed_time"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 224
+      },
+      "id": 117,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "prio1_diag_available_tmsp",
+          "value": "prio1_diag_available_tmsp"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 225
+      },
+      "hiddenSeries": false,
+      "id": 118,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "prio1_diag_available_tmsp",
+          "value": "prio1_diag_available_tmsp"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 234
+      },
+      "id": 119,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "uds_available_tmsp",
+          "value": "uds_available_tmsp"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 235
+      },
+      "hiddenSeries": false,
+      "id": 120,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "uds_available_tmsp",
+          "value": "uds_available_tmsp"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 244
+      },
+      "id": 121,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "user_accounts_proxy_available",
+          "value": "user_accounts_proxy_available"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 245
+      },
+      "hiddenSeries": false,
+      "id": 122,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "user_accounts_proxy_available",
+          "value": "user_accounts_proxy_available"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 254
+      },
+      "id": 123,
+      "panels": [],
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 4,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "vsomeip_routing_ready_available_tmsp",
+          "value": "vsomeip_routing_ready_available_tmsp"
+        }
+      },
+      "title": "Selected kpi: $kpi_name",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "IDCEvo-Node0-prod",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 255
+      },
+      "hiddenSeries": false,
+      "id": 124,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "sort": "min",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.15",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "repeatIteration": 1748950127892,
+      "repeatPanelId": 2,
+      "repeatedByRow": true,
+      "scopedVars": {
+        "kpi_name": {
+          "selected": false,
+          "text": "vsomeip_routing_ready_available_tmsp",
+          "value": "vsomeip_routing_ready_available_tmsp"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:219",
+          "alias": "/.*_master/",
+          "color": "#C4162A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:212",
+          "alias": "/.*_i330_stable/",
+          "color": "#FADE2A",
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:230",
+          "alias": "/.*_i350_stable/",
+          "color": "#FA6400",
+          "dashes": true,
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$kpi_name",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "generic_time_kpi_available_tmsp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"generic_kpi_time_value\" WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "kpi_name",
+              "operator": "=~",
+              "value": "/^$kpi_name$/"
+            },
+            {
+              "condition": "AND",
+              "key": "job",
+              "operator": "=",
+              "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM /generic_kpi_metric_threshold.*/ WHERE (\"kpi_name\" =~ /^$kpi_name$/) AND (\"job\" =~ /^$job_name$/) AND (\"build\" =~ /^$build_id$/) AND (\"hardware_revision\" =~ /^$hardware_revision$/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$kpi_name",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:262",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:263",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "IDCEvo-Node0-prod",
+        "definition": "show tag values from generic_kpi_time_value with key =~ /kpi_name/ WHERE (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "KPI name:",
+        "multi": true,
+        "name": "kpi_name",
+        "options": [],
+        "query": "show tag values from generic_kpi_time_value with key =~ /kpi_name/ WHERE (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "tags": [],
+          "text": [
+            "idcevo-pu2507-user-SI-performance",
+            "idcevo-pu2507-userdebug-SI-performance"
+          ],
+          "value": [
+            "idcevo-pu2507-user-SI-performance",
+            "idcevo-pu2507-userdebug-SI-performance"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Job name:",
+        "multi": true,
+        "name": "job_name",
+        "options": [
+          {
+            "selected": false,
+            "text": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance",
+            "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance"
+          },
+          {
+            "selected": false,
+            "text": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring",
+            "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring"
+          },
+          {
+            "selected": false,
+            "text": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging",
+            "value": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging"
+          },
+          {
+            "selected": false,
+            "text": "si-idcevo-ee25-traas-SI-performance",
+            "value": "si-idcevo-ee25-traas-SI-performance"
+          },
+          {
+            "selected": false,
+            "text": "si-idcevo-ee25-traas-SI-staging",
+            "value": "si-idcevo-ee25-traas-SI-staging"
+          },
+          {
+            "selected": false,
+            "text": "si-idcevo-ee25-traas-SI-android",
+            "value": "si-idcevo-ee25-traas-SI-android"
+          },
+          {
+            "selected": true,
+            "text": "idcevo-pu2507-user-SI-performance",
+            "value": "idcevo-pu2507-user-SI-performance"
+          },
+          {
+            "selected": true,
+            "text": "idcevo-pu2507-userdebug-SI-performance",
+            "value": "idcevo-pu2507-userdebug-SI-performance"
+          }
+        ],
+        "query": "ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance, ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring,ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging,si-idcevo-ee25-traas-SI-performance, si-idcevo-ee25-traas-SI-staging, si-idcevo-ee25-traas-SI-android,\nidcevo-pu2507-user-SI-performance, idcevo-pu2507-userdebug-SI-performance",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "IDCEvo-Node0-prod",
+        "definition": "select build from job_duration where (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "build_id",
+        "multi": true,
+        "name": "build_id",
+        "options": [],
+        "query": "select build from job_duration where (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "IDCEvo-Node0-prod",
+        "definition": "show tag values from job_duration with key = hardware_revision WHERE (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "hardware_revision",
+        "multi": true,
+        "name": "hardware_revision",
+        "options": [],
+        "query": "show tag values from job_duration with key = hardware_revision WHERE (\"job\" =~ /^$job_name$/) AND $timeFilter",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "IDCEVO - Generic Performance KPIs",
+  "uid": "oXi3zG9Vz",
+  "version": 89
+}

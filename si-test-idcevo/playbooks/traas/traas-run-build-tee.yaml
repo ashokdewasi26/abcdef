@@ -1,0 +1,38 @@
+- hosts: all
+  environment:
+    PIP_INDEX_URL: https://common.artifactory.cc.bmwgroup.net/artifactory/api/pypi/software-factory-pypi-public/simple
+
+  roles:
+    - role: ensure-python
+  tasks:
+    - name: Run build-idcevo-build-tee-config when no config already defined
+      include_role:
+        name: setup-tee-config
+      when: tee_config | default({}) | length == 0
+
+    - debug:
+        msg: "No tee_config was specified or built, will use image defaults"
+      when: tee_config | default({}) | length == 0
+
+    - name: Run build-tee
+      block:
+        - name: Display the tee_config
+          debug:
+            var: tee_config
+
+        - name: Run build-tee
+          include_role:
+            name: run-build-tee
+          vars:
+            # Configuration options for the run-build-tee role
+            # See the complete list at:
+            # https://cc-github.bmwgroup.net/software-factory/validation-jobs/tree/master/roles/run-build-tee
+            build_tee_path: "{{ test_env_out_dir }}/build-tee"
+            tee_env: "{{ ansible_user_dir }}/build-tee.env"
+            repos_folder: "/tmp/build-tee"
+            build_tee_version: "1.10.2"
+
+        - name: Show build-tee virtualenv config
+          shell: |
+            "{{ ansible_user_dir }}/build-tee.env/bin/pip" freeze
+      when: tee_config | default({}) | length > 0

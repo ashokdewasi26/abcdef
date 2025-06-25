@@ -1,0 +1,22 @@
+- project:
+    nightly-late: # This pipeline is executed at 4:00 UTC.
+      jobs:
+        - si-idcevo-ee25-traas-SI-android: &idcevo_upload_traas
+            vars:
+              enable_jira_xrayctl_upload: true
+        - si-idcevo-ee25-traas-SI-staging:
+            timeout: 28800  # 8h Zuul job timeout
+            vars:
+              enable_jira_xrayctl_upload: true
+              rack_tags: Rack_CTW_CR_010
+              branch: "master"
+              duration: 120  # TRAAS session duration in minutes (2h)
+              product_type: idcevo
+              artifactory_repo: idcevo-nightly
+              test_suite: "SI-android-traas"
+              flash_pdx: "true"
+              test_scripts: ""
+              si_test_idcevo_si_version: "master"
+              executor_version: "latest"
+              run_mtee_custom: "false"
+              install_custom_repos: "true"

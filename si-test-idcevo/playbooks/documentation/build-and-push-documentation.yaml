@@ -1,0 +1,19 @@
+- import_playbook: build-documentation.yaml
+
+- hosts: all
+  tasks:
+    - name: Push documentation
+      shell: |
+        set -eux
+        git clone --branch gh-pages \
+            "https://{{ zuul.project.canonical_name }}.git" \
+            gh-pages
+        rm -rf gh-pages/*
+        cp -r "{{ zuul_logs_dir }}"/html/* gh-pages/
+        touch gh-pages/.nojekyll
+        cd gh-pages
+        if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Update documentation"
+            git push origin gh-pages
+        fi;

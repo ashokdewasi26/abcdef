@@ -1,0 +1,170 @@
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-base
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-env
+    required-projects:
+      - idcevo/si-test-idcevo
+    pre-run:
+      - playbooks/build-tee-test-config/si-test-run-build-tee.yaml
+    vars:
+      enable_repo_sync: true
+      build_test_suite_folder: "{{ product_type }}_sp21"
+      # temporary until https://cc-github.bmwgroup.net/idcevo/meta-idcevo/pull/3330 is merged
+      src_dir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      si_test_idcevo_base_repo: cc-github.bmwgroup.net/idcevo/si-test-idcevo
+      si_test_idcevo_src_dir: |-
+        {{ zuul_root_dir }}/{{ zuul.projects[si_test_idcevo_base_repo].src_dir }}
+      # The chosen test suit will be applied for system tests and posttests, TODO - add plugins when enabled
+      # Example: tee_test_suite: "SI" -> will use "SI-systemtests-idcevo" and "SI-posttests-idcevo"
+      tee_test_suite: "SI"
+      # # TA Staging variables - configurable here but dealt with on TA level, defaults defined on
+      # #  https://cc-github.bmwgroup.net/idcevo/test-automation/blob/master/roles/configure-build-tee/defaults/main.yaml
+      # # Gerrit repos, support refspecs, e.g. "refs/heads/master"
+      # mtee_core_version: ""
+      # mtee_gen22_version: ""
+      # dltlyse_core_version: ""
+      # diagnose_version: ""
+      mtee_apinext_repo_version: "master"
+      # # Github repos, need branch, commit or tag, e.g. "master"
+      # tee_idcevo_version: ""
+      # dlt_version: ""
+      # TEMP_PIN due to changes not in main image (https://cc-github.bmwgroup.net/node0/dltlyse-plugins-gen22/pull/441)
+      dltlyse_plugins_version: "686e84f24a4772581cc6a4077cec7c40deaf9a6c"
+      # SI Staging variables - configurable and dealt with on this repo
+      si_test_idcevo_si_version: "" # This will not install the test-suites and test packages, just installs the repo into the docker
+      sysman_testing_version: ""
+      deletion_handler_version: ""
+      system_telemetry_version: ""
+      partition_manager_version: ""
+      rsu_flasher_tool_version: ""
+      bat_automation_tests_systemsw_version: ""
+      bat_automation_tests_version: ""
+      cde_launcher_app_version: ""
+      rse_launcher_app_version: ""
+      # Flag to install si-test-idcevo test packages and test-suites configured on
+      #  "/playbooks/build-tee-test-config/templates/tests-config.yaml.j2"
+      #  with [si_test_idcevo_si_version] or 'master' by default
+      install_si_tests_idcevo: false
+      # List of collector defined in reportings/vars/collector_suites.yaml
+      collector_suite: "{{ tee_test_suite }}"
+      # Upload results to jira
+      enable_jira_xrayctl_upload: false
+      xrayctl_upload_config_path: "playbooks/reporting/files/job_config_si_idcevo.yaml"
+      mtee_tests_xrayctl_upload_config_path_remote_src: true
+      mtee_tests_xrayctl_upload_config_path: "{{ src_dir }}/{{ xrayctl_upload_config_path }}"
+      # Publish kpi to influx db
+      kpi_upload: false
+      # Appium variables
+      # include_appium: false
+      # appium_server_version: "v1.22.3-p6"
+      # How to test a dirty meta-idcevo image
+      # build_artifacts_file_url: "https://idcevo.artifactory.cc.bmwgroup.net/artifactory/idcevo-platform-build-fg/check/github/idcevo/meta-idcevo/3278/2024-04-16-13-33-06/build_artifacts.yaml"
+      disable_recovery_actions: false
+      # Enable git-lfs
+      has_git_lfs: true
+      # Install mtee-apinext and enable adb log trace
+      enable_adb_trace: true
+      # Split dlt file into smaller chunks
+      split_full_dlt_file: true
+      dlt_data_chunks: 199  # size of files in MB
+      dlt_file_pattern: '.*_full_trace.*\.dlt'  # regex pattern for DLT file
+      compress_dlt_files: true  # Compress the dlt files and clean up
+      enable_job_failure_analyser: true  # Creates overview of failures in zuul-build-result-page
+    post-run:
+      - playbooks/reporting/collect-build-env.yaml
+      - playbooks/reporting/report-metrics.yaml
+      - playbooks/split_and_compress.yaml
+      - playbooks/filter-tee-xml-reporting.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-base
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI-SIT-Automated"
+      install_si_tests_idcevo: true
+      download_ver_gen: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI"
+      should_prepare_pdx_urls: true
+      rsu_flasher_tool_version: "master"
+      partition_manager_version: "master"
+      sysman_testing_version: "master"
+      svt_file_name_pattern_pdx: "SVT_IDCEVO-WITH_SWITCH.xml"
+      disable_recovery_actions: false #  Enabled on this job because it runs recovery test package
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-performance
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    timeout: 7200 # 2h
+    vars:
+      tee_test_suite: "SI-performance"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-stability
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    timeout: 43200 # 12h
+    vars:
+      tee_test_suite: "SI-stability"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-staging
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-staging"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+      bat_automation_tests_systemsw_version: "si_job_ready"
+      bat_automation_tests_version: "master"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-long
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    timeout: 28800 # 8h
+    vars:
+      tee_test_suite: "SI-long"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-diag
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-diag"
+
+- job:
+    name: ta-idcevo-hw-mtf3-IDCevo-SP21-SI-PDX-flashing-stress
+    timeout: 43200 # 12h
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "PDX-stress"
+      should_prepare_pdx_urls: True
+      svt_file_name_pattern_pdx: "SVT_IDCEVO-WITH_SWITCH.xml"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-android
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-android"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated-domains
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-SIT-Automated-domains"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-Multi-Coding-U
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-multi-coding-sp21-u"
+      should_prepare_pdx_urls: true

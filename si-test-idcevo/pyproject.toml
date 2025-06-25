@@ -1,0 +1,41 @@
+[project]
+name = "si_test_idcevo"
+authors = [
+    {name = "CTW Lion", email = "apinext-lion@list.bmw.com"},
+]
+description = "System Integration tests and helpers for IDCEvo"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: Other/Proprietary License",
+    "Operating System :: POSIX :: Linux",
+    "Environment :: Console",
+    "Development Status :: 3 - Alpha",
+    "Topic :: Software Development :: Testing"
+]
+dependencies = []
+dynamic = ["version"]
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+"Homepage" = "https://cc-github.bmwgroup.net/idcevo/si-test-idcevo"
+
+[tool.setuptools.packages.find]
+exclude = ["tests"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+
+[tool.black]
+line-length = 119
+
+# ... other project metadata fields as specified in:
+#     https://packaging.python.org/en/latest/specifications/declaring-project-metadata/

@@ -1,0 +1,44 @@
+- name: Metrics collection and upload
+  hosts: all
+  roles:
+    - role: ensure-testing-reporting
+  vars_files:
+    - vars/collector_suites.yaml
+  vars:
+    metric_collector_venv_path: ".test_reporting_venv"
+    metric_collector_bin: "metric_collector_evo"
+  tasks:
+    - name: Define build.env path
+      stat:
+        path: "{{ zuul_logs_dir }}/results/testrun/build.env"
+      register: build_env_path
+
+    - block:
+        - name: Write data to file using collector suite
+          shell: |
+            "{{ metric_collector_venv_path }}/bin/{{ metric_collector_bin }}" \
+            -r "{{ zuul_logs_dir }}/results/testrun" \
+            -c {{ collectors_set[collector_suite|upper] | join(' ') }} \
+            -o "{{ zuul_logs_dir }}/metrics_evo.txt" \
+            -v
+          when: collector_suite|length > 0
+
+        - name: Publish metrics to influx using collector suite
+          become: yes
+          shell: |
+            "{{ metric_collector_venv_path }}/bin/{{ metric_collector_bin }}" \
+            -r "{{ zuul_logs_dir }}/results/testrun" \
+            -c {{ collectors_set[collector_suite|upper] | join(' ') }} \
+            --influxdb \
+            --database "{{ product_type }}_node0_prod" \
+            --url http://mgu-gen22-si-metrics.bmwgroup.net:8086 \
+            --user idc_farm_monitor \
+            --influxdb-password-file "{{ ansible_user_dir }}/.influxdb.pass" \
+            --kpi-regression-detection \
+            --regression-threshold 2 \
+            --xml-output {{ xml_output | default('./results/testrun') }} \
+            -v \
+            --regression-whitelist {{ regression_whitelist[collector_suite|upper] | default(['']) | join(' ') }}
+          when: kpi_upload | default('false') | bool and collector_suite|length > 0
+
+      when: collector_suite|length > 0 and build_env_path.stat.exists

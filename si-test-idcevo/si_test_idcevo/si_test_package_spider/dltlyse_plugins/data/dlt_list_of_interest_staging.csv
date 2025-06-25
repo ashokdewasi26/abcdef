@@ -1,0 +1,3 @@
+APID,CTID,LOG_LEVEL,PAYLOAD
+ALD,LCAT,,Cluster-App-Ready!
+SYS,MGR,,system booted with systemd

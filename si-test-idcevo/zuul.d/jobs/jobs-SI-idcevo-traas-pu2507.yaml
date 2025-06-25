@@ -1,0 +1,21 @@
+- job:
+    name: si-idcevo-pu2507-ee25-traas-SI-performance
+    parent: si-idcevo-ee25-traas-SI-performance
+    vars:
+      rack_tags: Rack_COCO_020
+      branch: "idcevo-pu2507"
+
+- job:
+    name: si-idcevo-pu2507-ee25-traas-SI-staging
+    parent: si-idcevo-ee25-traas-SI-staging
+    vars:
+      rack_tags: Rack_COCO_020
+      branch: "idcevo-pu2507"
+
+- job:
+    name: si-idcevo-pu2507-ee25-traas-SI-android
+    parent: si-idcevo-ee25-traas-SI-android
+    timeout: 21600  # 6h Zuul job timeout
+    vars:
+      rack_tags: Rack_CTW_CR_006
+      branch: "idcevo-pu2507"

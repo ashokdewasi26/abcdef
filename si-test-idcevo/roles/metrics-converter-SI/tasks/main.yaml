@@ -1,0 +1,29 @@
+- name: Run metric converter workflow
+  block:
+    - name: Copy metrics converter config file to workspace_dir
+      when:
+        - metrics_converter_config_file_name is defined
+        - metrics_converter.location
+      copy:
+        src: "{{ metrics_converter_config_file_name }}"
+        dest: "{{ metrics_converter.location }}"
+        mode: "0644"
+
+    - name: Copy metrics converter template file to workspace_dir
+      when:
+        - metrics_converter_template_file_name is defined
+        - metrics_converter.location
+      copy:
+        src: "{{ metrics_converter_template_file_name }}"
+        dest: "{{ metrics_converter.location }}"
+        mode: "0644"
+
+    - name: Create SOFYA folder
+      file:
+        path: "{{ zuul_logs_dir }}/SOFYA"
+        state: directory
+        mode: "0755"
+
+    - name: Run run-metrics-converter workflow
+      include_role:
+        name: metrics/run-metrics-converter

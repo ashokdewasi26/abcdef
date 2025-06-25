@@ -1,0 +1,14 @@
+- project:
+    nightly-late: # This pipeline is executed at 4:00 UTC.
+      jobs:
+        - noop
+        # - ee25-traas-Rack-Health-COCO_001 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_002 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_003 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_004 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_010 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_011 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_012 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_013 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_020 # Not running due to job reduction IDCEVODEV-448568
+        # - ee25-traas-Rack-Health-COCO_021 # Not running due to job reduction IDCEVODEV-448568

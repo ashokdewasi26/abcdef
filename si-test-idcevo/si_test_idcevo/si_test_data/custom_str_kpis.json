@@ -1,0 +1,27 @@
+{
+    "cluster_app_resumed": {
+        "apid_ctid": ["ALD", "LCAT"],
+        "regex_pattern_payload": "Cluster-App-Ready!",
+        "type": "msg_tmsp",
+        "formula_type": "android"
+    },
+    "launcher_app_resumed": {
+        "apid_ctid": ["ALD", "LCAT"],
+        "regex_pattern_payload": "ACTION_LAUNCHER_READY_REPEAT",
+        "type": "msg_tmsp",
+        "formula_type": "android"
+    },
+    "vsomeip_routing_resumed": {
+        "apid_ctid": ["VSIP", "VSIP"],
+        "regex_pattern_payload": "rmi::set_routing_state Set routing to resume mode done, diagnosis mode was inactive.",
+        "type": "msg_tmsp",
+        "formula_type": "kernel"
+    },
+    "deadreckoning_pos_resumed": {
+        "apid_ctid": ["NAVD", "KPI#"],
+        "kpi_name": "MARKER KPI Positioning component",
+        "regex_pattern_payload": "MARKER KPI Positioning component has been",
+        "type": "msg_tmsp",
+        "formula_type": "kernel"
+    }
+}

@@ -1,0 +1,7 @@
+si-test-idcevo/si_test_package_android
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_linuxos/systemtests/verify_uart_tests.py
+si-test-idcevo/si_test_package_modes_moments
+si-test-idcevo/si_test_package_performance/systemtests/generic_dlt_kpi_tests.py
+si-test-idcevo/si_test_package_real_phone
+si-test-idcevo/si_test_package_updatecenter

@@ -1,0 +1,4 @@
+mtee_test_result_dir: "{{ zuul_logs_dir }}/results/testrun"
+mtee_tests_xrayctl_upload_config_path: "playbooks/reporting/files/job_config_si_idcevo.yaml"
+upload_test_result_xrayctl_idcevo_xrayctl_version: "0.7.15"
+mtee_tests_xrayctl_upload_config_path_remote_src: false

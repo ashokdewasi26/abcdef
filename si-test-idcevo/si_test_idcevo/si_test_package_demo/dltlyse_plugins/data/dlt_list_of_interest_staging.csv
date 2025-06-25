@@ -1,0 +1,12 @@
+APID,CTID,LOG_LEVEL,PAYLOAD
+AMON,LOOP,,.*on cpu.*
+ALD,KRNL,,.*\[1\]:MARKER KPI - kernel_init Done
+BOOT,PERF,,.*jmp hypervisor at core.*|.*welcome to lk\/MP.*|.*boot args.*|.*KPI\: HV start.*
+BOOT,PERF,,.*bcp rev.*
+CAPI,VSIP,,.*REQUEST\(631a\).*|.*Avoid trigger.*|.*OFFER\(631b\).*|.*Port configuration missing.*
+CDM,CDM,,.*Event loop MainEventPool started.*
+CDM,CDM,,.*Systemd watchdog enabled.*
+ETHD,ETHD,,.*EthernetDiagnostics initialized successfully*
+HWAb,IOLI,,.*WAKEUP_REASON.*
+ICFU,MAIN,,IC functions' registration completed
+ICSC,SaCo,,Both Safety Processes found.

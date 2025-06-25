@@ -1,0 +1,14 @@
+diagnostic-log-trace-systemtests/systemtests/dlt_component_logging_check_tests.py
+diagnostic-log-trace-systemtests/systemtests/dlt_screenshot_tests.py
+partition-manager-systemtests/systemtests/partman_tests.py
+system-telemetry
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_performance_monitoring/systemtests/idle_measurements_tests.py
+system-functions/systemtests/system_functions_certificates_tests.py
+system-functions/systemtests/system_functions_dtc_tests.py
+system-functions/systemtests/system_functions_factory_diagnostic_jobs_tests.py
+system-functions/systemtests/system_functions_logistics_tests.py
+system-functions/systemtests/system_functions_startup_tests.py
+system-functions/systemtests/system_functions_vin_tests.py
+system-functions/systemtests/system_functions_zedis_tests.py
+si-test-idcevo/si_test_package_lifecycle/systemtests/lifecycle_shutdown_tests.py

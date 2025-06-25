@@ -1,0 +1,64 @@
+# All SI TRAAS jobs will perform the following actions:
+# - PDX flash last available nightly
+# - Install the current version (if triggered from a PR) or 'master' version of si-test-idcevo
+- job:
+    name: si-idcevo-ee25-traas-SI-base
+    parent: ta-hw-traas-idcevo-base
+    timeout: 14400  # 4h Zuul job timeout
+    vars:
+      duration: 120  # TRAAS session duration in minutes (2h)
+      product_type: idcevo
+      artifactory_repo: idcevo-nightly
+      include_appium: true # TRAAS already installs appium by default but this is set to true for visibility
+      run_mtee_suite: "true"
+      test_suite: "SI-staging-traas"
+      test_packages: "all"
+      flash_dev_full: "false" # Don't DEV flash CTW racks. It will break them.
+      flash_pdx: "true"
+      executor_version: ""  # For custom build use your QX number
+      # Make sure every TRAAS job instals si-test-idcevo
+      si_test_idcevo_base_repo: cc-github.bmwgroup.net/idcevo/si-test-idcevo
+      si_test_idcevo_src_dir: |-
+        {{ zuul_root_dir }}/{{ zuul.projects[si_test_idcevo_base_repo].src_dir }}
+      traas_artifactory_base_url_pattern: https://idcevo.artifactory.cc.bmwgroup.net/artifactory/
+      with_phonesimu: "false"
+      # ensure si-test-idcevo is installed with master version or current PR branch
+      export_test_dir: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/idcevo/si-test-idcevo"
+      run_mtee_custom: "true"
+      test_scripts: "{{ test_dir }}/si-test-idcevo/si_test_idcevo/si_test_package_basic/systemtests"
+      test_dir: "custom_repos"
+      install_custom_repos: ""
+      extra_files:
+        - "/tmp/build-tee/cv-daily-operations/whitelist/bat/idcevo/dtc_whitelist_idc"
+      # CHANGE the variable bellow for different initial actions
+      extra_prepare_actions: >
+        tee25:custom_install_from_upload:{{ test_dir }}/si-test-idcevo;
+        tee25:prepare_si_test_suites;
+        tee25:custom_install:{{ test_dir }}/mtee-apinext;
+        tee25:extend_dtc_whitelist:/ws/uploads/{{ test_dir }}/extrafiles/dtc_whitelist_idc;
+      mtee_apinext_version: "master" # TEMP_PIN Pinned for now, when removing also remove from extra_prepare_actions
+      si_test_idcevo_si_version: "master" # TEMP_PIN This will not install the test-suites and test packages, just installs the repo into the docker
+      cv_daily_operations_version: "master"
+      has_git_lfs: false
+
+- job:
+    name: si-idcevo-ee25-traas-SI-performance
+    parent: si-idcevo-ee25-traas-SI-base
+    vars:
+      rack_tags: Rack_COCO_020
+      test_suite: "SI-performance-traas"
+
+- job:
+    name: si-idcevo-ee25-traas-SI-staging
+    parent: si-idcevo-ee25-traas-SI-base
+    vars:
+      rack_tags: Rack_COCO_020
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head"
+
+- job:
+    name: si-idcevo-ee25-traas-SI-android
+    parent: si-idcevo-ee25-traas-SI-base
+    vars:
+      duration: 180  # TRAAS session duration in minutes (3h)
+      rack_tags: Rack_COCO_021
+      test_suite: "SI-android-traas"

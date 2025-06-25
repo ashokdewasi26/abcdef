@@ -1,0 +1,13 @@
+AndroidbootPlugin
+AndroidLogsPlugin
+ContextPlugin
+CoredumpAnalyzer
+CPULoadBootchartPlugin
+CPULoadCheck
+CrashReportPlugin
+CrashToTestcase
+DLTMsgInterestPluginIDCEvoLite
+ExtractFilesPlugin
+MonitorIDCEVOTestsExecution
+SELinuxPlugin
+TimeLineLitePlugin

@@ -1,0 +1,302 @@
+{
+  "dltlyse.AndroidbootPlugin.Reports the status of the Android VM startup during test execution,": [
+    {
+      "ticket": "IDCEVODEV-421030",
+      "error": "There has been at least one lifecycle without Android VM logs, plugin need improvement"
+    }
+  ],
+  "dltlyse.AndroidLogsPlugin.Check if android logs are available in each LC after setup is completed.": [
+    {
+      "ticket": "IDCEVODEV-369862",
+      "error": "There has been at least one lifecycle without Android VM logs, plugin need improvement"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine deadreckoning position calculated after cold boot": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine early cluster first image": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine full cluster available": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine interior light CAF loaded": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine interior light available": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Vsome IP routing ready test": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Check target UDS availability after reset": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Prio1 diagnostic job availability after reset": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.generic_dlt_kpi_tests.[SIT_Automated] Collect all the KPIs from GENERIC_DLT_KPI_CONFIG": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "Not all KPIs are collected, need to update the config"
+    }
+  ],
+  "si_test_package_performance.kpi_uds_availability_tests.[SIT_Automated] UDS Availability": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.kpi_uds_availability_tests.[SIT_Automated] Prio1 diagnostic job availability": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "system-functions.system_functions_post_tests.SystemFunctionsPostTest.test_007_check_for_fatal_errors_si -- LSMF,DTC,Env condition with DID 26556/0x67BC not found": [
+    {
+      "ticket": "IDCEVODEV-457882",
+      "error": "condition with DID 26556/0x67BC not found"
+    }
+  ],
+  "si_test_package_common.tombstones_crash_tests.StabilityPostTest.test_anr": [
+    {
+      "ticket": "IDCEVODEV-439823",
+      "error": "/mtee-env/bin/adb -s 1d547e575206cbb5136c002790000843 shell 'su 0 ls -A /data/anr"
+    }
+  ],
+  "si_test_package_common.tombstones_crash_tests.StabilityPostTest.test_crash": [
+    {
+      "ticket": "IDCEVODEV-439823",
+      "error": "adb: device '1d547e575206cbb5136c002790000843' not found"
+    }
+  ],
+  "si_test_package_common.tombstones_crash_tests.StabilityPostTest.test_tombstones": [
+    {
+      "ticket": "IDCEVODEV-439823",
+      "error": "adb: device '1d547e575206cbb5136c002790000843' not found"
+    }
+  ],
+  "si_test_package_stability.robustness_switch_modes_tests.[SIT_Automated] Test robustness of switching between App and Bolo modes": [
+    {
+      "ticket": "IDCEVODEV-443628",
+      "error": "Reboots failed"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests.Readout status nominal scenario": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "still to be addressed in https://jira.cc.bmwgroup.net/browse/JCSF-8093"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests.Upload certificates from another ECU (PKI consistency)": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "still to be addressed in https://jira.cc.bmwgroup.net/browse/JCSF-8093"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests.Call Start Check without uploading certs": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "still to be addressed in https://jira.cc.bmwgroup.net/browse/JCSF-8093"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests.Upload empty container": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "still to be addressed in https://jira.cc.bmwgroup.net/browse/JCSF-8093"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests.Upload incomplete certificates (ID certificate deleted)": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "still to be addressed in https://jira.cc.bmwgroup.net/browse/JCSF-8093"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_usb_device_tree": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_language": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_language": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_eth_learn_port_configuration": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_eth_learn_port_configuration": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_test_verbau_display": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_test_verbau_display": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_test_verbau_bt_wlan_antenna": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_test_verbau_bt_wlan_antenna": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_test_verbau_arc_serdes": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_test_verbau_arc_serdes": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_mute": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_mute": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_fm": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_fm": [
+    {
+      "ticket": "IDCEVODEV-319156",
+      "error": "Not applicable for RSE26/CDE"
+    }
+  ],
+  "si_test_package_lifecycle.lifecycle_shutdown_tests.[SIT_Automated] Verify first Switch to power Startup": [
+    {
+      "ticket": "IDCEVODEV-482342",
+      "error": "need to update payloads"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[SIT_Automated] Verify Kernel Support for All HW Variants": [
+    {
+      "ticket": "IDCEVODEV-479685",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[SIT_Automated] Verify I2C Device Detection": [
+    {
+      "ticket": "IDCEVODEV-479684",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_system_software.system_software_already_automated_tests.[SIT_Automated] Verify virtio-fs frontend is available": [
+    {
+      "ticket": "IDCEVODEV-497103",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_system_software.system_software_already_automated_tests.[SIT_Automated] Verify the monitoring status of IVI (Android alive status)": [
+    {
+      "ticket": "IDCEVODEV-502931",
+      "error": "Timeout of 60s reached"
+    }
+  ],
+  "system-functions.system_functions_startup_tests.Check target UDS request acceptance, reachability and SSH connectivity.consecutive resets": [
+    {
+      "ticket": "IDCEVODEV-489436",
+      "error": "ECU did not respond within 30sec"
+    }
+  ],
+  "core-test-suite.posttests_post_recovery_event_tests.test_recovery_event_not_allowed(RecoveryEvent(service='container-telematics.service', exit_code='1', crashid='n/a'),)": [
+    {
+      "ticket": "IDCEVODEV-505144",
+      "error": "container-telematics.service failure"
+    }
+  ],
+  "core-test-suite.posttests_post_recovery_event_tests.test_recovery_event_not_allowed(RecoveryEvent(service='vmc.service', exit_code='80', crashid='n/a'),)": [
+    {
+      "ticket": "IDCEVODEV-511456 ",
+      "error": "vmc.service failure"
+    }
+  ],
+  "si_test_package_linuxos.linux_filesystem_tests.[SIT_Automated] Verify EXT4 Filesystem Mount": [
+    {
+      "ticket": "IDCEVODEV-511079",
+      "error": "Failed for Common Partition"
+    }
+  ],
+  "si_test_package_linuxos.linux_filesystem_tests.[SIT_Automated] Verify UFS Partitioning and Mounting": [
+    {
+      "ticket": "IDCEVODEV-511079",
+      "error": "Failed for Common Partition"
+    }
+  ],
+  "si_test_package_system_software.system_software_already_automated_tests.[SIT_Automated] Verify the shutdown of whole system": [
+    {
+      "ticket": "IDCEVODEV-499451",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_lifecycle.lifecycle_shutdown_tests.[SIT_Automated] Verify System Behavior with or without FPN request": [
+    {
+      "ticket": "IDCEVODEV-510049",
+      "error": "Expected payloads not found"
+    }
+  ]
+}

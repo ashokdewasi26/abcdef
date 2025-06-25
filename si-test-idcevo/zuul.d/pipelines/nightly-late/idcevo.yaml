@@ -1,0 +1,31 @@
+- project:
+    nightly-late: # This pipeline is executed at 4:00 UTC.
+      jobs:
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance: &idcevo_upload_metrics_jira
+            vars:
+              kpi_upload: true
+              enable_jira_xrayctl_upload: true
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-STR-SIT-Automated: *idcevo_upload_metrics_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle: &idcevo_upload_jira
+            vars:
+              enable_jira_xrayctl_upload: true
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle-domains: *idcevo_upload_jira  # Deactivated in cleanup IDCEVODEV-448568
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains-sys-sw: *idcevo_upload_jira  # Deactivated in cleanup IDCEVODEV-448568
+        - ta-idcevo-hw-mtf3-IDCevo-SI-PDX-flashing-stress: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-production: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-rtos-crash-cases: *idcevo_upload_jira  # Deactivated in cleanup IDCEVODEV-448568
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated-domains: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-NA: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-G: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-GED4K: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots: *idcevo_upload_jira
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-test SI-kpi-test  # Deactivated in cleanup IDCEVODEV-448568
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-STR: *idcevo_upload_jira  # Deactivated in cleanup IDCEVODEV-448568

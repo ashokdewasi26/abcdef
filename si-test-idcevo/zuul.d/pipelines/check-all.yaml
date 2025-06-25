@@ -1,0 +1,7 @@
+- project:
+    check-all:
+      jobs:
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging:
+            vars:
+              kpi_upload: true
+              tee_test_suite: "SI-performance"

@@ -1,0 +1,494 @@
+{
+  "dltlyse.AndroidbootPlugin.Reports the status of the Android VM startup during test execution,": [
+    {
+      "ticket": "IDCEVODEV-421030",
+      "error": "There has been at least one lifecycle without Android VM logs, plugin need improvement"
+    }
+  ],
+  "dltlyse.AndroidLogsPlugin.Check if android logs are available in each LC after setup is completed.": [
+    {
+      "ticket": "IDCEVODEV-369862",
+      "error": "There has been at least one lifecycle without Android VM logs, plugin need improvement"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine deadreckoning position calculated after cold boot": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine early cluster first image": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine full cluster available": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine interior light CAF loaded": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Determine interior light available": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Vsome IP routing ready test": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Check target UDS availability after reset": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.validate_kpi_tests.[SIT_Automated] Prio1 diagnostic job availability after reset": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.generic_dlt_kpi_tests.[SIT_Automated] Collect all the KPIs from GENERIC_DLT_KPI_CONFIG": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "Not all KPIs are collected, need to update the config"
+    }
+  ],
+  "si_test_package_performance.kpi_uds_availability_tests.[SIT_Automated] UDS Availability": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "si_test_package_performance.kpi_uds_availability_tests.[SIT_Automated] Prio1 diagnostic job availability": [
+    {
+      "ticket": "IDCEVODEV-464247",
+      "error": "KPI is above threshold"
+    }
+  ],
+  "test_recovery_event_not_allowed(RecoveryEvent(service='safetyHMI', exit_code=None, crashid='00000000')": [
+    {
+      "ticket": "IDCEVODEV-404898",
+      "error": "safetyHMI.service failure"
+    }
+  ],
+  "test_recovery_event_not_allowed(RecoveryEvent(service='safety_coordinator.service', exit_code=None, crashid='00000000')": [
+    {
+      "ticket": "IDCEVODEV-404898",
+      "error": "safety_coordinator.service.service failure"
+    }
+  ],
+  "test_recovery_event_not_allowed(RecoveryEvent(service='android-exit-tracer.service', exit_code='0', crashid='n/a')": [
+    {
+      "ticket": "IDCEVODEV-393040",
+      "error": "android-exit-tracer.service.service failure"
+    }
+  ],
+  "0_targetmanager.tests._dtc_check_post_test - 0XB7FB07": [
+    {
+      "ticket": "IDCEVODEV-312963",
+      "error": "Found unexpected DTC 0XB7FB07"
+    }
+  ],
+  "si_test_package_system_software.general_system_software_tests.[System Software] [SIT_Automated] UFS 128GB Provisioning": [
+    {
+      "ticket": "IDCEVODEV-462033",
+      "error": "Need to update Tests failing on LK sealed target"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[Instrument Cluster] [SIT_Automated] Verify IDCevo basic features working properly - Range": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_system_software.neural_processing_tests.[System Software] [SIT_Automated] Verify Processing of 2NNM/4NNM/8NNM simultaneously": [
+    {
+      "ticket": "IDCEVODEV-463909",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[SIT_Automated] Verify SQHMI started and working properly after Power ON": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[Instrument Cluster] [SIT_Automated] Verify PHUD battery percentage": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_system_software.neural_processing_tests.[System Software] [SIT_Automated] Verify system can able to handle preEmpt processing": [
+    {
+      "ticket": "IDCEVODEV-463909",
+      "error": "Output is missing the 'Golden Match"
+    }
+  ],
+  "si_test_package_system_software.inter_vm_communication_tests.[System Software] [SIT_Automated] [RSE]Verify the standalone start of IVI (Android)": [
+    {
+      "ticket": "IDCEVODEV-488620",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[Instrument Cluster] [SIT_Automated] Verify speed in main and secondary dials": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_system_software.inter_vm_communication_tests,[System Software] [SIT_Automated] Verify the reboot of whole system using vshutdown": [
+    {
+      "ticket": "IDCEVODEV-482673",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_system_software.neural_processing_tests.[System Software] [SIT_Automated] processing of 2NNM models run simultaneously based on scheduling": [
+    {
+      "ticket": "IDCEVODEV-433228",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[LinuxOS] [SIT_Automated] Verify I2C Device Detection": [
+    {
+      "ticket": "IDCEVODEV-479684",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[LinuxOS] [SIT_Automated] Verify Kernel Support for All HW Variants": [
+    {
+      "ticket": "IDCEVODEV-479685",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_linuxos.linux_filesystem_tests.[LinuxOS] [SIT_Automated] Verify UFS Partitioning and Mounting": [
+    {
+      "ticket": "IDCEVODEV-361193",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_rtos.rtos_safety_tests.[Safety] [SIT_Automated] Safety Manager watchdog - IOC | Verify MCU triggers safe state": [
+    {
+      "ticket": "IDCEVODEV-397332",
+      "error": "Need to update testcase"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[SIT_Automated] Change the speed using vCar to a know value and check if PHUD follows": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_navigation_row.verify_gnss_tests.[Navigation ROW] [SIT_Automated] BMW_IDCEvo_I290 _ GNSS input log frequency is set to 10 Hz.": [
+    {
+      "ticket": "IDCEVODEV-428868",
+      "error": "Need to check VCAR signal"
+    }
+  ],
+  "si_test_package_common.tombstones_crash_tests.tombstones_crash_tests.StabilityPostTest": [
+    {
+      "ticket": "IDCEVODEV-420649",
+      "error": "type object 'StabilityPostTest' has no attribute 'mtee_tm_stop_cmd'"
+    }
+  ],
+  "si_test_package_common.posttests_trace_load_monitoring_tests.Reads the trace metadata from the csv files and returns average trace load": [
+    {
+      "ticket": "IDCEVODEV-462212",
+      "error": "AssertionError"
+    }
+  ],
+  "coredumper-systemtests.coredumper_crash_tests.Coredumper - Handling Kernal Crash Minidump Multiple": [
+    {
+      "ticket": "IDCEVODEV-438718",
+      "error": "Minidump has not generated"
+    }
+  ],
+  "coredumper-systemtests.coredumper_crash_tests.Coredumper - Coredumper - kernel crash": [
+    {
+      "ticket": "IDCEVODEV-438718",
+      "error": "coredump image not generated"
+    }
+  ],
+  "deletion-handler.factory_reset_si_tests.SYSMAN - DELETIONHANDLER - Trigger Recovery Factory Reset by component crash": [
+    {
+      "ticket": "IDCEVODEV-484554",
+      "error": "Timeout reached in 60s (default is 60s) during SSH command"
+    }
+  ],
+  "partition-manager-systemtests.partman_tests.SYSMAN - PARTMAN - A/B Partition Verification tests (different slot)": [
+    {
+      "ticket": "IDCEVODEV-438721",
+      "error": "Remounting the / partition rw failed"
+    }
+  ],
+  "failure.failure.Failure.runTest:": [
+    {
+      "ticket": "IDCEVODEV-462297",
+      "error": "No module named 'helper_dlt'"
+    }
+  ],
+  "system-functions.system_functions_certificates_tests": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "don't match expected: E_OK."
+    }
+  ],
+  "system-functions.Upload certificates from another ECU (PKI consistency)": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "don't match expected: E_OK."
+    }
+  ],
+  "system-functions.Call Start Check without uploading certs": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "don't match expected: E_OK."
+    }
+  ],
+  "system-functions.Upload empty container": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "don't match expected: E_OK."
+    }
+  ],
+  "system-functions.Upload incomplete certificates (ID certificate deleted)": [
+    {
+      "ticket": "IDCEVODEV-147703",
+      "error": "don't match expected: E_OK."
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job steuern_language": [
+    {
+      "ticket": "IDCEVODEV-429933",
+      "error": "Failure_Prevents_Execution_of_Requested_Action"
+    }
+  ],
+  "system-functions.system_functions_zedis_tests.Execute diagnostic job status_language": [
+    {
+      "ticket": "IDCEVODEV-429933",
+      "error": "Failure_Prevents_Execution_of_Requested_Action"
+    }
+  ],
+  "si_test_package_linuxos.thermal_operating_mode_tests.[SIT_Automated] Verify Thermal Shutdown at 126 C for Thermal Zone 0": [
+    {
+      "ticket": "IDCEVODEV-438372",
+      "error": "Timeout value: 180"
+    }
+  ],
+  "si_test_package_linuxos.thermal_operating_mode_tests.[SIT_Automated] Verify Thermal Shutdown at 126 C for Thermal Zone 1": [
+    {
+      "ticket": "IDCEVODEV-438372",
+      "error": "Timeout value: 180"
+    }
+  ],
+  "si_test_package_linuxos.thermal_operating_mode_tests.[SIT_Automated] Verify Thermal Shutdown at 126 C for Thermal Zone 2": [
+    {
+      "ticket": "IDCEVODEV-475256",
+      "error": "Timeout value: 180"
+    }
+  ],
+  "si_test_package_linuxos.thermal_operating_mode_tests.[SIT_Automated] Verify Thermal Shutdown at 126 C for Thermal Zone 3": [
+    {
+      "ticket": "IDCEVODEV-438372",
+      "error": "Timeout value: 180"
+    }
+  ],
+  "0_targetmanager.tests.flash_mcu": [
+    {
+      "ticket": "IDCEVODEV-473701",
+      "error": "MCU flashing failed with FFP"
+    }
+  ],
+  "si_test_package_system_software.system_software_already_automated_tests.[SIT_Automated] Verify able to create kernel panic on Android side": [
+    {
+      "ticket": "IDCEVODEV-481086",
+      "error": "Timeout of 120s reached"
+    }
+  ],
+  "si_test_package_system_software.lk_shell_already_automated_tests.[SIT_Automated] Verify hypervisor is logging early information into serial console": [
+    {
+      "ticket": "IDCEVODEV-490381",
+      "error": "increase log level were not found"
+    }
+  ],
+  "si_test_package_system_software.system_software_already_automated_tests.[SIT_Automated] Verify the shutdown of whole system": [
+    {
+      "ticket": "IDCEVODEV-499451",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "si_test_package_rtos.posttests_sfi_error_tests.[SIT_Automated] Check that there are no SFI related error messages in idcevo_full_trace.dlt": [
+    {
+      "ticket": "IDCEVODEV-497909",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "core-test-suite.posttests_post_recovery_event_tests.test_recovery_event_not_allowed(RecoveryEvent(service='safety_coordinator.service', exit_code=None, crashid='00000000'),)": [
+    {
+      "ticket": "IDCEVODEV-497553",
+      "error": "Service failure"
+    }
+  ],
+  "core-test-suite.posttests_post_recovery_event_tests.test_recovery_event_not_allowed(RecoveryEvent(service='safetyHMI', exit_code=None, crashid='00000000'),)": [
+    {
+      "ticket": "IDCEVODEV-497553",
+      "error": "Service failure"
+    }
+  ],
+  "si_test_package_system_software.neural_processing_tests.[SIT_Automated] processing of 2NNM models run simultaneously based on scheduling": [
+    {
+      "ticket": "IDCEVODEV-202018",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[SIT_Automated] Verify I2C Device Detection": [
+    {
+      "ticket": "IDCEVODEV-479684",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "si_test_package_linuxos.variant_support_tests.[SIT_Automated] Verify Kernel Support for All HW Variants": [
+    {
+      "ticket": "IDCEVODEV-479685",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "si_test_package_rtos.rtos_safety_tests.[SIT_Automated] Safety Manager watchdog - IOC | Verify MCU triggers safe state": [
+    {
+      "ticket": "IDCEVODEV-397332",
+      "error": "Need to update the testcase"
+    }
+  ],
+  "si_test_package_basic.search_logs_tests.[SIT_Automated] SFI DLT_Bridge init success": [
+    {
+      "ticket": "IDCEVODEV-505416",
+      "error": "No logs found for pattern"
+    }
+  ],
+  "si_test_package_navigation_row.verify_gnss_tests.[SIT_Automated] BMW_IDCEvo_I290 _ GNSS input log frequency is set to 10 Hz": [
+    {
+      "ticket": "IDCEVODEV-490604",
+      "error": "Test need to update"
+    }
+  ],
+  "lifecycle-components-systemtests.lifecycle_nsm_post_tests.Lifecycle - Post tests - NSM/NSG shutdown error messages": [
+    {
+      "ticket": "IDCEVODEV-496056",
+      "error": "ClientState pending found on lifecycles"
+    }
+  ],
+  "si_test_package_phud.instrument_cluster_functions_tests.[SIT_Automated] Verify if IC-Functions is running properly after cold-boot": [
+    {
+      "ticket": "IDCEVODEV-486312",
+      "error": "did not complete the boot procedure"
+    }
+  ],
+  "si_test_package_interior_light.ambient_light_tests.[SIT_Automated] permanent ambientlight active - Light stack runs_Component integration test_set_api": [
+    {
+      "ticket": "IDCEVODEV-518052",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_rtos.posttests_ioc_dlt_tests.Test if ioc dlt has error messages using raw dlt": [
+    {
+      "ticket": "IDCEVODEV-484242",
+      "error": "need to update testcase"
+    }
+  ],
+  "si_test_package_linuxos.verify_cpu_freq_tests.[SIT_Automated] Verify Default CPU Frequency after Bootup is Set to 'Boost Mode'": [
+    {
+      "ticket": "IDCEVODEV-517056",
+      "error": "update testcase"
+    }
+  ],
+  "si_test_package_linuxos.verify_cpu_freq_tests.[SIT_Automated] Verify setting of CPU frequency for 'Boost Mode' (e.g. 2112 MHz) to all clusters": [
+    {
+      "ticket": "IDCEVODEV-517056",
+      "error": "update testcase"
+    }
+  ],
+  "si_test_package_linuxos.verify_setting_temp_tests.[SIT_Automated] Verify Setting of Temperature Value for All Thermal Zones Through emul_temp sysfs Interface": [
+    {
+      "ticket": "IDCEVODEV-438372",
+      "error": "invalid literal"
+    }
+  ],
+  "si_test_package_rtos.rtos_safety_tests.[SIT_Automated] Verify SFI and MCU uses the Safety UART for functional safety reasons": [
+    {
+      "ticket": "IDCEVODEV-478810",
+      "error": "Expected refresh time doesnt match"
+    }
+  ],
+  "si_test_package_rtos.rtos_safety_tests.[SIT_Automated] Verify Trigger Safety Watchdog failure and Check no Periodic logs on MCU DLT": [
+    {
+      "ticket": "IDCEVODEV-478810",
+      "error": "Expected refresh time doesnt match"
+    }
+  ],
+  "si_test_package_system_software.inter_vm_communication_tests.[SIT_Automated] Verify VRPC device is operational": [
+    {
+      "ticket": "IDCEVODEV-517547",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_linuxos.spi_bus_config_tests.[SIT_Automated] Verify SPI Bus Configuration": [
+    {
+      "ticket": "IDCEVODEV-361375",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_system_software.inter_vm_communication_tests.[SIT_Automated] [RSE]Verify the standalone start of IVI (Android)": [
+    {
+      "ticket": "IDCEVODEV-488620",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[SIT_Automated] Verify Early-Cluster started and working properly after 10 sec after cold-boot": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_rtos.rtos_safety_tests.[SIT_Automated] Verify SFI and MCU uses the Safety UART for functional safety reasons": [
+    {
+      "ticket": "IDCEVODEV-478810",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_linuxos.thermal_operating_mode_tests.[SIT_Automated] Verify Reading of Temperature Value for all Thermal Zones Through sysfs in SYS VM": [
+    {
+      "ticket": "IDCEVODEV-438372",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_navigation_row.verify_gnss_tests.[SIT_Automated] BMW_IDCEvo_I290 _ GNSS input log frequency is set to 10 Hz": [
+    {
+      "ticket": "IDCEVODEV-490604",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[SIT_Automated] Verify speed in main and secondary dials": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Testcase needs to update"
+    }
+  ],
+  "si_test_package_phud.phud_ui_tests.[SIT_Automated] Verify Android Cluster App started and working properly": [
+    {
+      "ticket": "IDCEVODEV-421008",
+      "error": "Testcase needs to update"
+    }
+  ] 
+}

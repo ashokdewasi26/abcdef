@@ -1,0 +1,440 @@
+version: "2.0"
+
+repositories:
+  functional_tests:
+    type: static_assign
+    folder: Functional tests
+    key: categorization
+    value: functional
+    subfolders: &_jira_subfolder
+      jira_meta_data_feature_cluster:
+        type: dynamic_assign
+        key: ["traceability", "idcevo", "FEATURE"]
+        fetch_jira_meta_data_feature_cluster: true
+        subfolders:
+          jira_feature_summary:
+            type: dynamic_assign
+            key: ["traceability", "idcevo", "FEATURE"]
+            fetch_jira_issue_summary: true
+            subfolders:
+              jira_subfeature_summary:
+                type: dynamic_assign
+                key: ["traceability", "idcevo", "SUBFEATURE"]
+                fetch_jira_issue_summary: true
+
+  integration_tests:
+    type: static_assign
+    folder: Integration Tests
+    key: categorization
+    value: integration
+    subfolders:
+      domain:
+        type: dynamic_assign
+        key: domain
+        subfolders:
+          component:
+            type: dynamic_assign
+            key: component
+
+  non_functional_tests:
+    type: static_assign
+    folder: Non-Functional Tests
+    key: categorization
+    value: non-functional
+    subfolders: {}
+
+  duplicates:
+    type: static_assign
+    folder: Duplicated test SIT automation
+    key: duplicates
+    subfolders: {}
+
+jobs:
+  .base: &base
+    target: idcevo
+    project_key: IDCEVODEV
+    test_plan_key: <Please define it for each job>
+    build_env_info: &base_build_env_info
+      env_file: 'build\.env'
+      timestamp_files:
+        - 'build\.env'
+        - test_results_simple.html
+      version_info_xml: "^targetmanager.*_test_results.xml"
+      ignore_gl_version_parse_error: False
+    test_exec_render_info: &base_test_exec_render_info
+      summary_template: "{target_upper} - {job} - {gl_version_short}"
+      environments_template:
+        - build-snapshot
+      revision_template: "{gl_version_short}"
+      description_template: &base_description_template
+        job_template: |
+          Job: {job_url}
+          Job build tag: {job_build_tag}
+          Console log: {job_output}
+          Result html: {result_html}
+          Change url: {change_url}
+        env_template: "{build_env}"
+        extra_template: ""
+    patch_test_run_todo: true
+    patch_test_run_todo_status: "ABORTED"
+    update_test:
+      policy: "sequential"
+      request_duration: 0.1
+      link_test:
+        enable: true
+        internal_link:
+          relationship: Test
+      link_issues: true
+    custom_fields:
+      - name: "Meta Data"
+        fill_type: meta_data_assign
+        item_names:
+          - "component"
+      - name: "Variant 3"
+        fill_type: fixed_value
+        value: "Already automated"
+        option_check: true
+      - name: "Priority"
+        fill_type: mapping
+        value_mapping:
+          "1": "High"
+          "2": "Medium"
+          "3": "Low"
+      - name: "Categorization"
+        fill_type: mapping
+        junit_metadata_field: testtype
+        value_mapping:
+          "functional": "SWE.6"
+          "non-functional": "SYS.4"
+          "integration": "SWE.5"
+      - name: "Project Specific Labels"
+        fill_type: mapping
+        junit_metadata_field: asil
+        value_mapping:
+          "QM": "ASIL-QM"
+          "A": "ASIL-A"
+          "B": "ASIL-B"
+          "C": "ASIL-C"
+          "D": "ASIL-D"
+          "A(B)": "ASIL-A(B)"
+          "A(C)": "ASIL-A(C)"
+          "A(D)": "ASIL-A(D)"
+          "B(C)": "ASIL-B(C)"
+          "B(D)": "ASIL-B(D)"
+          "C(D)": "ASIL-C(D)"
+      - name: "Domain"
+        fill_type: copy
+        junit_metadata_field: domain
+      - name: "Other Text"
+        fill_type: copy
+        junit_metadata_field: othertext
+        option_check: false
+      - name: "Security Level"
+        fill_type: fixed_value
+        value: "Default"
+        option_check: true
+      - name: "Team"
+        fill_type: copy
+        junit_metadata_field: team
+    junit_xml_results: &_common_junit_xml_results
+      dltlyse_live:
+        filename: "posttest_live_[a-zA-Z0-9]*_test_results.xml"
+      posttest:
+        filename: '^posttest_targetmanager.*_results_filtered\.xml'
+      coredump_status:
+        filename: "convert_dumps_results.xml"
+    upload_skipped_test_cases: false
+  base_si_tests_idcevo: &base_si_tests_idcevo
+    <<: *base
+    junit_xml_results:
+      idcevo:
+        filename: '^targetmanager.*_results_filtered\.xml'
+      <<: *_common_junit_xml_results
+    attachment:
+      prefix_template: "idcevo_{job}_{job_build_tag}_{build_short}"
+      paths:
+        - "*.log"
+        - "*.xml"
+        - "*.json"
+      archive_filename: "simple_test_result.tar.bz2"
+
+  base_si_tests_idcevo_with_dlt_attachment: &base_si_tests_idcevo_with_dlt_attachment
+    <<: *base_si_tests_idcevo
+    attachment:
+      prefix_template: "idcevo_{job}_{job_build_tag}_{build_short}"
+      paths:
+        - "*.log"
+        - "split_dlt_files.tar.gz"
+        - "serial_console_IOC.log_non_verbose.dlt"
+        - "*.xml"
+        - "*.json"
+      archive_filename: "simple_test_result.tar.bz2"
+
+
+# IDCEVO - Mainline SI jobs
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-77302
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-rtos-crash-cases:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-145361
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-15657
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-15682
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-28333
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag:
+    <<: *base_si_tests_idcevo_with_dlt_attachment
+    test_plan_key: IDCEVODEV-45506
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-47733
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-51789
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-68689
+
+  ta-idcevo-hw-mtf3-IDCevo-SI-PDX-flashing-stress:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-74451
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-10943
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-88949
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-120045
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-155143
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-production:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-161687
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated-domains:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-216232
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains-sys-sw:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-275028
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-NA:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-291778
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-G:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-321257
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-GED4K:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-302014
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-boot-stability:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-364486
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle-domains:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-381072
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-STR:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-438810
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-STR-SIT-Automated:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-443812
+
+# IDCEVO SP21 - Mainline SI jobs
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301746
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-performance:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301752
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-stability:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301756
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301757
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-android:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-393637
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-long:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301760
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-diag:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301764
+
+  ta-idcevo-hw-mtf3-IDCevo-SP21-SI-PDX-flashing-stress:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-301776
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated-domains:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-336386
+
+  ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-Multi-Coding-U:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-517404
+
+# IDCEVO TRAAS - Mainline SI jobs
+
+  si-idcevo-ee25-traas-SI-performance:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-260050
+
+  si-idcevo-ee25-traas-SI-staging:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279763
+
+  si-idcevo-ee25-traas-SI-android:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-322039
+
+  ee25-traas-Rack-Health-CTW-CR-001:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-Rack-Health-CTW-CR-002:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-Rack-Health-CTW-CR-003:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-Rack-Health-CTW-CR-004:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-Rack-Health-CTW-CR-005:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-Rack-Health-CTW-CR-006:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-279767   # traas-SI-dummy
+
+  ee25-traas-SI-Perso:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-379405
+
+  ee25-traas-SI-Spider:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-491599
+
+# IDCEVO - PU2507 SI jobs
+  idcevo-pu2507-userdebug-SIT-Automated:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409580
+
+  idcevo-pu2507-userdebug-SI-performance:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409141
+
+  idcevo-pu2507-userdebug-SI-performance-monitoring:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409581
+
+  idcevo-pu2507-user-SI-kpi-reboots:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409583
+
+  idcevo-pu2507-user-SI-lifecycle:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409585
+
+  idcevo-pu2507-user-SI-long:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409586
+
+  idcevo-pu2507-user-SI-stability:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409587
+
+  idcevo-pu2507-userdebug-SI-diag:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409589
+
+  idcevo-pu2507-userdebug-SI-android:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409590
+
+  idcevo-pu2507-user-SI-PDX-flashing-stress:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409591
+
+  idcevo-pu2507-user-SI:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409593
+
+  idcevo-pu2507-user-SI-production:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409595
+
+  idcevo-pu2507-user-SI-Multi-Coding-NA:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-409596
+
+  idcevo-pu2507-userdebug-SI-staging:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-28333
+
+  idcevo-pu2507-user-SI-STR:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-438815
+
+  idcevo-pu2507-user-STR-SIT-Automated:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-443825
+
+  idcevo-pu2507-userdebug-SI-SIT-Automated-domains:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-515768
+
+# IDCEVO TRAAS - PU2507 SI jobs
+  si-idcevo-pu2507-ee25-traas-SI-performance:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-438460
+
+  si-idcevo-pu2507-ee25-traas-SI-staging:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-438481
+
+  si-idcevo-pu2507-ee25-traas-SI-android:
+    <<: *base_si_tests_idcevo
+    test_plan_key: IDCEVODEV-439686

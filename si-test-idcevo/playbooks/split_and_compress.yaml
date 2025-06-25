@@ -1,0 +1,64 @@
+- name: Split full dlt trace file into smaller ones
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Define test artifacts results path
+      stat:
+        path: "{{ zuul_logs_dir }}/test-artifacts/results"
+      register: test_artifacts_results_path
+
+    - name: Split full dlt trace file into smaller ones
+      block:
+        - name: Find DLT file in a folder
+          find:
+            paths: "{{ zuul_logs_dir }}/test-artifacts/results/"
+            patterns: "{{ dlt_file_pattern }}"
+            use_regex: yes
+          register: found_files
+
+        - name: Display the found files
+          debug:
+            var: item.path
+          loop: "{{ found_files.files }}"
+
+        - name: Create a directory to save new files
+          file:
+            path: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+            state: directory
+
+        - name: Split the DLT file into smaller parts
+          shell: |
+            split -b {{dlt_data_chunks }}m -d --additional-suffix .dlt {{ found_files.files[0].path }} split_dlt_file
+          args:
+            chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+
+        - name: Import the role to install dlt tools
+          import_role:
+            name: install-dlt-tools
+
+        - name: Find DLT split files in a folder
+          find:
+            paths: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+            patterns: "split_dlt_file*"
+            use_regex: yes
+          register: found_split_files
+
+        - include_tasks: dlt_timestamp.yaml
+          loop: "{{ found_split_files.files }}"
+
+        - name: Compress the DLT files
+          archive:
+            path: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/split_dlt_file*.dlt"
+            dest: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/split_dlt_files.tar.gz"
+            format: gz
+          when: compress_dlt_files|default(false)
+
+        - name: Remove the files after compression
+          shell: |
+            rm split_dlt_file*.dlt
+            rm tmp_file.dlt
+          args:
+            chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+          when: compress_dlt_files|default(false)
+
+      when: split_full_dlt_file|default(false) and test_artifacts_results_path.stat.exists

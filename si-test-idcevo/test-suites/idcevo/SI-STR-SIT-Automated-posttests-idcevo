@@ -1,0 +1,4 @@
+si-test-idcevo/si_test_package_common
+!!si-test-idcevo/si_test_package_common/posttests/posttests_trace_load_monitoring_tests.py
+si-test-idcevo/si_test_package_basic
+si-test-idcevo/si_test_package_performance/posttests/str_kpi_csv_postprocessing_tests.py

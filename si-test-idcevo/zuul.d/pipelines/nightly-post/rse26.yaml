@@ -1,0 +1,18 @@
+- project:
+    nightly-post: # This pipeline is build triggered, meaning when a new tag is available
+      jobs:
+        - rse_tag_trigger_mainline
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI: &rse26_upload_jira
+            dependencies:
+              - rse_tag_trigger_mainline
+            vars:
+              artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+              enable_jira_xrayctl_upload: true
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-stability: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-long: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-performance: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-SIT-Automated: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-diag: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-SIT-Automated-domains: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-rse26-SI-PDX-flashing-stress: *rse26_upload_jira
+        - ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-android: *rse26_upload_jira

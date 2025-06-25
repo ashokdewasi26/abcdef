@@ -1,0 +1,18 @@
+- project:
+    nightly-late: # This pipeline is executed at 4:00 UTC.
+      jobs:
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-performance: &idcevo_upload_metrics_jira
+            vars:
+              kpi_upload: true
+              enable_jira_xrayctl_upload: true
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated: &idcevo_upload_jira
+            vars:
+              enable_jira_xrayctl_upload: true
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-long: *idcevo_upload_jira # Not running due to job reduction IDCEVODEV-448568
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-stability: *idcevo_upload_jira # Not running due to job reduction IDCEVODEV-448568
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-diag: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-IDCevo-SP21-SI-PDX-flashing-stress: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-android: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-SIT-Automated-domains: *idcevo_upload_jira
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SP21-SI-Multi-Coding-U: *idcevo_upload_jira

@@ -1,0 +1,55 @@
+jira_url: "https://jira.cc.bmwgroup.net/"
+test_plans:
+  # RSE26
+  - issue: "IDCEVODEV-139554"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI"
+
+  - issue: "IDCEVODEV-139556"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-stability"
+
+  - issue: "IDCEVODEV-151513"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-long"
+
+  - issue: "IDCEVODEV-143702"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-performance"
+
+  - issue: "IDCEVODEV-139555"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-SIT-Automated"
+
+  - issue: "IDCEVODEV-166897"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-diag"
+
+  - issue: "IDCEVODEV-216242"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-SIT-Automated-domains"
+
+  - issue: "IDCEVODEV-277506"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE26-SI-PDX-flashing-stress"
+
+  - issue: "IDCEVODEV-495913"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "RSE-SI-android"
+
+publisher:
+  confluence:
+    publish: true
+    space_key: "idcevo"
+    parent_page_name: "RSE26 SIT results"
+    title: "RSE26 SIT results"
+    confluence_wiki: "https://confluence.cc.bmwgroup.net/"

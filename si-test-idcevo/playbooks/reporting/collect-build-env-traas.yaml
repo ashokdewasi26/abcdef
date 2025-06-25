@@ -1,0 +1,137 @@
+- name: Collect build information
+  hosts: all
+  roles:
+    - role: zuul-set-log-url
+  tasks:
+    - name: Check if results exist
+      stat:
+        path: "{{ test_artifacts_out_dir }}"
+      register: test_results_exists
+
+    - name: Define prepare action log
+      stat:
+        path: "{{ test_artifacts_out_dir }}/action_prepare.log"
+      register: action_prepare_path
+
+    - name: Check if product type log exists
+      stat:
+        path: "{{ test_artifacts_out_dir }}/testrun/test_{{ product_type }}.log"
+      register: product_type_log
+
+    - block:
+        - name: Get image release info
+          shell:
+            cmd: grep -G 'Preparing workspace for.*for branch' '{{ test_artifacts_out_dir }}'/action_prepare.log
+          register: workspace_details
+
+        - name: Extract branch and gl version
+          set_fact:
+            gl_version: "{{ workspace_details.stdout | regex_findall('.*([0-9]{2}w[0-9]{2}.[0-9]-[0-9]).*') | first }}"
+            branch: "{{ workspace_details.stdout | regex_findall('for branch (.*) and gl_folder') | first }}"
+
+        - name: Get hardware revision
+          shell:
+            cmd: grep -m 1 -o "hardware_revision='[^']*'" "{{ test_artifacts_out_dir }}/testrun/test_{{ product_type }}.log" | awk -F"'" '{print $2}'
+          register: hardware_revision_info
+
+        - name: assert that hardware revision is known
+          vars:
+            supported_revisions:
+              - B1
+              - B2
+              - B3
+              - B4
+              - C1
+              - D1
+          assert:
+            that:
+              - 'hardware_revision_info.stdout in supported_revisions'
+            fail_msg: "the hardware revision is not recognized: '{{ hardware_revision_info.stdout }}'"
+
+        - name: Set hardware revision
+          set_fact:
+            hardware_revision: "{{ product_type }}_{{ hardware_revision_info.stdout | default('hw_unkn') }}"
+
+        - name: Get hardware variant
+          shell:
+            cmd: grep -m 1 -o "target_serial_no='HBB[0-9]\{1,\}" "{{ test_artifacts_out_dir }}/testrun/test_{{ product_type }}.log" | awk -F"target_serial_no='HB" '{print $2}'
+          register: hardware_variant_info
+
+        - name: assert that hardware variant is known
+          vars:
+            supported_variants:
+              # https://confluence.cc.bmwgroup.net/display/idcevo/Hardware+Variants+Overview+-+Simplified
+              # IDCEVO SP25
+              - B504
+              - B505
+              - B506
+              # IDCEVO SP21
+              - B538
+              - B539
+              - B542
+              - B543
+              - B544
+              - B545
+              # CDE
+              - B541
+              # RSE26
+              - B513
+          assert:
+            that:
+              - 'hardware_variant_info.stdout in supported_variants'
+            fail_msg: "the hardware variant is not recognized: '{{ hardware_variant_info.stdout }}'"
+
+        - name: Set hardware variant
+          set_fact:
+            hardware_variant: "{{ hardware_variant_info.stdout | default('variant_unknown') }}"
+
+        - name: load the jenkins job info env file
+          slurp:
+            src: "{{ test_artifacts_out_dir }}/jenkins_job_info.env"
+          register: jenkins_env_raw
+
+        - name: Parse the jenkins env file
+          set_fact:
+            jenkins_env: "{{ ('{' + (jenkins_env_raw.content | b64decode).split('\n') | select |
+            map('regex_replace', '([^=]*)=(.*)', '\"\\1\": \"\\2\"') | join(',') + '}') | from_json }}"
+          when: jenkins_env_raw is succeeded
+
+        - name: Set the worker name fact
+          set_fact:
+            traas_worker_name: "{{ jenkins_env.traas_rack }}"
+
+        - name: Create dispatcher metrics for metric collector hostname
+          become: yes
+          copy:
+            dest: "{{ zuul_logs_dir }}/results/testrun/dispatcher_metrics.json"
+            content: "{{ content_json | to_json }}"
+          vars:
+            content_json:
+              worker_name: "{{ traas_worker_name | regex_replace(\"'\", '') | regex_replace(' ', '-') }}"
+
+        - name: Collect job information to env file
+          become: yes
+          copy:
+            content: |
+              ansible_host={{ ansible_facts['nodename'] | default('') }}
+              artifacts_url={{ zuul_log_url }}test-artifacts/
+              build={{ zuul.build }}
+              build_short={{ zuul.build[0:7] }}
+              build_url={{ codecraft.base_url }}/zuul/t/{{ zuul.tenant }}/build/{{ zuul.build }}
+              change_url={{ zuul.change_url | default('') }}
+              gl_version={{ gl_version }}
+              job={{ zuul.job }}
+              job_output={{ zuul_log_url  }}job-output.txt
+              job_url={{ codecraft.base_url }}/zuul/t/{{ zuul.tenant }}/build/{{ zuul.build }}
+              product_type={{ product_type }}
+              result_html={{ zuul_log_url  }}results/results.html
+              test_suite={{ test_suite }}
+              hardware_revision={{ hardware_revision }}
+              hardware_variant={{ hardware_variant }}
+              branch={{ branch }}
+              job_build_tag={{ zuul.build[0:7] }}
+            dest: "{{ zuul_logs_dir }}/results/testrun/build.env"
+            mode: "0644"
+
+      # Means TRAAS was schedule and started preparing and tests ran
+      when: action_prepare_path.stat.exists and product_type_log.stat.exists

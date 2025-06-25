@@ -1,0 +1,28 @@
+{
+    "extractors": [
+      {
+        "type": "SSHExtractor",
+        "name": "node0 bootlog",
+        "command": "cat /proc/dram_bootlog",
+        "output_file": "node0_bootlog.txt"
+      },
+      {
+        "type": "SSHExtractor",
+        "name": "hypervisor logs",
+        "command": "head -n 100 /dev/vlx-history",
+        "output_file": "hypervisor_history.txt"
+      },
+      {
+        "type": "SSHExtractor",
+        "name": "Disk usage monitoring",
+        "command": "df -kP",
+        "output_file": "disk_usage_monitoring.txt"
+      },
+      {
+        "type": "ADBExtractor",
+        "name": "Android properties",
+        "command": ["adb", "wait-for-device", "shell", "getprop"],
+        "output_file": "android_properties.txt"
+      }
+    ]
+  }

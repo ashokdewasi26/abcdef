@@ -1,0 +1,20 @@
+jira_url: "https://jira.cc.bmwgroup.net/"
+test_plans:
+  # TRAAS PU2507
+  - issue: "IDCEVODEV-438460"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-pu2507-userdebug-SI-performance-traas"
+
+  - issue: "IDCEVODEV-439686"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-pu2507-userdebug-SI-android-traas"
+
+publisher:
+  confluence:
+    publish: true
+    space_key: "idcevo"
+    parent_page_name: "TRAAS PU2507 results"
+    title: "TRAAS PU2507 results"
+    confluence_wiki: "https://confluence.cc.bmwgroup.net/"

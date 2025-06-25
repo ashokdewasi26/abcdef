@@ -1,0 +1,122 @@
+- name: Schedule traas task
+  hosts: all
+  tasks:
+    - name: install dependencies in ta.venv virtual environment
+      shell: |
+        python3 -m venv "{{ ta_src_dir }}"/.ta_venv
+        "{{ ta_virtualenv_path }}"/bin/python -m pip install filelock
+        "{{ ta_virtualenv_path }}"/bin/python -m pip install --index-url=https://common.artifactory.cc.bmwgroup.net/artifactory/api/pypi/software-factory-pypi-public/simple htmlresults
+        "{{ ta_virtualenv_path }}"/bin/python -m pip install python-socketio==5.7.1 requests>=2.22.0 tenacity==8.2.3 python-socketio[client]
+
+    # This script uses TRAAS credentials stored in /etc/environment
+    # Credentials are copied to Zuul VM through a playbook in zuul-trusted repo
+    # Environment variables used are: TRAAS_USERNAME & TRAAS_PASSWORD
+
+    - name: Create custom repositories directory
+      file:
+        path: "{{ zuul_logs_dir }}/{{ test_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Export custom test dir
+      command: >
+        cp -r "{{ export_test_dir }}" "{{ test_dir }}"
+      environment:
+        BUILD_TAG: "{{ zuul.job }}_{{ zuul.build }}"
+        WORKSPACE: "{{ project_workspace_dir }}"
+      args:
+        chdir: "{{ zuul_logs_dir }}"
+      become: true
+      when: export_test_dir | length > 0
+
+    - name: Copy extra files to custom test dir
+      copy:
+        src: "{{ item }}"
+        dest: "{{ zuul_logs_dir }}/{{ test_dir }}/extrafiles/"
+        remote_src: yes
+      loop: "{{ extra_files }}"
+      when: extra_files is defined and extra_files | length > 0
+
+    - name: Find compressed repos inside test-execution-environment
+      find:
+        paths: "{{ zuul_logs_dir }}/build-tee/build/test-execution-environment"
+        patterns: '*.tar.gz'
+      register: compressed_repos
+
+    - name: Extract repos to zuul_logs_dir
+      unarchive:
+        src: "{{ item.path }}"
+        dest: "{{ zuul_logs_dir }}/{{ test_dir }}"
+        remote_src: yes
+      become: true
+      loop: "{{ compressed_repos.files }}"
+
+    - name: run the TRAAS scheduler script
+      command: >
+        "{{ ta_virtualenv_path }}"/bin/python "{{ traas_repo_dir }}"/run_traas_session.py
+      environment:
+        BUILD_TAG: "{{ zuul.job }}_{{ zuul.build }}"
+        WORKSPACE: "{{ project_workspace_dir }}"
+        branch: "{{ branch }}"
+        branch_RSE: "{{ branch_rse }}"
+        DURATION: "{{ duration }}"
+        GL_FOLDER: "{{ gl_folder }}"
+        GL_FOLDER_RSE: "{{ gl_folder_rse }}"
+        RACK_TAGS: "{{ rack_tags }}"
+        FLASH_DEV: "{{ flash_dev }}"
+        FLASH_DEV_RSE: "{{ flash_dev_rse }}"
+        FLASH_DEV_FULL: "{{ flash_dev_full }}"
+        FLASH_DEV_FULL_RSE: "{{ flash_dev_full_rse }}"
+        FLASH_PDX: "{{ flash_pdx }}"
+        FLASH_PDX_RSE: "{{ flash_pdx_rse }}"
+        INSTALL_TARGET_PACKAGES: "{{ install_target_packages }}"
+        RUN_MTEE_CUSTOM: "{{ run_mtee_custom }}"
+        RUN_MTEE_CUSTOM_RSE: "{{ run_mtee_custom_rse }}"
+        TEST_DIR: "{{ test_dir }}"
+        TEST_SCRIPTS: "{{ test_scripts }}"
+        RUN_MTEE_SUITE: "{{ run_mtee_suite }}"
+        TEST_SUITE: "{{ test_suite }}"
+        TEST_SUITE_RSE: "{{ test_suite_rse }}"
+        RUN_MTEE_SUITE_RSE: "{{ run_mtee_suite_rse }}"
+        test_packages: "{{ test_packages }}"
+        test_packages_rse: "{{ test_packages_rse }}"
+        EXTRA_ARGS: "{{ extra_args }}"
+        EXTRA_ARGS_RSE: "{{ extra_args_rse }}"
+        RUN_FLASH_STRESS: "{{ run_flash_stress }}"
+        RUN_FLASH_STRESS_RSE: "{{ run_flash_stress_rse }}"
+        OLD_GL: "{{ old_gl }}"
+        OLD_GL_BRANCH: "{{ old_gl_branch }}"
+        RUN_FLASH_ENDURANCE: "{{ run_flash_endurance }}"
+        RUN_FLASH_ENDURANCE_RSE: "{{ run_flash_endurance_rse }}"
+        ENDURANCE_ITERATIONS: "{{ endurance_iterations }}"
+        EXTRA_ACTIONS: "{{ extra_actions }}"
+        keep_running: "{{ keep_running }}"
+        EXTRA_PREPARE_ACTIONS: "{{ extra_prepare_actions }}"
+        EXECUTOR_VERSION: "{{ executor_version }}"
+        WITH_PHONESIMU: "{{ with_phonesimu }}"
+        RUN_INSTRUMENTED_TESTS: "{{ run_instrumented_tests }}"
+        APK_FILE: "{{ apk_file }}"
+        TEST_APK_FILE: "{{ test_apk_file }}"
+        INSTALL_CUSTOM_REPOS: "{{ install_custom_repos }}"
+        # Limited to 50 characters due to TRAAS database configuration
+        SESSION_NAME: "{{ (zuul.job ~ '_' ~ zuul.change_url.split('/')[-1] ~ '_' ~ session_name)[:50] }}"
+      args:
+        chdir: "{{ zuul_logs_dir }}"
+      become: true
+
+    - name: parse PDX flash results file flashing_results.xml
+      block:
+        - stat:
+            path: "{{ zuul_logs_dir }}/results/initial_flash/flashing_results.xml"
+          register: result_file_check
+
+        - fail:
+            msg: "Something went terribly wrong. PDX flashing could not be started"
+          when: not result_file_check.stat.exists
+
+        - shell: |
+            "{{ ta_virtualenv_path }}"/bin/python \
+            "{{ src_dir }}"/testautomation/reporting/junit_result_parser.py \
+            --junit-xml "{{ zuul_logs_dir }}"/results/initial_flash/flashing_results.xml
+          when: result_file_check.stat.exists
+      when: flash_pdx|bool

@@ -1,0 +1,40 @@
+- name: Install required dependencies
+  apt:
+    name:
+      - git
+      - build-essential
+      - cmake
+      - libsystemd-dev
+    update_cache: yes
+  become: true
+
+- name: Clone the dlt-daemon repository
+  git:
+    repo: "{{ dlt_daemon_url }}"
+    dest: /tmp/dlt-daemon
+    version: "{{ dlt_daemon_version }}"
+    force: yes
+
+- name: Create build directory
+  file:
+    path: /tmp/dlt-daemon/build
+    state: directory
+
+- name: Build the dlt-daemon
+  shell: |
+    cd /tmp/dlt-daemon/build
+    cmake ..
+    make
+  changed_when: true
+
+- name: Install the dlt tools
+  command: make install
+  args:
+    chdir: /tmp/dlt-daemon/build
+  changed_when: true
+  become: true
+
+- name: Run ldconfig after installing shared libraries
+  command: ldconfig
+  changed_when: true
+  become: true

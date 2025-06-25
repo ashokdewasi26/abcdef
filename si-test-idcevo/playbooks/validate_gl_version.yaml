@@ -1,0 +1,86 @@
+- hosts: all
+  vars:
+    backflash_limit: "24w46.2-1"
+    reason: >-
+          According to the I&K updates this build cannot be flashed anymore due to a software break.
+          Flashing with this build would brick the sample.
+          Aborted the run.
+    gl_regex: '([0-9]+)w([0-9]+)\.([0-9]+)-([0-9]+)'
+    build_is_valid: false
+    url: "{{ pba[aosp_build_type_ta]['flashfiles_url_system_assembly'] }}"
+  tasks:
+    - name: Logs url
+      debug:
+        msg: "Current GL elements: {{ url }}"
+
+    # Dirty builds will not match the pattern and will be marked as not "released"
+    - name: Check if build matches pattern
+      set_fact:
+        released_gl: "{{ (url | regex_findall(gl_regex) ) | default([]) }}"
+
+    - name: Validate build can be flashed
+      block:
+
+        - name: Extract GL elements from the backflash limit
+          set_fact:
+            backflash_limit: "{{ (backflash_limit | regex_findall(gl_regex) | first | list) }}"
+
+        - name: Extract GL elements from the build artifacts
+          set_fact:
+            current_build_elements: "{{ released_gl | first | list }}"
+
+        - name: Check if Year is older
+          fail:
+            msg: >-
+              Current GL {{ current_build_elements }} is older than
+              {{ backflash_limit }} (Year comparison)
+              {{ reason }}
+          when: current_build_elements[0] | int < backflash_limit[0] | int
+
+        - name: Check if Year is younger
+          set_fact:
+            build_is_valid: true
+          when: not build_is_valid and current_build_elements[0] | int > backflash_limit[0] | int
+
+        - name: Check if Week is older
+          fail:
+            msg: >-
+              Current GL {{ current_build_elements }} is older than
+              {{ backflash_limit }} (Week comparison)
+              {{ reason }}
+          when: not build_is_valid and current_build_elements[1] | int < backflash_limit[1] | int
+
+        - name: Check if Week is younger
+          set_fact:
+            build_is_valid: true
+          when: not build_is_valid and current_build_elements[1] | int > backflash_limit[1] | int
+
+        - name: Check if Day is older
+          fail:
+            msg: >-
+              Current GL {{ current_build_elements }} is older than
+              {{ backflash_limit }} (Day comparison)
+              {{ reason }}
+          when: not build_is_valid and current_build_elements[2] | int < backflash_limit[2] | int
+
+        - name: Check if Day is younger
+          set_fact:
+            build_is_valid: true
+          when: not build_is_valid and current_build_elements[2] | int > backflash_limit[2] | int
+
+        - name: Check if build is older
+          fail:
+            msg: >-
+              Current GL {{ current_build_elements }} is older than
+              {{ backflash_limit }} (Build comparison)
+              {{ reason }}
+          when: not build_is_valid and current_build_elements[3] | int < backflash_limit[3] | int
+
+        - name: Successfully validated versions
+          debug:
+            msg: >-
+              Current GL {{ current_build_elements }} is newer
+              than or equal to the limit to flash ({{ backflash_limit }})
+          when: build_is_valid
+
+      when: backflash_limit is defined and (released_gl | length > 0)

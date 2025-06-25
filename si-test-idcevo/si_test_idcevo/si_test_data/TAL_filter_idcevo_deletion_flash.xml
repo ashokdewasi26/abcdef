@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--TAL filter for IDCEVO allowing swe deletion (used to delete SWFK)-->
+<talfilter>
+    <allEcu>
+        <hwDeinstall action="mustNotBeTreated"/>
+    </allEcu>
+    <ecuFilter>
+        <diagAdr>99</diagAdr>
+        <setting>
+            <blUpdate action="mustNotBeTreated" processClass="all"></blUpdate>
+            <cdDeploy action="mustBeTreated" processClass="all"></cdDeploy>
+            <hwDeinstall action="mustNotBeTreated" processClass="all"></hwDeinstall>
+            <hwInstall action="mustNotBeTreated" processClass="all"></hwInstall>
+            <swDeploy action="mustNotBeTreated" processClass="all">
+                <swDeleteTA action="allowedToBeTreated" processClass="all"/>
+            </swDeploy>
+            <ecuActivate action="allowedToBeTreated"/>
+            <ecuPoll action="allowedToBeTreated"/>
+            <ecuMirrorDeploy processClass="all" action="mustNotBeTreated"/>
+        </setting>
+    </ecuFilter>
+</talfilter>

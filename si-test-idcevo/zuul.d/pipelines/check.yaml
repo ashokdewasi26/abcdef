@@ -1,0 +1,14 @@
+- job:
+    name: run-tox-si
+    parent: run-tox-multipython
+    vars:
+      envlist: ALL
+
+- project:
+    check:
+      jobs:
+        - gitlint
+        - zuullint
+        - shellcheck
+        - run-tox-si
+        - noop

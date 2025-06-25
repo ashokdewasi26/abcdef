@@ -1,0 +1,514 @@
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-base
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-env
+    required-projects:
+      - idcevo/si-test-idcevo
+    pre-run:
+      - playbooks/build-tee-test-config/si-test-run-build-tee.yaml
+      - playbooks/validate_gl_version.yaml
+    vars:
+      vcar_version: "2025.05.07.1" # TEMP_PIN
+      enable_repo_sync: true
+      build_test_suite_folder: "{{ product_type }}"
+      # temporary until https://cc-github.bmwgroup.net/idcevo/meta-idcevo/pull/3330 is merged
+      src_dir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      si_test_idcevo_base_repo: cc-github.bmwgroup.net/idcevo/si-test-idcevo
+      si_test_idcevo_src_dir: |-
+        {{ zuul_root_dir }}/{{ zuul.projects[si_test_idcevo_base_repo].src_dir }}
+      # The chosen test suit will be applied for system tests and posttests, TODO - add plugins when enabled
+      # Example: tee_test_suite: "SI" -> will use "SI-systemtests-idcevo" and "SI-posttests-idcevo"
+      tee_test_suite: "SI"
+      # # TA Staging variables - configurable here but dealt with on TA level, defaults defined on
+      # #  https://cc-github.bmwgroup.net/idcevo/test-automation/blob/master/roles/configure-build-tee/defaults/main.yaml
+      # # Gerrit repos, support refspecs, e.g. "refs/heads/master"
+      # mtee_core_version: ""
+      # mtee_gen22_version: ""
+      # dltlyse_core_version: ""
+      # diagnose_version: ""
+      mtee_apinext_repo_version: "master"
+      # # Github repos, need branch, commit or tag, e.g. "master"
+      # tee_idcevo_version: ""
+      # dlt_version: ""
+      # TEMP_PIN due to changes not in main image (https://cc-github.bmwgroup.net/node0/dltlyse-plugins-gen22/pull/441)
+      dltlyse_plugins_version: "686e84f24a4772581cc6a4077cec7c40deaf9a6c"
+      # SI Staging variables - configurable and dealt with on this repo
+      si_test_idcevo_si_version: "" # This will not install the test-suites and test packages, just installs the repo into the docker
+      sysman_testing_version: ""
+      deletion_handler_version: ""
+      system_telemetry_version: ""
+      partition_manager_version: ""
+      rsu_flasher_tool_version: ""
+      bat_automation_tests_systemsw_version: ""
+      bat_automation_tests_version: ""
+      cde_launcher_app_version: ""
+      rse_launcher_app_version: ""
+      # Flag to install si-test-idcevo test packages and test-suites configured on
+      #  "/playbooks/build-tee-test-config/templates/tests-config.yaml.j2"
+      #  with [si_test_idcevo_si_version] or 'master' by default
+      install_si_tests_idcevo: false
+      # List of collector defined in reportings/vars/collector_suites.yaml
+      collector_suite: "{{ tee_test_suite }}"
+      # Upload results to jira
+      enable_jira_xrayctl_upload: false
+      xrayctl_upload_config_path: "playbooks/reporting/files/job_config_si_idcevo.yaml"
+      mtee_tests_xrayctl_upload_config_path_remote_src: true
+      mtee_tests_xrayctl_upload_config_path: "{{ src_dir }}/{{ xrayctl_upload_config_path }}"
+      # Publish kpi to influx db
+      kpi_upload: false
+      # Appium variables
+      # include_appium: false
+      # appium_server_version: "v1.22.3-p6"
+      # How to test a dirty meta-idcevo image
+      # build_artifacts_file_url: "https://idcevo.artifactory.cc.bmwgroup.net/artifactory/idcevo-platform-build-fg/check/github/idcevo/meta-idcevo/3278/2024-04-16-13-33-06/build_artifacts.yaml"
+      disable_recovery_actions: false
+      # Enable git-lfs
+      has_git_lfs: true
+      # Install mtee-apinext and enable adb log trace
+      enable_adb_trace: true
+      # Split dlt file into smaller chunks
+      split_full_dlt_file: true
+      dlt_data_chunks: 199  # size of files in MB
+      dlt_file_pattern: '.*_full_trace.*\.dlt'  # regex pattern for DLT file
+      compress_dlt_files: true  # Compress the dlt files and clean up
+      enable_job_failure_analyser: true  # Creates overview of failures in zuul-build-result-page
+      mtf_config:
+        queue: idcevo_stable
+    post-run:
+      - playbooks/reporting/collect-build-env.yaml
+      - playbooks/reporting/report-metrics.yaml
+      - playbooks/split_and_compress.yaml
+      - playbooks/filter-tee-xml-reporting.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-base
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI-SIT-Automated"
+      install_si_tests_idcevo: true
+      download_ver_gen: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    parent: sofya-cdh-ingest
+    timeout: 43200 # 12h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-test
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 7200 # 2h
+    vars:
+      tee_test_suite: "SI-kpi-test"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-test
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI"
+      should_prepare_pdx_urls: true
+      rsu_flasher_tool_version: "master"
+      partition_manager_version: "master"
+      sysman_testing_version: "master"
+      disable_recovery_actions: false # This job runs recovery test package, so recovery actions are enabled
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-rtos-crash-cases
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-rtos-crash-cases"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 14400 # 4h
+    vars:
+      tee_test_suite: "SI-performance"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 43200 # 12h
+    vars:
+      tee_test_suite: "SI-stability"
+      job_environment:
+        TCP_TRACE: "false"
+    nodeset:
+      nodes:
+        name: 160gb_storage_nodes
+        label: idcevo-ubuntu2204-16-core
+        # We are overiding this label due to base node only having 80GB of storage and this having 160GB
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability
+    parent: sofya-cdh-ingest
+    timeout: 43200 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-staging"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+      bat_automation_tests_systemsw_version: "si_job_ready"
+      bat_automation_tests_version: "master"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-diag"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-gate-bat
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    irrelevant-files:
+      - ^whitelist/.*
+      - ^skiplist/.*
+    vars:
+      tee_test_suite: "BAT"
+      collector_suite: "SI"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-gate-pdx
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    irrelevant-files:
+      - ^whitelist/.*
+      - ^skiplist/.*
+    vars:
+      tee_test_suite: "PDX"
+      collector_suite: "SI"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 43200 # 12h
+    vars:
+      tee_test_suite: "SI-performance-monitoring"
+      include_appium: true
+      job_environment:
+        TCP_TRACE: "false"
+    nodeset:
+      nodes:
+        name: 160gb_storage_nodes
+        label: idcevo-ubuntu2204-16-core
+        # We are overiding this label due to base node only having 80GB of storage and this having 160GB
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring
+    parent: sofya-cdh-ingest
+    timeout: 43200 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-android"
+      include_appium: true
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains
+    description: |
+      Run the domain test packages that are not run in BAT
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 25200 # 7h
+    vars:
+      tee_test_suite: "SI-domains"
+      bat_automation_tests_systemsw_version: "si_job_ready"
+      bat_automation_tests_version: "master"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains-sys-sw
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-domains
+    timeout: 43200 # 12h
+    vars:
+      tee_test_suite: "SI-domains-sys-sw"
+    nodeset:
+      nodes:
+        name: 160gb_storage_nodes
+        label: idcevo-ubuntu2204-16-core
+        # We are overiding this label due to base node only having 80GB of storage and this having 160GB
+
+- job:
+    name: ta-idcevo-hw-mtf3-IDCevo-SI-PDX-flashing-stress
+    timeout: 43200 # 12h
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "PDX-stress"
+      should_prepare_pdx_urls: True
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 28800 # 8h
+    vars:
+      tee_test_suite: "SI-long"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 28800 # 8h
+    vars:
+      tee_test_suite: "SI-lifecycle"
+      sysman_testing_version: "master"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+# This job runs one test which is based on "generic_dlt_kpi_tests.py", however it performs several reboots, processing kpi values each time.
+# In the end a report is generated showing which KPIs were processed and which were missing.
+# The collected KPIs are processed and collection information (max, min, average...) will be sent to grafana.
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 28800 # 8h
+    vars:
+      tee_test_suite: "SI-kpi-reboots"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots
+    parent: sofya-cdh-ingest
+    timeout: 18000 # 5h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-dlt-monitor
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-production
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-production"
+      should_prepare_pdx_urls: True
+      svt_with_switch_file_name_pattern_pdx: SVT_{{ product_type | upper }}-WITH_SWITCH_NA5.xml
+      svt_without_switch_file_name_pattern_pdx: SVT_{{ product_type | upper }}-WITHOUT_SWITCH_NA5.xml
+      # Esys version temporary until integration of https://cc-github.bmwgroup.net/software-factory/validation-python-esys/pull/82
+      validation_python_esys_version: fix_unsigned_path_tokens  # TEMP_PIN
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated-domains
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-SIT-Automated-domains"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-NA
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-multi-coding-na"
+      should_prepare_pdx_urls: True
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-G
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 23400 # 6h30
+    vars:
+      tee_test_suite: "SI-multi-coding-g"
+      should_prepare_pdx_urls: True
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-GED4K
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    vars:
+      include_appium: true
+      tee_test_suite: "SI-GED4K"
+      mtf_config:
+        queue: tf-worker-idcevo-049
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-boot-stability
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 54000 # 15h
+    vars:
+      tee_test_suite: "SI-boot-stability"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle-domains
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI-lifecycle-domains"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-STR
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI-STR"
+      sysman_testing_version: "master"
+
+- job:
+    name: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-STR-SIT-Automated
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    timeout: 43200 # 12h
+    vars:
+      tee_test_suite: "SI-STR-SIT-Automated"
+      sysman_testing_version: "master"
+    nodeset:
+      nodes:
+        name: 160gb_storage_nodes
+        label: idcevo-ubuntu2204-16-core
+        # We are overiding this label due to base node only having 80GB of storage and this having 160GB

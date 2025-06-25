@@ -1,0 +1,334 @@
+[
+    {
+        "domain": "adbd",
+        "maintainer": "AOSP"
+    },
+    {
+        "domain": "bmw_accountprotections_hal",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_assistedparking_service",
+        "maintainer": "Sicht and Absicht"
+    },
+    {
+        "domain": "bmw_bluetoothservice_app",
+        "maintainer": "Wireless Services / Tiger"
+    },
+    {
+        "domain": "bmw_boardnetsettings_app",
+        "maintainer": "Car Functions"
+    },
+    {
+        "domain": "bmw_boardnetsettings_service",
+        "maintainer": "Car Functions / Hedgehog"
+    },
+    {
+        "domain": "bmw_car_service",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_carplay_app",
+        "maintainer": "SDI"
+    },
+    {
+        "domain": "bmw_ccmessage",
+        "maintainer": "Car Functions"
+    },
+    {
+        "domain": "bmw_ccmessage_service",
+        "maintainer": "Car Functions"
+    },
+    {
+        "domain": "bmw_cdcsync_service",
+        "maintainer": "Telematics"
+    },
+    {
+        "domain": "bmw_cdcsync_service_app",
+        "maintainer": "Telematics"
+    },
+    {
+        "domain": "bmw_driverassistance",
+        "maintainer": "Sicht and Absicht"
+    },
+    {
+        "domain": "bmw_driverassistance_service",
+        "maintainer": "Sicht and Absicht"
+    },
+    {
+        "domain": "bmw_drivingexcitement_service",
+        "maintainer": "Sicht and Absicht"
+    },
+    {
+        "domain": "bmw_dsm_service",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_factory_reset_java_service",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_factory_reset_service",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_geocoderservice_app",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_init_shell",
+        "maintainer": "Falcon"
+    },
+    {
+        "domain": "bmw_itasu_service",
+        "maintainer": "Telematics / Elk"
+    },
+    {
+        "domain": "bmw_lanelevelnavigation_app",
+        "maintainer": "China Navigation"
+    },
+    {
+        "domain": "bmw_lanelevelnavigation_service",
+        "maintainer": "China Navigation"
+    },
+    {
+        "domain": "bmw_navigation_app",
+        "maintainer": "Navigation ROW"
+    },
+    {
+        "domain": "bmw_navigation_service",
+        "maintainer": "Navigation ROW"
+    },
+    {
+        "domain": "bmw_occupancydetection_service",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_package_manager_service_app",
+        "maintainer": "Entertainment App Store"
+    },
+    {
+        "domain": "bmw_perso_service",
+        "maintainer": "Personalization / Wolverine"
+    },
+    {
+        "domain": "bmw_privacy_service",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_privacysettings",
+        "maintainer": "Personalization"
+    },
+    {
+        "domain": "bmw_rolecontroller_service_app",
+        "maintainer": "Speech Amazon"
+    },
+    {
+        "domain": "bmw_rsu",
+        "maintainer": "RSU HMI / Griffin (RSU)"
+    },
+    {
+        "domain": "bmw_rsu_service",
+        "maintainer": "RSU HMI / Griffin (RSU)"
+    },
+    {
+        "domain": "bmw_screenshot_service_app",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_sfa_service",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_system_configuration",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmw_system_ui",
+        "maintainer": "CoreUI"
+    },
+    {
+        "domain": "bmw_telematics_service",
+        "maintainer": "Telematics / Dragon"
+    },
+    {
+        "domain": "bmw_telematics_service_app",
+        "maintainer": "Telematics"
+    },
+    {
+        "domain": "bmw_tollcollect_cn_app",
+        "maintainer": "China Product"
+    },
+    {
+        "domain": "bmw_usbdiag_service",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "bmwaudiocontroller_default",
+        "maintainer": "Audio Infra"
+    },
+    {
+        "domain": "bootanim",
+        "maintainer": "Qualcomm"
+    },
+    {
+        "domain": "connectivitydiagservice_app",
+        "maintainer": "Wireless Services"
+    },
+    {
+        "domain": "dltsystem",
+        "maintainer": "SysMan"
+    },
+    {
+        "domain": "flags_health_check",
+        "maintainer": "AOSP"
+    },
+    {
+        "domain": "hal_audio_default",
+        "maintainer": "Pantera (Garmin)"
+    },
+    {
+        "domain": "hal_audiodiag_default",
+        "maintainer": "Audio Infra"
+    },
+    {
+        "domain": "hal_bmwfortune_default",
+        "maintainer": "Android Platform / Eagle"
+    },
+    {
+        "domain": "hal_bmwtuner_default",
+        "maintainer": "Entertainment / Buffalo (Garmin)"
+    },
+    {
+        "domain": "hal_bmwtvcontrol_default",
+        "maintainer": "Entertainment"
+    },
+    {
+        "domain": "hal_bmwtvstream_default",
+        "maintainer": "Entertainment"
+    },
+    {
+        "domain": "hal_broadcastradio_default",
+        "maintainer": "Entertainment"
+    },
+    {
+        "domain": "hal_camera_default",
+        "maintainer": "Camera Infrastructure / Ocelot (Garmin)"
+    },
+    {
+        "domain": "hal_carplayaudio_default",
+        "maintainer": "Audio Infra"
+    },
+    {
+        "domain": "hal_countrydummyproxy_default",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "hal_diag_connectivity_default",
+        "maintainer": "Wireless Services"
+    },
+    {
+        "domain": "hal_lifecycle_default",
+        "maintainer": "Android Platform    / Condor"
+    },
+    {
+        "domain": "hal_rawgnss_default",
+        "maintainer": "Tardigrade (Garmin)"
+    },
+    {
+        "domain": "hal_sand_default",
+        "maintainer": "Sicht und Absicht"
+    },
+    {
+        "domain": "hal_sensors_default",
+        "maintainer": "Android Platform / Qualcomm"
+    },
+    {
+        "domain": "hal_sxm_default",
+        "maintainer": "Entertainment"
+    },
+    {
+        "domain": "hal_telematicsinfo_default",
+        "maintainer": "Telematics"
+    },
+    {
+        "domain": "hal_timezonesync_default",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": "hwservicemanager",
+        "maintainer": "AOSP"
+    },
+    {
+        "domain": "idd_service",
+        "maintainer": "AR Glasses"
+    },
+    {
+        "domain": "init",
+        "maintainer": "JC-4 security"
+    },
+    {
+        "domain": "installd",
+        "maintainer": "AOSP"
+    },
+    {
+        "domain": "kernel",
+        "maintainer": "JC-4 security"
+    },
+    {
+        "domain": "log_control",
+        "maintainer": "Log&Trace"
+    },
+    {
+        "domain": "monitor_a",
+        "maintainer": "Health"
+    },
+    {
+        "domain": "netd",
+        "maintainer": "Telematics / AOSP"
+    },
+    {
+        "domain": "platform_app",
+        "maintainer": "n/a (this can be any app that is part of the platform) needs to be checked case by case"
+    },
+    {
+        "domain": "shell",
+        "maintainer": "n/a - these are shell commands from TA or etc"
+    },
+    {
+        "domain": "surfaceflinger",
+        "maintainer": "Android Platform / AOSP"
+    },
+    {
+        "domain": "system_app",
+        "maintainer": "n/a (this can be any app that is part of the platform) needs to be checked case by case"
+    },
+    {
+        "domain": "system_server",
+        "maintainer": "Android Platform    / AOSP"
+    },
+    {
+        "domain": "unifiedui_app",
+        "maintainer": "CoreUI / Launcher"
+    },
+    {
+        "domain": "unifiedui_hal_service",
+        "maintainer": "CoreUI / Launcher"
+    },
+    {
+        "domain": "untrusted_app_25",
+        "maintainer": "n/a (this can be any app that is part of the platform) needs to be checked case by case"
+    },
+    {
+        "domain": "vendor_init",
+        "maintainer": "AOSP"
+    },
+    {
+        "domain": "zygote",
+        "maintainer": "Android Platform"
+    },
+    {
+        "domain": null,
+        "maintainer": "JC-4 security"
+    }
+  ]

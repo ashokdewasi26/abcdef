@@ -1,0 +1,14 @@
+- name: Build the repos config with the ones with declared versions
+  set_fact:
+    build_tee_repos: "{{ build_tee_repos + [ item ] }}"
+  loop: "{{ build_tee_repos_templates }}"
+  when:
+    - item.version | default(None) != None
+    - item.version | length > 0
+
+- name: Set build-tee repos from already built repos
+  set_fact:
+    tee_config: "{{ tee_config | combine({
+      'repos': build_tee_repos
+    }) }}"
+  when: build_tee_repos | length > 0

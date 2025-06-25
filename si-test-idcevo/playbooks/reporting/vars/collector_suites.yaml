@@ -1,0 +1,325 @@
+# Lists of metric collectors
+collectors_set:
+    SI:
+        - "MetricCollectorLogMetrics"
+
+    SI-PERFORMANCE:
+        - "MetricCollectorAndroidANR"
+        - "MetricCollectorCPUUsage"
+        - "MetricCollectorCPUUsageAverage"
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorFrameTimes"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLinuxCrashReporting"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTest"
+        - "MetricCollectorMemUsageTest"
+        - "MetricCollectorMonitorCpu"
+        - "MetricCollectorMonitorMemory"
+        - "MetricCollectorMonitorRam"
+        - "MetricCollectorNIAFrameTimes"
+        - "MetricCollectorPerformanceCPUIUsageRebootTest"
+        - "MetricCollectorPerformanceIdleTest"
+        - "MetricCollectorPerformancePdxFlashTest"
+        - "MetricCollectorRAMUsageComponent"
+
+    SI-STAGING:
+        - "MetricCollectorDiskUsageOnMultipleReboots"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorLogMetricsFolder"
+        - "MetricCollectorMEMCPUUsageTimelineDynamic"
+
+    SI-STABILITY:
+        - "MetricCollectorCPUUsage"
+        - "MetricCollectorCPUUsageAverage"
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTest"
+        - "MetricCollectorMemUsageTest"
+        - "MetricCollectorMonitorCpu"
+        - "MetricCollectorMonitorMemory"
+        - "MetricCollectorMonitorRam"
+        - "MetricCollectorPerformanceCPUIUsageRebootTest"
+        - "MetricCollectorPerformanceIdleTest"
+        - "MetricCollectorPerformancePdxFlashTest"
+        - "MetricCollectorRAMUsageComponent"
+
+    SI-DIAG:
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTimeline"
+
+    SI-PERFORMANCE-MONITORING:
+        - "MetricCollectorAndroidANR"
+        - "MetricCollectorAndroidPackagesCPU"
+        - "MetricCollectorAndroidPackagesMEM"
+        - "MetricCollectorAndroidTotalCPU"
+        - "MetricCollectorAndroidTotalMEM"
+        - "MetricCollectorDiskUsageOnMultipleReboots"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLinuxCrashReporting"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTimelineDynamic"
+        - "MetricCollectorNode0CPULoad"
+        - "MetricCollectorNode0MemoryProcess"
+
+    SI-ANDROID:
+        - "MetricCollectorAndroidANR"
+        - "MetricCollectorCPUUsage"
+        - "MetricCollectorCPUUsageAverage"
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorDiskUsageOnMultipleReboots"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTest"
+        - "MetricCollectorMEMCPUUsageTimeline"
+        - "MetricCollectorMemUsageTest"
+        - "MetricCollectorMonitorCpu"
+        - "MetricCollectorMonitorMemory"
+        - "MetricCollectorMonitorRam"
+        - "MetricCollectorPerformanceCPUIUsageRebootTest"
+        - "MetricCollectorPerformanceIdleTest"
+        - "MetricCollectorPerformancePdxFlashTest"
+        - "MetricCollectorRAMUsageComponent"
+
+    SI-DOMAINS:
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTimeline"
+
+    SI-DOMAINS-SYS-SW:
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTimeline"
+
+    SI-RTOS-CRASH-CASES:
+        - "MetricCollectorDiskUsageOnMultipleReboots"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTimelineDynamic"
+
+    PDX:
+        - "MetricCollectorLogMetrics"
+
+    PDX-STRESS:
+        - "MetricCollectorLogMetrics"
+
+    SI-SIT-AUTOMATED:
+        - "MetricCollectorLogMetrics"
+
+    SI-SIT-AUTOMATED-DOMAINS:
+        - "MetricCollectorLogMetrics"
+
+    SI-LONG:
+        - "MetricCollectorLogMetrics"
+
+    SI-LIFECYCLE:
+        - "MetricCollectorLogMetrics"
+
+    SI-LIFECYCLE-DOMAINS:
+        - "MetricCollectorLogMetrics"
+
+    SI-PRODUCTION:
+        - "MetricCollectorLogMetrics"
+
+    SI-KPI-REBOOTS:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-PERFORMANCE-TRAAS:
+        - "MetricCollectorAndroidANR"
+        - "MetricCollectorCPUUsage"
+        - "MetricCollectorCPUUsageAverage"
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorFrameTimes"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLinuxCrashReporting"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTest"
+        - "MetricCollectorMemUsageTest"
+        - "MetricCollectorMonitorCpu"
+        - "MetricCollectorMonitorMemory"
+        - "MetricCollectorMonitorRam"
+        - "MetricCollectorNIAFrameTimes"
+        - "MetricCollectorPerformanceCPUIUsageRebootTest"
+        - "MetricCollectorPerformanceIdleTest"
+        - "MetricCollectorPerformancePdxFlashTest"
+        - "MetricCollectorRAMUsageComponent"
+
+    SI-ANDROID-TRAAS:
+        - "MetricCollectorAndroidANR"
+        - "MetricCollectorCPUUsage"
+        - "MetricCollectorCPUUsageAverage"
+        - "MetricCollectorDiskUsageMounted"
+        - "MetricCollectorDiskUsageOnMultipleReboots"
+        - "MetricCollectorJobDuration"
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorMEMCPUUsageTest"
+        - "MetricCollectorMEMCPUUsageTimeline"
+        - "MetricCollectorMemUsageTest"
+        - "MetricCollectorMonitorCpu"
+        - "MetricCollectorMonitorMemory"
+        - "MetricCollectorMonitorRam"
+        - "MetricCollectorPerformanceCPUIUsageRebootTest"
+        - "MetricCollectorPerformanceIdleTest"
+        - "MetricCollectorPerformancePdxFlashTest"
+        - "MetricCollectorRAMUsageComponent"
+
+    SI-STAGING-TRAAS:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-DUMMY-TRAAS:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-MULTI-CODING-NA:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-MULTI-CODING-G:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-MULTI-CODING-SP21-U:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-GED4K:
+        - "MetricCollectorLogMetrics"
+
+    SI-KPI-TEST:
+        - "MetricCollectorLogMetrics"
+
+    SI-PERSO-TRAAS:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-SPIDER-TRAAS:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-BOOT-STABILITY:
+        - "MetricCollectorLogMetrics"
+
+    SI-STR:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+    SI-STR-SIT-AUTOMATED:
+        - "MetricCollectorLogMetrics"
+        - "MetricCollectorJobDuration"
+
+# Default / common regression whitelist for all test-suites
+# It's possible to use regex need to add quotation mark and apostrophes "'<regex>'"
+default_whitelist:
+    - "cpu_load"
+    - "mem_used"
+    - "'generic_kpi_metric_threshold_.*'"
+    - "targetfiles_installation_duration"
+    - "android_cpu_load"
+    - "android_total_cpu_load"
+    - "android_total_mem_usage"
+    - "android_mem_rss"
+    - "android_mem_pss"
+    - "execution_phases_duration"
+    - "job_duration"
+    - "mtee-retries_failed_attempts_stats"
+    - "mtee-retries_failed_attempts"
+
+# List of measurements to skip the kpi regression
+regression_whitelist:
+    SI:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-PERFORMANCE:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-STAGING:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-STABILITY:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-DIAG:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-PERFORMANCE-MONITORING:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-ANDROID:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-DOMAINS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-DOMAINS-SYS-SW:
+        - "{{ default_whitelist | join(' ') }}"
+
+    PDX:
+        - "{{ default_whitelist | join(' ') }}"
+
+    PDX-STRESS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-SIT-AUTOMATED:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-SIT-AUTOMATED-DOMAINS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-LONG:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-LIFECYCLE:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-LIFECYCLE-DOMAINS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-RTOS-CRASH-CASES:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-PRODUCTION:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-KPI-REBOOTS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-PERFORMANCE-TRAAS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-ANDROID-TRAAS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-STAGING-TRAAS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-DUMMY-TRAAS:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-MULTI-CODING-NA:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-MULTI-CODING-G:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-MULTI-CODING-SP21-U:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-GED4K:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-KPI-TEST:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-BOOT-STABILITY:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-STR:
+        - "{{ default_whitelist | join(' ') }}"
+
+    SI-STR-SIT-AUTOMATED:
+        - "{{ default_whitelist | join(' ') }}"

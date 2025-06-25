@@ -1,0 +1,65 @@
+- name: Metrics collection and upload
+  hosts: all
+  roles:
+    - role: ensure-testing-reporting
+  vars_files:
+    - vars/collector_suites.yaml
+  vars:
+    metric_collector_venv_path: ".test_reporting_venv"
+    metric_collector_bin: "metric_collector_evo"
+  tasks:
+    - name: Define build.env path
+      stat:
+        path: "{{ zuul_logs_dir }}/test-artifacts/build.env"
+      register: build_env_path
+
+    - name: Locate the worker environment file to extract worker name
+      find:
+        paths: "{{ zuul_logs_dir }}/test-env"
+        use_regex: yes
+        patterns:
+          - 'tf-worker.*\.env'
+      register: found_worker_env_file
+
+    - name: Extract the name of the worker environment file
+      set_fact:
+        worker_env_file: "{{ found_worker_env_file.files[0].path | \
+                             default('undefined') | basename }}"
+
+    - name: Create dispatcher metrics for metric collector hostname
+      copy:
+        dest: "{{ zuul_logs_dir }}/test-artifacts/dispatcher_metrics.json"
+        content: "{{ content_json | to_json }}"
+      vars:
+        content_json:
+          worker_name: "{{ worker_env_file.split('.')[0] }}"
+
+    - block:
+        - name: Write data to file using collector suite
+          shell: |
+            "{{ metric_collector_venv_path }}/bin/{{ metric_collector_bin }}" \
+            -r "{{ zuul_logs_dir }}/test-artifacts/" \
+            -c {{ collectors_set[collector_suite|upper] | join(' ') }} \
+            -o "{{ zuul_logs_dir }}/metrics_evo.txt" \
+            -v
+          when: collector_suite|length > 0
+
+        - name: Publish metrics to influx using collector suite
+          become: yes
+          shell: |
+            "{{ metric_collector_venv_path }}/bin/{{ metric_collector_bin }}" \
+            -r "{{ zuul_logs_dir }}/test-artifacts/" \
+            -c {{ collectors_set[collector_suite|upper] | join(' ') }} \
+            --influxdb \
+            --database "{{ product_type }}_node0_prod" \
+            --url http://mgu-gen22-si-metrics.bmwgroup.net:8086 \
+            --user idc_farm_monitor \
+            --influxdb-password-file "{{ ansible_user_dir }}/.influxdb.pass" \
+            --kpi-regression-detection \
+            --regression-threshold 2 \
+            --xml-output {{ xml_output | default('results/') }} \
+            -v \
+            --regression-whitelist {{ regression_whitelist[collector_suite|upper] | default(['']) | join(' ') }}
+          when: kpi_upload | default('false') | bool and collector_suite|length > 0
+
+      when: collector_suite|length > 0 and build_env_path.stat.exists

@@ -1,0 +1,38 @@
+- name: run test summarizer
+  hosts: all
+  tasks:
+    - name: Install test summarizer virtual environment
+      shell: |
+        set -xe
+        python3 -m venv --clear {{ test_summarizer_venv_path }}
+        {{ test_summarizer_venv_path }}/bin/pip install --upgrade pip
+        {{ test_summarizer_venv_path }}/bin/pip install \
+          "{{ test_summarizer_package_name }}=={{ test_summarizer_package_version }}"
+      args:
+        executable: /bin/bash
+      environment:
+        PIP_INDEX_URL: "{{ test_summarizer_index_url }}"
+
+    - name: Run the test summarizer tool
+      shell: |
+        {{ test_summarizer_venv_path }}/bin/test-summarizer \
+        {% if known_issues_path is defined and known_issues_path %}
+        --known-issues "{{ known_issues_path }}" \
+        {% endif %}
+        {% if config_path is defined and config_path %}
+        --reporter-config "{{ config_path }}" \
+        {% endif %}
+        {% if jira_token_path is defined and jira_token_path %}
+        --jira-token-path "{{ jira_token_path }}" \
+        {% endif %}
+        {% if confluence_token_path is defined and confluence_token_path %}
+        --confluence-token-path "{{ confluence_token_path }}" \
+        {% endif %}
+        {% if netrc_path is defined and netrc_path %}
+        --netrc-path "{{ netrc_path }}" \
+        {% endif %}
+        {% if only_check_nightly is defined and only_check_nightly %}
+        --only-check-nightly
+        {% endif %}
+      args:
+        executable: /bin/bash

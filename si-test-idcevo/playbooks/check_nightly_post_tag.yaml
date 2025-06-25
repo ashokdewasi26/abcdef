@@ -1,0 +1,29 @@
+- name: Check tag and create nightly pattern
+  hosts: all
+  tasks:
+      - name: Debug zuul dict to debug if tag fails
+        debug:
+            var: zuul
+
+      - name: Fail if tag key is not included in zuul dict
+        fail:
+            msg: tag is not defined in zuul dict
+        when: '"tag" not in zuul.keys()'
+
+      - name: Fail in case of tag pattern not found in expected tag
+        fail:
+            msg: Tag trigger check failed. tag pattern was not found.
+        when: 'tag_pattern not in zuul.tag'
+
+      - name: Set nightly pattern
+        set_fact:
+            triggered_date_pattern: '{{ zuul.tag | regex_search("\d{2}w\d{2}\.\d-\d") }}'
+
+      - name: Debug triggered build date pattern
+        debug:
+            var: triggered_date_pattern
+
+      - name: Set triggered nightly_pattern var to use on downstream jobs
+        zuul_return:
+            data:
+                triggered_date_pattern: "{{ triggered_date_pattern }}"

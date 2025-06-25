@@ -1,0 +1,60 @@
+- name: Parse PR fields
+  include_role:
+    name: read-gh-pr-fields
+  vars:
+    gh_pr_fields_setting:
+      - regex: "^si_bat_automation_tests_systemsw_version: (.*)$"
+        field: "bat_automation_tests_systemsw_version"
+      - regex: "^si_bat_automation_tests_version: (.*)$"
+        field: "bat_automation_tests_version"
+      - regex: "^si_deletion_handler_version: (.*)$"
+        field: "deletion_handler_version"
+      - regex: "^si_metric_collector_package_version: (.*)$"
+        field: "metric_collector_package_version"
+      - regex: "^si_metric_collector_index_url_default: (.*)$"
+        field: "metric_collector_index_url_default"
+      - regex: "^si_rsu_flasher_tool_version: (.*)$"
+        field: "rsu_flasher_tool_version"
+      - regex: "^si_sysman_testing_version: (.*)$"
+        field: "sysman_testing_version"
+      - regex: "^si_cv_daily_operations_version: (.*)$"
+        field: "cv_daily_operations_version"
+      - regex: "^si_cde_launcher_app_version: (.*)$"
+        field: "cde_launcher_app_version"
+      - regex: "^si_rse_launcher_app_version: (.*)$"
+        field: "rse_launcher_app_version"
+
+- block:
+    - name: Show parsed result
+      debug:
+        msg: "Parsed the following fields {{ gh_pr_fields }}"
+
+    - name: Overwrite pins from PR field if offered
+      set_fact:
+        bat_automation_tests_systemsw_version: "{{ gh_pr_fields.bat_automation_tests_systemsw_version | default(omit) }}"
+        bat_automation_tests_version: "{{ gh_pr_fields.bat_automation_tests_version | default(omit) }}"
+        deletion_handler_version: "{{ gh_pr_fields.deletion_handler_version | default(omit) }}"
+        metric_collector_package_version: "{{ gh_pr_fields.metric_collector_package_version | default(omit) }}"
+        metric_collector_index_url_default: "{{ gh_pr_fields.metric_collector_index_url_default | default(omit) }}"
+        rsu_flasher_tool_version: "{{ gh_pr_fields.rsu_flasher_tool_version | default(omit) }}"
+        sysman_testing_version: "{{ gh_pr_fields.sysman_testing_version | default(omit) }}"
+        _noop_var: null
+        cacheable: true
+
+    - debug:
+        msg: |-
+          "This job has pins:"
+          {% for pin_name, pin_value in pins.items() %}
+          "{{ pin_name }}: {{ pin_value }}"
+          {% endfor %}
+      vars:
+        pins:
+          bat_automation_tests_systemsw_version: "{{ bat_automation_tests_systemsw_version | default('UNSET') }}"
+          bat_automation_tests_version: "{{ bat_automation_tests_version | default('UNSET') }}"
+          deletion_handler_version: "{{ deletion_handler_version | default('UNSET') }}"
+          metric_collector_package_version: "{{ metric_collector_package_version | default('UNSET') }}"
+          metric_collector_index_url_default: "{{ metric_collector_index_url_default | default('UNSET') }}"
+          rsu_flasher_tool_version: "{{ rsu_flasher_tool_version | default('UNSET') }}"
+          sysman_testing_version: "{{ sysman_testing_version | default('UNSET') }}"
+
+  when: gh_pr_fields is defined

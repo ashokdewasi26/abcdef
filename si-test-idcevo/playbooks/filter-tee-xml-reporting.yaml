@@ -1,0 +1,70 @@
+- name: Filter-tee-xml-reporting
+  hosts: all
+  gather_facts: no
+  vars:
+    venv_path: "{{ ansible_user_dir }}/venv"
+    python_interpreter: "{{ venv_path }}/bin/python3"
+    script_path: "{{ src_dir }}/scripts/zuul/filter-tee-xml-reporting.py"
+    paths: "{{ zuul_logs_dir }}/test-artifacts/results"
+
+  tasks:
+    - name: Set results path for TRAAS if applicable
+      set_fact:
+        paths:
+          - "{{ zuul_logs_dir }}/results"
+          - "{{ zuul_logs_dir }}/results/testrun"
+      when: '"traas" in zuul.job'
+
+    - name: Check if the script exists at the given path
+      ansible.builtin.stat:
+        path: "{{ script_path }}"
+      register: script_stat
+
+    - name: Create a Python virtual environment
+      ansible.builtin.command:
+        cmd: python3 -m venv {{ venv_path }}
+      args:
+        creates: "{{ venv_path }}"
+      register: create_venv
+      changed_when: create_venv.rc == 0
+
+    - name: Ensure lxml is installed
+      pip:
+        name: lxml
+        virtualenv: "{{ venv_path }}"
+        virtualenv_python: "{{ python_interpreter }}"
+
+    - name: Find targetmanager XML file in the test-artifacts directory
+      ansible.builtin.find:
+        paths: "{{ paths }}"
+        patterns:
+          - 'targetmanager_run_results.xml'
+          - 'targetmanager_SI*_test_results.xml'
+          - 'targetmanager_PDX-stress_test_results.xml'
+          - 'posttest_targetmanager_SI*_test_results.xml'
+          - 'posttest_targetmanager_PDX-stress_test_results.xml'
+      register: found_xml_files
+
+    - name: Create a copy of the XML file with the "_filtered" suffix
+      become: yes
+      ansible.builtin.copy:
+        src: "{{ item.path }}"
+        dest: "{{ item.path | regex_replace('\\.xml$', '_filtered.xml') }}"
+        remote_src: yes
+      loop: "{{ found_xml_files.files }}"
+      when: found_xml_files.matched > 0
+      register: copied_xml_files
+
+    - name: Remove testcases with specific name attribute using a script on each copied XML file
+      become: yes
+      ansible.builtin.command:
+        cmd: "{{ python_interpreter }} {{ script_path }} {{ item.dest }}"
+      loop: "{{ copied_xml_files.results }}"
+      when: copied_xml_files.changed
+      register: xml_edit_script
+      failed_when: xml_edit_script.rc == -1
+
+    - name: Remove the Python virtual environment
+      ansible.builtin.file:
+        path: "{{ venv_path }}"
+        state: absent

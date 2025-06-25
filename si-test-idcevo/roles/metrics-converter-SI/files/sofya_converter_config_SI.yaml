@@ -1,0 +1,4103 @@
+metrics_converter_config: v2
+sources:
+  src_execution_phases:
+    metric_file: ./metrics.json
+    metric_name_column: phase
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    metrics:
+      execution_phases: wildcard_metric_name
+
+  src_generic_kpis:
+    metric_file: ./metrics.json
+    metric_name_column: kpi_name
+    columns:
+      time_value:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    metrics:
+      generic_kpi: wildcard_metric_name
+
+  src_generic_kpis_thresholds:
+    metric_file: ./metrics.json
+    metric_name_column: kpi_name
+    columns:
+      metric_threshold_master:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    metrics:
+      generic_kpi:
+        - node0_kernel_boot_duration_time
+        - node0_pid1_kpi_msg_processed_time
+        - prio1_diag_available_tmsp
+        - uds_available_tmsp
+        - vsomeip_routing_ready_available_tmsp
+    common_fields:
+      type: threshold
+
+  src_time_from_irom_to_lk_bootloader:
+    metric_file: ./metrics.json
+    metric_name_column: Time_from_IROM_to_LK_Bootloader
+    columns:
+      Time_from_IROM_to_LK_Bootloader:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Time_from_IROM_to_LK_Bootloader
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_hypervisor:
+    metric_file: ./metrics.json
+    metric_name_column: Load_Hypervisor
+    columns:
+      Load_Hypervisor:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_Hypervisor
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authentication_of_hypervisor_finished:
+    metric_file: ./metrics.json
+    metric_name_column: Authentication_of_Hypervisor_finished
+    columns:
+      Authentication_of_Hypervisor_finished:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authentication_of_Hypervisor_finished
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_start_hypervisor:
+    metric_file: ./metrics.json
+    metric_name_column: Start_hypervisor
+    columns:
+      Start_hypervisor:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Start_hypervisor
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_linux:
+    metric_file: ./metrics.json
+    metric_name_column: Load_Linux
+    columns:
+      Load_Linux:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_Linux
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authentication_of_linux_finished:
+    metric_file: ./metrics.json
+    metric_name_column: Authentication_of_Linux_finish
+    columns:
+      Authentication_of_Linux_finish:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authentication_of_Linux_finish
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_start_linux:
+    metric_file: ./metrics.json
+    metric_name_column: Start_Linux
+    columns:
+      Start_Linux:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Start_Linux
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_dsp:
+    metric_file: ./metrics.json
+    metric_name_column: Load_DSP
+    columns:
+      Load_DSP:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_DSP
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authenticate_dsp:
+    metric_file: ./metrics.json
+    metric_name_column: Authenticate_DSP
+    columns:
+      Authenticate_DSP:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authenticate_DSP
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_start_dsp:
+    metric_file: ./metrics.json
+    metric_name_column: Start_DSP
+    columns:
+      Start_DSP:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Start_DSP
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_sfi:
+    metric_file: ./metrics.json
+    metric_name_column: Load_SFI
+    columns:
+      Load_SFI:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_SFI
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authenticate_sfi:
+    metric_file: ./metrics.json
+    metric_name_column: Authenticate_SFI
+    columns:
+      Authenticate_SFI:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authenticate_SFI
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_start_sfi:
+    metric_file: ./metrics.json
+    metric_name_column: Start_SFI
+    columns:
+      Start_SFI:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Start_SFI
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_android:
+    metric_file: ./metrics.json
+    metric_name_column: Load_Android
+    columns:
+      Load_Android:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_Android
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authenticate_android:
+    metric_file: ./metrics.json
+    metric_name_column: Authenticate_Android
+    columns:
+      Authenticate_Android:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authenticate_Android
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_load_secure_os:
+    metric_file: ./metrics.json
+    metric_name_column: Load_SecureOS
+    columns:
+      Load_SecureOS:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Load_SecureOS
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_authenticate_secure_os:
+    metric_file: ./metrics.json
+    metric_name_column: Authenticate_Secure_OS
+    columns:
+      Authenticate_Secure_OS:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Authenticate_Secure_OS
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_start_secure_os:
+    metric_file: ./metrics.json
+    metric_name_column: Start_Secure_OS
+    columns:
+      Start_Secure_OS:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    common_fields:
+      type: boot_kpi
+      subtype: Start_Secure_OS
+    metrics:
+      boot_kpis: wildcard_metric_name
+
+  src_perfo_kpis:
+    metric_file: ./metrics.json
+    metric_name_column: kpi_name
+    columns:
+      value:
+        conversion: float
+        aggregation:
+          value: data[0] if len(data) == 1 else data
+    metrics:
+      perfo_ioc_dlt: wildcard_metric_name
+
+  src_kpicheck_durations:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P20:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          entity: "P20"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P40:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          entity: "P40"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P60:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          entity: "P60"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P80:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          entity: "P80"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P95:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          entity: "P95"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_durations_P99:
+    metric_file: ./kpicheck_durations_report.csv
+    metric_name_column: KPI
+
+    columns:
+      duration:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          entity: "P99"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics:
+      - systemd-udevd.service duration
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P20:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          entity: "P20"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P40:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          entity: "P40"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P60:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          entity: "P60"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P80:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          entity: "P80"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P95:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          entity: "P95"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_kpicheck_deadlines_P99:
+    metric_file: ./kpicheck_deadlines_report.csv
+    metric_name_column: KPI
+
+    columns:
+      deadline:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          entity: "P99"
+          aggregation: "avg"
+          measurement_properties: "false"
+          target: "@context['raw_data']['threshold'].mean()"
+      threshold:
+        conversion: float
+        data_only: true
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_KPI
+      timestamp: "null"
+
+  src_track_disk_usage:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: data.mean()
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P20:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P40:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P60:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P80:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P95:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P99:
+    metric_file: ./disk_usage.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: data.mean()
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+      software_component: "Android"
+
+  src_track_disk_usage_P20_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,20)
+        custom_fields:
+          subtype: "P20 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P40_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,40)
+        custom_fields:
+          subtype: "P40 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P60_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,60)
+        custom_fields:
+          subtype: "P60 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P80_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,80)
+        custom_fields:
+          subtype: "P80 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P95_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,95)
+        custom_fields:
+          subtype: "P95 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_disk_usage_P99_AMON:
+    metric_file: ./disk_usage_AMON.csv
+    metric_name_column: Partition
+    columns:
+      Total_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Total_size_in_MB"
+      Used_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Used_size_in_MB"
+      Free_size_in_MB:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Free_size_in_MB"
+      Used_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Used_size_in_%"
+      Free_size_in_%:
+        conversion: float
+        aggregation:
+          value: np.percentile(data,99)
+        custom_fields:
+          subtype: "P99 of Free_size_in_%"
+    metrics:
+      - /
+      - /var/data
+      - /var/sys
+      - /var/vdt
+
+    common_fields:
+      type: Perfo_Disk_Usage
+      subtype: "@context['column']"
+      entity: "@context['metric']"
+      subentity: "null"
+      testcase: "null"
+      timestamp: "null"
+      unit: Megabytes
+
+  src_track_system_load:
+    metric_file: ./system_load_statistics.csv
+    metric_name_column: Ref
+
+    columns:
+      Max Value of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Min Value 0f 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Value of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_System_Load
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_system_load_AMON:
+    metric_file: ./system_load_statistics_AMON.csv
+    metric_name_column: Ref
+
+    columns:
+      Max Value of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Min Value 0f 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Value of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation of 1st Field:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_System_Load
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track__delay:
+    metric_file: ./memory_delay_per_process.csv
+    metric_name_column: Process Name
+
+    columns:
+      Max Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Memory_Delay
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_memory_delay_AMON:
+    metric_file: ./memory_delay_per_process_AMON.csv
+    metric_name_column: Process Name
+
+    columns:
+      Max Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Deviation Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Reclaim Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Thrash Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Swapin Delay:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Memory_Delay
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_IO_block_layer:
+    metric_file: ./io_block_layer_per_device.csv
+    metric_name_column: Device Name
+
+    columns:
+      Max Value of Read in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Read in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Write in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Write in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of iowait in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IO_Block_Layer
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_IO_block_layer_AMON:
+    metric_file: ./io_block_layer_per_device_AMON.csv
+    metric_name_column: Device Name
+
+    columns:
+      Max Value of Read in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Read in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Write in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of Write in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Max Value of iowait in ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Read_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Read_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Write_MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Write_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Iowait_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IO_Block_Layer
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_io_usage:
+    metric_file: ./io_usage_plugin_per_thread.csv
+    metric_name_column: Thread Name
+
+    columns:
+      Sum of VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IO_Usage_Per_Thread
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_io_usage_AMON:
+    metric_file: ./io_usage_plugin_per_thread_AMON.csv
+    metric_name_column: Thread Name
+
+    columns:
+      Sum of VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VfsRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VfsWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 DiskRKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 DiskWKB in MB:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IO_Usage_Per_Thread
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_service_activation_time:
+    metric_file: ./lca_full_test_execution_activation_time.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_activation_time_in_microseconds:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_activation_time_in_microseconds:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_activation_time_in_microseconds:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_activation_time_in_microseconds:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cgroup_Activation_Time
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: microseconds
+
+  src_system_memory_usage:
+    metric_file: ./measured_mem_usage_full_test_execution.csv
+    metric_name_column: System Memory
+
+    columns:
+      avg_mem_usage_in_mb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_mem_usage_in_mb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_mem_usage_in_mb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_mem_usage_in_mb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_System_Memory_Usage
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: kilobytes
+
+  src_service_mem_usage:
+    metric_file: ./memory_monitor/full_test_execution_mem_usage.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_mem_usage_in_kb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_mem_usage_in_kb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_mem_usage_in_kb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_mem_usage_in_kb:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cgroup_Memory_Usage
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: bytes
+
+  src_track_network_usage:
+    metric_file: ./network_usage_per_networkdevice.csv
+    metric_name_column: Network Device
+
+    columns:
+      Sum of Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Network_Usage
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_network_usage_AMON:
+    metric_file: ./network_usage_per_networkdevice_AMON.csv
+    metric_name_column: Network Device
+
+    columns:
+      Sum of Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Sum of Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Rx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Rx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Tx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 Tx_packets:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Network_Usage
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_irq:
+    metric_file: ./irq_softirqs_per_key.csv
+    metric_name_column: Key
+
+    columns:
+      Max Value of Key:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IRQ
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_irq_AMON:
+    metric_file: ./irq_softirqs_per_key_AMON.csv
+    metric_name_column: Key
+
+    columns:
+      Max Value of Key:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_IRQ
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_sirq:
+    metric_file: ./sirq_softirqs_per_key.csv
+    metric_name_column: Key
+
+    columns:
+      Max Value of Key:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Soft_IRQ
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_sirq_AMON:
+    metric_file: ./sirq_softirqs_per_key_AMON.csv
+    metric_name_column: Key
+
+    columns:
+      Max Value of Key:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Soft_IRQ
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_thread_io_delay:
+    metric_file: ./io_delay_full_test.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Thread_IO_Delay
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: milliseconds
+
+  src_thread_io_delay_AMON:
+    metric_file: ./io_delay_full_test_AMON.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_io_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Thread_IO_Delay
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: milliseconds
+      software_component: "Android"
+
+  src_thread_scheduling_delay:
+    metric_file: ./scheduling_delay_full_test.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Thread_Scheduling_Delay
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: milliseconds
+
+  src_thread_scheduling_delay_AMON:
+    metric_file: ./scheduling_delay_full_test_AMON.csv
+    metric_name_column: SERVICE
+
+    columns:
+      avg_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      std_dev_scheduling_delay_in_ms:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Thread_Scheduling_Delay
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: milliseconds
+      software_component: "Android"
+
+  src_track_context_switches:
+    metric_file: ./stat_max.csv
+    metric_name_column: CTX_Value
+
+    columns:
+      Maximum Interrupt per second:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Context_Switches
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_context_switches_AMON:
+    metric_file: ./stat_max_AMON.csv
+    metric_name_column: CTX_Value
+
+    columns:
+      Maximum Interrupt per second:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Context_Switches
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_contextswitches_RTThread:
+    metric_file: ./Ctx_RTThread.csv
+    metric_name_column: Thread Name
+
+    columns:
+      Maximum VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Minimum VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Minimum NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Context_switches_RTThread
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_contextswitches_RTThread_AMON:
+    metric_file: ./Ctx_RTThread_AMON.csv
+    metric_name_column: Thread Name
+
+    columns:
+      Maximum VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Minimum VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Minimum NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard Deviation NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 VolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99 NonVolCtx:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Context_switches_RTThread
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_cpu_load_per_proc_per_tc:
+    metric_file: ./test_cpu_load_per_proc_per_tc.csv
+    metric_name_column: Proc:TC
+
+    columns:
+      avg_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Per_Process_Per_Tc
+      subtype: "null"
+      testcase: "@context['metric']"
+      timestamp: "null"
+      entity: "@context['column']"
+
+  src_cpu_load_per_proc_per_tc_AMON:
+    metric_file: ./test_cpu_load_per_proc_per_tc_AMON.csv
+    metric_name_column: Proc:TC
+
+    columns:
+      avg_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Per_Process_Per_Tc
+      subtype: "null"
+      testcase: "@context['metric']"
+      timestamp: "null"
+      entity: "@context['column']"
+      software_component: "Android"
+
+  src_track_cpu_load:
+    metric_file: ./test_cpu_load_avg_per_tc.csv
+    metric_name_column: test_case
+    columns:
+      avg_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Avg
+      subtype: "null"
+      entity: "@context['column']"
+      testcase: "@context['metric']"
+      timestamp: "null"
+      unit: percentage
+
+  src_track_cpu_load_AMON:
+    metric_file: ./test_cpu_load_avg_per_tc_AMON.csv
+    metric_name_column: test_case
+    columns:
+      avg_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Avg
+      subtype: "null"
+      entity: "@context['column']"
+      testcase: "@context['metric']"
+      timestamp: "null"
+      unit: percentage
+      software_component: "Android"
+
+  src_track_overall_cpu_load:
+    metric_file: ./overall_cpu_load.csv
+    metric_name_column: ref
+
+    columns:
+      max_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Max Value
+      min_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Min Value
+      avg_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Avg Value
+      stdev_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Stdev Value
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_CPULoad
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: bytes
+
+  src_track_overall_cpu_load_AMON:
+    metric_file: ./overall_cpu_load_AMON.csv
+    metric_name_column: ref
+
+    columns:
+      max_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Max Value
+      min_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Min Value
+      avg_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Avg Value
+      stdev_overall_cpuload:
+        conversion: float
+        aggregation:
+          value: data.mean()
+        custom_fields:
+          entity: Stdev Value
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_CPULoad
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: bytes
+      software_component: "Android"
+
+  src_track_GPU_load_MON:
+    metric_file: ./gpu_load.csv
+    metric_name_column: Ref
+
+    columns:
+      Minimum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard_Deviation:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_GPULoad
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_GPU_load_AMON:
+    metric_file: ./gpu_load_amon.csv
+    metric_name_column: Ref
+
+    columns:
+      Minimum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard_Deviation:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_GPULoad
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_track_GPU_load_testcase_MON:
+    metric_file: ./gpuload_per_testcase.csv
+    metric_name_column: Testcase
+
+    columns:
+      Minimum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard_Deviation:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_GPULoad_Testcase
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+
+  src_track_GPU_load_testcase_AMON:
+    metric_file: ./gpuload_per_testcase_amon.csv
+    metric_name_column: Testcase
+
+    columns:
+      Minimum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Maximum:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Average:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      Standard_Deviation:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_GPULoad_Testcase
+      subtype: "@context['metric']"
+      entity: "@context['column']"
+      timestamp: "null"
+      unit: megabytes
+      software_component: "Android"
+
+  src_cpu_load_per_proc_AMON:
+    metric_file: ./test_cpu_load_per_process_AMON.csv
+    metric_name_column: Process
+    columns:
+      avg_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Per_Process
+      subtype: "null"
+      entity: "@context['column']"
+      subentity: "@context['metric']"
+      testcase: "null"
+      timestamp: "null"
+      unit: percentage
+      software_component: "Android"
+
+  src_cpu_load_per_proc:
+    metric_file: ./test_cpu_load_per_process.csv
+    metric_name_column: Process
+    columns:
+      avg_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      min_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      max_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      sd_cpu_load_per_proc:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P20:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P40:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P60:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P80:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P95:
+        conversion: float
+        aggregation:
+          value: data.mean()
+      P99:
+        conversion: float
+        aggregation:
+          value: data.mean()
+
+    metrics: wildcard_aggregated_bulk_metrics
+
+    common_fields:
+      type: Perfo_Cpu_Load_Per_Process
+      subtype: "null"
+      entity: "@context['column']"
+      subentity: "@context['metric']"
+      testcase: "null"
+      timestamp: "null"
+      unit: percentage
+
+common_fields:
+  tool: "mtee"
+  type: "@context['raw_data']['__options__metric_type']"
+  subtype: "@context['raw_data']['__options__metric_name']"
+  hardware_component: "@context['extra_info']['hardware']['name']"
+  hardware_subcomponent: null
+  testcase: null
+  entity: null
+  subentity: null
+  aggregation: disabled
+  target: null
+  unit: s
+  timestamp: "@context['raw_data']['__options__timestamp']"
+
+postprocessing:
+  save_as: json
+  load_extra_info: # json data source only
+    src_execution_phases:
+      - system_information
+  extra_info_mappings:
+    software:
+      version: "@context['extra_info'][next(iter(context['extra_info']))][0].get('version')"
+      ecu: "@context['extra_info'][next(iter(context['extra_info']))][0].get('id')"
+      additional_properties:
+        variant: "@context['extra_info'][next(iter(context['extra_info']))][0].get('variant')"
+        variant_id: "@context['extra_info'][next(iter(context['extra_info']))][0].get('variant_id')"
+        node0_version: "@context['extra_info'][next(iter(context['extra_info']))][0].get('node0_version')"
+        distro_features: "@context['extra_info'][next(iter(context['extra_info']))][0].get('distro_features')"
+        base_name: "@context['extra_info'][next(iter(context['extra_info']))][0].get('base_name')"
+        timestamp: "@context['extra_info'][next(iter(context['extra_info']))][0].get('timestamp')"
+      ecu_variant: null
+      domain: null
+      component: null
+      subcomponent: null
+      asil: null
+    hardware:
+      version: "@context['extra_info'][next(iter(context['extra_info']))][1].get('version')"
+      serial_number: "@context['extra_info'][next(iter(context['extra_info']))][1].get('serial_number')"
+      variant: "@context['extra_info'][next(iter(context['extra_info']))][1].get('variant')"
+      test_bench: "@context['extra_info'][next(iter(context['extra_info']))][1].get('test_bench')"
+      name: "@context['extra_info'][next(iter(context['extra_info']))][1].get('base_name')"
+      hardware_properties:
+        crin: "@context['extra_info'][next(iter(context['extra_info']))][1].get('crin')"
+        type_number: "@context['extra_info'][next(iter(context['extra_info']))][1].get('type_number')"
+        target_type: "@context['extra_info'][next(iter(context['extra_info']))][1].get('target_type')"
+        ecu_uid: "@context['extra_info'][next(iter(context['extra_info']))][1].get('ecu_uid')"
+        hardware_type: "@context['extra_info'][next(iter(context['extra_info']))][1].get('hardware_type')"
+        peripherals: "@context['extra_info'][next(iter(context['extra_info']))][1].get('peripherals')"
+        generation: "@context['extra_info'][next(iter(context['extra_info']))][1].get('generation')"
+        mac_address: "@context['extra_info'][next(iter(context['extra_info']))][1].get('mac_address')"
+        timestamp: "@context['extra_info'][next(iter(context['extra_info']))][1].get('timestamp')"
+
+  template_custom_vars:
+    header:
+      schema_version: ${schema_version:undefined}
+      timestamp: ${METRICS_HEADER_TIMESTAMP:undefined}
+    scm:
+      project_id: ${METRICS_SCM_PROJECT_ID:undefined}
+      project_url: ${METRICS_SCM_PROJECT_URL:undefined}
+      change_id: ${METRICS_SCM_CHANGE_ID:undefined}
+      change_url: ${METRICS_SCM_CHANGE_URL:undefined}
+      commit_hash: ${METRICS_SCM_COMMIT_HASH:undefined}
+      branch: ${METRICS_SCM_BRANCH:undefined}
+      tags: ${METRICS_SCM_TAGS:[]}
+    ci:
+      tenant: ${METRICS_CI_TENANT:undefined}
+      job: ${METRICS_CI_JOB:undefineds}
+      build_url: ${METRICS_CI_BUILD_URL:undefined}
+      pipeline: ${METRICS_CI_PIPELINE:undefined}
+      build_id: ${METRICS_CI_BUILD_ID:undefined}
+    af:
+      instance: ${METRICS_AF_INSTANCE:undefined}
+      repo: ${METRICS_AF_REPO:undefined}
+      path: ${METRICS_AF_PATH:undefined}
+      checksum: ${METRICS_AF_CHECKSUM:undefined}
+    software:
+      ecu: ${METRICS_SOFTWARE_ECU:undefined}
+      ecu_variant: ${METRICS_SOFTWARE_ECU_VARIANT:null}
+      domain: ${METRICS_SOFTWARE_DOMAIN:undefined}
+      component: ${METRICS_SOFTWARE_COMPONENT:<app name>}
+      subcomponent: ${METRICS_SOFTWARE_SUBCOMPONENT:<lib name>}
+      asil: ${METRICS_SOFTWARE_ASIL:undefined}
+      version: ${METRICS_SOFTWARE_VERSION:undefined}
+      additional_properties: ${METRICS_SOFTWARE_ADDITIONAL_PROPERTIES:{'key1':'val1','key2':'val2'}}
+    hardware:
+      name: ${METRICS_HARDWARE_NAME:undefined}
+      variant: ${METRICS_HARDWARE_VARIANT:undefined}
+      version: ${METRICS_HARDWARE_VERSION:undefined}
+      serial_number: ${METRICS_HARDWARE_SERIAL_NUMBER:undefined}
+      test_bench: ${METRICS_HARDWARE_TEST_BENCH:undefinedt}
+      hardware_properties: ${METRICS_HARDWARE_HARDWARE_PROPERTIES:{'key1':'val1','key2':'val2'}}
+    organisation:
+      project: ${organisation_project:undefined}
+
+  templatefile: ./sofya_converter_template_SI.j2

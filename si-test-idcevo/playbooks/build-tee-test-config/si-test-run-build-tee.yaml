@@ -1,0 +1,66 @@
+- hosts: all
+  pre_tasks:
+    - name: Read pins from PR fields
+      include_tasks: read_pins_from_pr_fields.yaml
+      when: zuul.pipeline == "test"
+  environment:
+    PIP_INDEX_URL: https://common.artifactory.cc.bmwgroup.net/artifactory/api/pypi/software-factory-pypi-public/simple
+  roles:
+    - role: ensure-python
+      python_version: "3.10"
+  tasks:
+    - name: Prepare idcevo si tests and test suites variables
+      block:
+        - name: Make sure to install si-test_idcevo master version in case it's not defined
+          set_fact:
+            si_test_idcevo_si_version: "master"
+          when: si_test_idcevo_si_version | default("") | length == 0
+
+        - name: Make sure to install bat-automation-tests-systemsw master version in case it's not defined
+          set_fact:
+            bat_automation_tests_systemsw_version: "master"
+          when: bat_automation_tests_systemsw_version | default("") | length == 0
+
+        - name: Set tests config file path destination
+          set_fact:
+            test_suites_config_file_path: "{{ ansible_user_dir }}/tests_config.yaml"
+
+        - name: Deploy idcevo si tests config from file
+          template:
+            src: "tests-config.yaml.j2"
+            dest: "{{ test_suites_config_file_path }}"
+            mode: "0644"
+      when: install_si_tests_idcevo | default(false)
+
+    - name: Run build-idcevo-build-tee-config when no config already defined
+      include_role:
+        name: setup-tee-config
+      when: tee_config | default({}) | length == 0
+
+    - debug:
+        msg: "No tee_config was specified or built, will use image defaults"
+      when: tee_config | default({}) | length == 0
+
+    - name: Run build-tee
+      block:
+        - name: Display the tee_config
+          debug:
+            var: tee_config
+
+        - name: Run build-tee
+          include_role:
+            name: run-build-tee
+          vars:
+            # Configuration options for the run-build-tee role
+            # See the complete list at:
+            # https://cc-github.bmwgroup.net/software-factory/validation-jobs/tree/master/roles/run-build-tee
+            build_tee_path: "{{ test_env_out_dir }}/build-tee"
+            tee_env: "{{ ansible_user_dir }}/build-tee.env"
+            repos_folder: "/tmp/build-tee"
+            build_tee_version: "1.10.6"
+            test_suites_config_file: "{{ test_suites_config_file_path }}"
+
+        - name: Show build-tee virtualenv config
+          shell: |
+            "{{ ansible_user_dir }}/build-tee.env/bin/pip" freeze
+      when: tee_config | default({}) | length > 0

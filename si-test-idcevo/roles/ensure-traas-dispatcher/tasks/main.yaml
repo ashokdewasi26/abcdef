@@ -1,0 +1,32 @@
+- name: create required directories for TRAAS
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  become: true
+  with_items:
+    - "{{ project_workspace_dir }}"
+    - "{{ traas_scheduler_repos }}"
+    - "{{ reporting_repo_dir }}"
+    - "{{ traas_repo_dir }}"
+
+- name: checkout TRAAS refspec with shell script
+  shell: |
+    set -ex
+    git clone "{{ traas_repo_url }}" "{{ traas_repo_dir }}"
+    cd "{{ traas_repo_dir }}"
+    git fetch "{{ traas_repo_url }}" "{{ traas_refspec }}" && git checkout FETCH_HEAD
+
+- name: checkout reporting refspec with shell script
+  shell: |
+    set -ex
+    git clone "{{ reporting_repo_url }}" "{{ reporting_repo_dir }}"
+    cd "{{ reporting_repo_dir }}"
+    git fetch "{{ reporting_repo_url }}" "{{ reporting_refspec }}" && git checkout FETCH_HEAD
+
+- name: Create a symbolic link for generate html results entrypoint
+  ansible.builtin.file:
+    src: "{{ reporting_repo_dir }}/htmlresults/generate_html_test_results.py"
+    dest: "{{ reporting_repo_dir }}/generate_html_test_results.py"
+    state: link

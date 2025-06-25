@@ -1,0 +1,6 @@
+system-software-kf-bat
+system-software-kf-bat-automation
+system-software-harman
+si-test-idcevo/si_test_package_a_dmverity
+si-test-idcevo/si_test_package_system_software
+!!si-test-idcevo/si_test_package_system_software/systemtests/lk_shell_already_automated_tests.py

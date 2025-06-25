@@ -1,0 +1,287 @@
+- job:
+    name: ta-hw-traas-idcevo-base
+    parent: traas-scheduler-base
+    abstract: true
+    description: |
+      Schedule a task on IDCEVO test rack through TRAAS
+    timeout: 7200 # 2h
+    attempts: 1
+    required-projects:
+      - idcevo/test-automation
+    roles:
+      - zuul: software-factory/validation-jobs
+    pre-run:
+      - playbooks/traas/prepare_traas_dispatcher.yaml
+      - playbooks/traas/traas-run-build-tee.yaml
+    run:
+      - playbooks/traas/schedule_traas_task.yaml
+    post-run:
+      - playbooks/reporting/collect-build-env-traas.yaml
+      - playbooks/filter-tee-xml-reporting.yaml
+      - playbooks/reporting/jira-xray-upload-traas.yaml
+      - playbooks/reporting/report-metrics-traas.yaml
+    vars:
+      build_test_suite_folder: "{{ product_type }}"
+      enable_repo_sync: true
+      enable_cilib_python: true
+      has_git_lfs: true
+      ta_base_repo: cc-github.bmwgroup.net/idcevo/test-automation  # We only need the .tavenv and the apinext is the one that has all the dependencies to run TRAAS script.
+      ta_src_dir: |-
+        {{ zuul_root_dir }}/{{ zuul.projects[ta_base_repo].src_dir }}
+      project_workspace_dir: "/workspace"
+      traas_scheduler_repos: "{{ project_workspace_dir }}/repos"
+      reporting_repo_dir: "{{ traas_scheduler_repos }}/reporting"
+      traas_repo_dir: "{{ traas_scheduler_repos }}/traas"
+      test_env_out_dir: "{{ zuul_logs_dir }}"
+      test_artifacts_out_dir: "{{ zuul_logs_dir }}/results"
+      ta_virtualenv_path: "{{ ta_src_dir }}/.ta_venv"
+      # Parameters for traas entrypoint
+      branch: master # Change to idcevo-mainline after IDCEVODEV-175174 solved
+      branch_rse: master
+      gl_folder: latest
+      gl_folder_rse: latest
+      rack_tags: SITA_IDCEvo
+      flash_dev: "false"
+      flash_dev_rse: "false"
+      flash_dev_full: "false"
+      flash_dev_full_rse: "false"
+      flash_pdx: "false"
+      flash_pdx_rse: "false"
+      install_target_packages: ""
+      run_mtee_custom: "false"
+      run_mtee_custom_rse: "false"
+      export_test_dir: ""
+      test_dir: ""
+      test_scripts: ""
+      run_mtee_suite: "false"
+      run_mtee_suite_rse: "false"
+      test_suite: ""
+      test_suite_rse: ""
+      test_packages: ""
+      test_packages_rse: ""
+      extra_args: ""
+      extra_args_rse: ""
+      run_flash_stress: "false"
+      run_flash_stress_rse: "false"
+      old_gl: ""
+      old_gl_branch: ""
+      run_flash_endurance: "false"
+      run_flash_endurance_rse: "false"
+      endurance_iterations: 10
+      extra_actions: ""
+      keep_running: "false"
+      extra_prepare_actions: ""
+      executor_version: ""
+      duration: 240 # TRAAS session duration in minutes (4h)
+      production_build: false
+      run_instrumented_tests: "false"
+      install_custom_repos: ""
+      apk_file: ""
+      test_apk_file: ""
+      # List of collector defined in reportings/vars/collector_suites.yaml
+      collector_suite: "{{ test_suite }}"
+      # Publish kpi to influx db
+      kpi_upload: false
+      # Upload results to jira
+      enable_jira_xrayctl_upload: false
+      xrayctl_upload_config_path: "playbooks/reporting/files/job_config_si_idcevo.yaml"
+      mtee_tests_xrayctl_upload_config_path_remote_src: true
+      mtee_tests_xrayctl_upload_config_path: "{{ src_dir }}/{{ xrayctl_upload_config_path }}"
+      src_dir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      xml_output: "./results/"
+      session_name: "SI tests"
+      # Vars for scheduler
+      with_phonesimu: "false"
+
+# CTW Rack Jobs
+- job:
+    name: ee25-traas-CTW-Rack-base
+    parent: ta-hw-traas-idcevo-base
+    timeout: 28800  # 8h Zuul job timeout
+    vars:
+      duration: 180  # TRAAS session duration in minutes (3h)
+      rack_tags: Rack_CTW_CR
+      product_type: idcevo
+      artifactory_repo: idcevo-nightly
+      executor_version: ""
+      flash_dev_full: "false"
+      flash_pdx: "false"
+      idcevo_branch: "idcevo-pu2507"
+      idcevo_version: "25w23.2-1"
+      icon_branch: "A"
+      icon_version: "25w22.3-1"
+      export_test_dir: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/idcevo/si-test-idcevo"
+      test_dir: "custom_repos"
+      install_custom_repos: "true"
+      extra_files:
+        - "/tmp/build-tee/cv-daily-operations/whitelist/bat/idcevo/dtc_whitelist_idc"
+        - "/tmp/build-tee/meta-icon/recipes-testing/icon-bam-test-execution-environment/files/conf/dtc-whitelist-icon"
+        - "/tmp/build-tee/meta-icon/recipes-testing/icon-bam-test-execution-environment/files/conf/dtc-whitelist-si-rack"
+        - "{{ export_test_dir }}/si_test_idcevo/si_test_data/traas/traas_whitelist"
+      cv_daily_operations_version: "master"
+      meta_icon_version: "master"
+      base_prepare_actions: >
+        prepare:prepare_workspace_icon:branch={{ icon_branch }}:gl_folder={{ icon_version }};
+        prepare:prepare_workspace:branch={{ idcevo_branch }}:gl_folder={{ idcevo_version }};
+        prepare:prepare_pdx_any;
+        tee25:extend_dtc_whitelist:/ws/uploads/{{ test_dir }}/extrafiles/dtc_whitelist_idc;
+        tee25:extend_dtc_whitelist:/ws/uploads/{{ test_dir }}/extrafiles/dtc-whitelist-icon;
+        tee25:extend_dtc_whitelist:/ws/uploads/{{ test_dir }}/extrafiles/dtc-whitelist-si-rack;
+        tee25:extend_dtc_whitelist:/ws/uploads/{{ test_dir }}/extrafiles/traas_whitelist;
+        tee25:umlaut_reboot:factory_reset=True;
+        tee25:pwf_command:PAD;
+        tee25:wait_reboot:target=idcevo;
+        tee25:flash_target;
+        tee25:wait_reboot:target=idcevo;
+        tee25:factory_reset;
+        tee25:wait_reboot:target=idcevo;
+        tee25:factory_reset:hard_reset=True;
+        tee25:umlaut_ecu_control:target=idcevo:action=reset;
+        tee25:wait_reboot:target=idcevo;
+        tee25:clear_dtc;
+        tee25:restore_persistency:target=idcevo;
+        tee25:pwf_command:PAD;
+        tee25:wait_reboot:target=icon;
+        tee25:flash_target_icon;
+        tee25:wait_reboot:target=icon;
+        tee25:factory_reset:target=icon;
+        tee25:wait_reboot:target=icon;
+        tee25:factory_reset:target=icon:hard_reset=True;
+        tee25:umlaut_ecu_control:target=icon:action=reset;
+        tee25:wait_reboot:target=icon;
+        tee25:clear_dtc:target=icon;
+        tee25:restore_persistency:target=icon;
+        tee25:provisioning_rack;
+        tee25:custom_install_from_upload:{{ test_dir }}/si-test-idcevo;
+      extra_prepare_actions: "{{ base_prepare_actions }}"
+
+- job:
+    name: ee25-traas-CTW-Rack-Health-base
+    parent: ee25-traas-CTW-Rack-base
+    vars:
+      extra_prepare_actions: |
+        {{ base_prepare_actions }}
+        tee25:wait_reboot:target=icon;
+        tee25:wait_reboot:target=idcevo;
+        tee25:health_check_sw_release:target=icon:expected_sw_version={{ icon_version }};
+        tee25:health_check_date_icon;
+        tee25:health_check_internet_icon;
+        tee25:health_check_sw_release:target=idcevo:expected_sw_version={{ idcevo_version }};
+        tee25:health_check_date_idcevo;
+        tee25:health_check_internet_idcevo;
+      run_mtee_suite: "true"
+      test_suite: "SI-spider-traas"
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-001
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_001
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-002
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_002
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-003
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_003
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-004
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_004
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-005
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_005
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-006
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_006
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-007
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_007
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-008
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_008
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-009
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_009
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-010
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_010
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-011
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_011
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-012
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_012
+
+- job:
+    name: ee25-traas-Rack-Health-CTW-CR-013
+    parent: ee25-traas-CTW-Rack-Health-base
+    vars:
+      rack_tags: Rack_CTW_CR_013
+
+- job:
+    name: ee25-traas-SI-Perso
+    parent: ee25-traas-CTW-Rack-base
+    timeout: 28800  # 8h Zuul job timeout
+    vars:
+      rack_tags: Rack_CTW_CR_007
+      run_mtee_suite: "true"
+      test_suite: "SI-perso-traas"
+      test_packages: "all"
+      idcevo_branch: "check"
+      idcevo_version: "gerrit/10129786/2025-06-18-10-38-09"
+      icon_branch: "A"
+      icon_version: "latest"
+
+- job:
+    name: ee25-traas-SI-Perso-Stability
+    parent: ee25-traas-CTW-Rack-base
+    timeout: 28800  # 8h Zuul job timeout
+    vars:
+      rack_tags: Rack_CTW_CR
+      run_mtee_suite: "true"
+      test_suite: "SI-perso-traas"
+      idcevo_branch: "idcevo-pu2507"
+      idcevo_version: "25w20.2-1"
+      icon_branch: "A"
+      icon_version: "25w20.2-1"
+
+- job:
+    name: ee25-traas-SI-Spider
+    parent: ee25-traas-CTW-Rack-base
+    timeout: 28800  # 8h Zuul job timeout
+    vars:
+      rack_tags: Rack_CTW_CR
+      run_mtee_suite: "true"
+      test_suite: "SI-spider-traas"

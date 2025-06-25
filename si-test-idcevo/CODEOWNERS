@@ -1,0 +1,7 @@
+# Each line is a file pattern followed by one or more owners.
+# Order is important; the last matching pattern takes the most precedence.
+# Syntax: https://help.github.com/articles/about-codeowners/
+
+# Maintainers of this repo
+* @idcevo/team-lion
+si-test-idcevo/zuul.d/jobs/jobs-SI-base.yaml @idcevo/team-lion @idcevo/team-octopus

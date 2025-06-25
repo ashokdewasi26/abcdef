@@ -1,0 +1,20 @@
+- name: Prepare traas dispatcher
+  hosts: all
+  environment: "{{ job_environment | default({}) }}"
+  roles:
+    # update the lfs files of the current project
+    # comes from codecraft/cilib
+    - role: ensure-git-lfs
+      when: has_git_lfs
+    - ensure-traas-dispatcher
+  tasks:
+    - name: enable git lfs and update for the current project
+      shell: |
+        set +xue
+        git config -f .lfsconfig lfs.url "https://apinext.artifactory.cc.bmwgroup.net/artifactory/api/lfs/idcevo-lfs-si-test-idcevo"
+        git lfs env
+        git lfs install
+        git lfs pull
+      args:
+        chdir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      when: has_git_lfs

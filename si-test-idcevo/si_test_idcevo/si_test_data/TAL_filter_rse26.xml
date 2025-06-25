@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--TAL filter for RSE26 -->
+<talfilter>
+    <allEcu>
+        <hwDeinstall action="mustNotBeTreated"/>
+    </allEcu>
+    <ecuFilter>
+        <diagAdr>152</diagAdr>
+        <setting>
+            <blUpdate action="mustBeTreated" processClass="all"></blUpdate>
+            <cdDeploy action="mustBeTreated" processClass="all"></cdDeploy>
+            <hwDeinstall action="mustNotBeTreated" processClass="all"></hwDeinstall>
+            <hwInstall action="mustNotBeTreated" processClass="all"></hwInstall>
+            <swDeploy action="mustBeTreated" processClass="all">
+                <swDeleteTA action="mustNotBeTreated" processClass="all"/>
+            </swDeploy>
+            <ecuActivate action="mustBeTreated"/>
+            <ecuPoll action="mustBeTreated"/>
+            <ecuMirrorDeploy processClass="all" action="mustBeTreated"/>
+        </setting>
+    </ecuFilter>
+</talfilter>

@@ -1,0 +1,65 @@
+- name: Set log url
+  include_role:
+    name: zuul-set-log-url
+
+- name: Write build information
+  block:
+    - name: Collect build information
+      set_fact:
+        mtee_build_env:
+          ansible_host: "{{ ansible_facts['nodename'] }}"
+          build: "{{ zuul.build }}"
+          build_short: "{{ zuul.build[0:7] }}"
+          job_build_tag: "{{ zuul.build[0:7] }}"
+          change_url: "{{ zuul.change_url }}"
+          job: "{{ zuul.job }}"
+          job_url: "{{ codecraft.base_url }}/zuul/t/{{ zuul.tenant }}/build/{{ zuul.build }}"
+          test_suite: "{{ test_suite }}"
+          test_artifacts_url: "{{ zuul_log_url }}"
+          job_output: "{{ zuul_log_url }}job-output.txt"
+          result_html: "{{ zuul_log_url }}results/results.html"
+
+    - name: Dump build information to file
+      become: yes
+      copy:
+        content: "{{ mtee_build_env | to_nice_json }}"
+        dest: "{{ mtee_test_result_dir }}/build_env.json"
+        mode: "0644"
+
+- name: Upload test result to Jira xray
+  block:
+    - name: Create a temp file path
+      become: yes
+      tempfile:
+        state: file
+        suffix: ".yaml"
+      register: raw_mtee_xrayctl_config_path
+
+    - name: Assign job config path
+      set_fact:
+        mtee_xrayctl_config_path: "{{ raw_mtee_xrayctl_config_path.path }}"
+
+    - name: Copy config file
+      become: yes
+      copy:
+        src: "{{ mtee_tests_xrayctl_upload_config_path }}"
+        dest: "{{ mtee_xrayctl_config_path }}"
+        mode: "0644"
+        remote_src: "{{ mtee_tests_xrayctl_upload_config_path_remote_src }}"
+
+- name: Upload results to jira xray
+  import_role:
+    name: upload-test-jira-xray
+  vars:
+    xrayctl_docker_image_tag: "{{ upload_test_result_xrayctl_idcevo_xrayctl_version }}"
+    xrayctl_config_path: "{{ mtee_xrayctl_config_path }}"
+    xrayctl_result_dir_path: "{{ mtee_test_result_dir }}"
+    xrayctl_netrc_path: "{{ ansible_user_dir }}/.netrc"
+    xrayctl_job_name: "{{ zuul.job }}"
+    xrayctl_retry: 5
+    xrayctl_timeout: 2400
+    xrayctl_jira_url: "https://jira.cc.bmwgroup.net/"
+    xrayctl_auth_token_path: "{{ zuul_root_dir }}/.cc_jira_auth"
+    xrayctl_enable_update_test_description: true
+    xrayctl_update_test_weekday: "Thursday"
+  ignore_errors: true

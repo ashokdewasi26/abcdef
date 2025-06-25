@@ -1,0 +1,78 @@
+- project:
+    test:
+      jobs:
+        - ta-idcevo-testing-gateway:
+            vars:
+              enable_repo_sync: true
+        - idcevo-pu2507-userdebug-SI-staging:
+            voting: false
+            dependencies:
+              - ta-idcevo-testing-gateway
+        # # ------- Automated SI Testing jobs - uncomment the lines in hte section bellow to use the dirty pins on all these jobs -------
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # # ------- TO BE USED BY DEVELOPERS -------
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging: &idcevo_testing_vars
+        #     vars:
+        #       tee_test_suite: "SI-staging"
+        #       kpi_upload: true
+        #       enable_jira_xrayctl_upload: true
+        #       si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+        #       mtf_config:
+        #         queue: idcevo
+        #       # ------ Use a specific nightly-release --------
+        #       # Please check first for SW breaks on this recommendations:
+        #       # https://asc.bmwgroup.net/wiki/display/IDCEVO/IDC+Evo+-+SW+Release+Recommendation
+        #       # DO NOT USE IMAGES BEFORE 24w15.3-1
+        #       triggered_date_pattern: "24w17.1-1"
+        #       artifactory_path_pattern_build_artifacts_file: "{{ branch_node0 }}/{{ triggered_date_pattern }}"
+        #       # ------ Trigger "dirty" image build --------
+        #       # You need to identify on artifactory the file "build_artifacts.yaml" and paste here the link
+        #       build_artifacts_file_url: "https://idcevo.artifactory.cc.bmwgroup.net/artifactory/idcevo-platform-build-fg/check/github/idcevo/meta-idcevo/3278/2024-04-16-13-33-06/build_artifacts.yaml"
+        #       artifactory_repo_pdx: "idcevo-platform-build-fg"  # This should match the path on the artifactory ^^^
+        # # ------- Some recommended SI jobs to validate --------
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated: *idcevo_testing_vars
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance: *idcevo_testing_vars
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android: *idcevo_testing_vars
+        # # ------- Domain testing on SI job --------------------
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI:
+        #     vars:
+        #       si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+        #       sysman_testing_version: "pull/43/head"  # you can specify your PR here
+        #       deletion_handler_version: ""
+        # - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-rtos-crash-cases: *idcevo_testing_vars
+        # # ------- Automated TRAAS SI Testing jobs --------
+        # - si-idcevo-ee25-traas-SI-performance:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - si-idcevo-ee25-traas-SI-android:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway
+        # - si-idcevo-ee25-traas-SI-staging:
+        #     voting: false
+        #     dependencies:
+        #       - ta-idcevo-testing-gateway

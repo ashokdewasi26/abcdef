@@ -1,0 +1,90 @@
+# Github, needs branch, commit or tag
+si_test_idcevo_si_version: ""
+sysman_testing_version: ""
+meta_idcevo_version: ""
+deletion_handler_version: ""
+system_telemetry_version: ""
+partition_manager_version: ""
+validation_python_esys_version: ""
+tee_idcevo_version: ""
+mtee_apinext_version: ""
+# ICON
+tee_icon_version: ""
+meta_icon_version: ""
+# Gerrit, supports refspecs
+mtee_core_version: ""
+mtee_gen22_version: ""
+cv-daily-operations_version: ""
+cde_launcher_app_version: ""
+rse_launcher_app_version: ""
+
+build_tee_repos: []
+tee_config: {}
+build_tee_repos_templates:
+  - repo: "si_test_idcevo"
+    url: "https://cc-github.bmwgroup.net/idcevo/si-test-idcevo.git"
+    version: "{{ si_test_idcevo_si_version | default(None) }}"
+    extra_installs:
+      - path: si_test_idcevo/si_test_data/*
+        to: resources/
+  - repo: "sysman_testing"
+    url: "https://cc-github.bmwgroup.net/node0/sysman-testing.git"
+    version: "{{ sysman_testing_version | default(None) }}"
+    update_submodules: False
+  - repo: "rsu_flasher_tool"
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit467.rsu-flasher-tool
+    version: "{{ rsu_flasher_tool_version | default(None) }}"
+  - repo: "deletion_handler"
+    url: "https://cc-github.bmwgroup.net/node0/deletion-handler.git"
+    version: "{{ deletion_handler_version | default(None) }}"
+    install: no
+  - repo: "system_telemetry"
+    url: "https://cc-github.bmwgroup.net/node0/system-telemetry.git"
+    version: "{{ system_telemetry_version | default(None) }}"
+    install: no
+  - repo: "dltlyse-plugins-gen22"
+    url: "https://cc-github.bmwgroup.net/node0/dltlyse-plugins-gen22.git"
+    version: "{{ dltlyse_plugins_version | default(None) }}"
+    extra_installs:
+      - path: dltlyse_plugins_gen22/plugins_gen22/data/DLTBootchart/dlt_filter_idcevo.json
+        to: resources/
+  - repo: "partition_manager"
+    url: "https://cc-github.bmwgroup.net/node0/partition-manager.git"
+    version: "{{ partition_manager_version | default(None) }}"
+    install: no
+  - repo: "validation-python-esys"
+    url: "https://cc-github.bmwgroup.net/software-factory/validation-python-esys"
+    version: "{{ validation_python_esys_version | default(None) }}"
+  - repo: "tee-idcevo"
+    url: "https://cc-github.bmwgroup.net/idcevo/tee-idcevo.git"
+    version: "{{ tee_idcevo_version | default(None) }}"
+  - repo: "mtee_core"
+    url: "https://gerrit.cc.bmwgroup.net/node0.validation.mtee_core"
+    version: "{{ mtee_core_version | default(None) }}"
+  - repo: "mtee_gen22"
+    url: "https://gerrit.cc.bmwgroup.net/node0.validation.mtee_gen22"
+    version: "{{ mtee_gen22_version | default(None) }}"
+  - repo: "mtee-apinext"
+    url: "https://cc-github.bmwgroup.net/apinext/mtee-apinext.git"
+    version: "{{ mtee_apinext_version | default(None) }}"
+  - repo: "tee-icon"
+    url: "https://cc-github.bmwgroup.net/iconicc/test-execution-environment.git"
+    version: "{{ tee_icon_version | default(None) }}"
+  - repo: "cv-daily-operations"
+    url: "https://cc-github.bmwgroup.net/idcevo/cv-daily-operations.git"
+    version: "{{ cv_daily_operations_version | default(None) }}"
+    install: no
+  - repo: "cde-launcher-app"
+    url: "https://cc-github.bmwgroup.net/apinext/cde-launcher-app.git"
+    version: "{{ cde_launcher_app_version | default(None) }}"
+    deactivate_lfs: True
+    install: no
+  - repo: "rse-launcher-app"
+    url: "https://cc-github.bmwgroup.net/apinext/rse-launcher-app.git"
+    version: "{{ rse_launcher_app_version | default(None) }}"
+    deactivate_lfs: True
+    install: no
+  - repo: "meta-icon"
+    url: "https://cc-github.bmwgroup.net/iconicc/meta-icon-bam.git"
+    version: "{{ meta_icon_version | default(None) }}"
+    install: no

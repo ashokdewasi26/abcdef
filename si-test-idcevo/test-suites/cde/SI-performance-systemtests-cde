@@ -1,0 +1,5 @@
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_performance
+!!si-test-idcevo/si_test_package_performance/systemtests/perfo-ref-app_tests.py
+!!si-test-idcevo/si_test_package_performance/systemtests/frame_time_tests.py
+!!si-test-idcevo/si_test_package_performance/systemtests/nowinandroid_tests.py

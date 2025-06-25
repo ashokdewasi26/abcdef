@@ -1,0 +1,18 @@
+- project:
+    nightly-post: # This pipeline is build triggered, meaning when a new tag is available
+      jobs: # These jobs are running on nightly-post pipeline because the latest tag is not working on traas
+        - idcevo_tag_trigger_pu2507
+        - si-idcevo-pu2507-ee25-traas-SI-performance:
+            dependencies:
+              - idcevo_tag_trigger_pu2507
+            vars:
+              gl_folder: "{{ triggered_date_pattern }}"
+              kpi_upload: true
+              enable_jira_xrayctl_upload: true
+
+        - si-idcevo-pu2507-ee25-traas-SI-android:
+            dependencies:
+              - idcevo_tag_trigger_pu2507
+            vars:
+              gl_folder: "{{ triggered_date_pattern }}"
+              enable_jira_xrayctl_upload: true

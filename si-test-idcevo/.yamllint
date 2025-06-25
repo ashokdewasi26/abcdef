@@ -1,0 +1,26 @@
+# APINEXT preferences for the cilib's Zuullint job
+#
+# Reference:
+# https://yamllint.readthedocs.io/en/stable/configuration.html
+# https://yamllint.readthedocs.io/en/stable/rules.html
+
+# Use all the default yamllint rules
+extends: default
+
+rules:
+
+  # Spacing for comments is minor and will bite us when deactivating code
+  # temporarily for testing.
+  comments: disable
+  comments-indentation: disable
+
+  # Lots of occurrences now. Let's accept the fact that we like it :)
+  line-length: disable
+
+  # Zuullint inherited roles from:
+  # https://cc-github.bmwgroup.net/codecraft/cilib/blob/master/roles/yamllint/templates/.yamllint
+  document-start:
+    level: error
+    present: false  # Zuullint enforces no start markers ("---")
+  truthy:
+    disable

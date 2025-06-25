@@ -1,0 +1,24 @@
+- project:
+    nightly-post: # This pipeline is build triggered, meaning when a new tag is available
+      jobs:
+        - noop
+        # - cde_tag_trigger_i330
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI: &cde_upload_jira_i330
+        #     dependencies:
+        #       - cde_tag_trigger_i330
+        #     vars:
+        #       enable_jira_xrayctl_upload: true
+        #       android_branch: "cde-pu2607_i330"
+        #       artifactory_path_pattern_build_artifacts_file: "cde-pu2607_i330/{{ triggered_date_pattern }}"
+        #       ecu_configs:
+        #         - target_ecu: "{{ product_type }}"
+        #           linux_target: "{{ product_type }}-hv"
+        #           android_branch: "{{ android_branch }}"
+        #           android_target_and_branch: "bmw_{{ android_branch }}"
+        #           emulator_target_and_branch: "bmw_evocar_emu-{{ android_branch }}"
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated: *cde_upload_jira_i330
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI-long: *cde_upload_jira_i330
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI-diag: *cde_upload_jira_i330
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated-domains: *cde_upload_jira_i330
+        # - ta-cde-hw-mtf3-flash-and-validate-cde-SI-performance: *cde_upload_jira_i330
+        # - ta-cde-hw-mtf3-cde-SI-PDX-flashing-stress: *cde_upload_jira_i330

@@ -1,0 +1,10 @@
+- project:
+    weekly-friday-evening:
+      jobs:
+        - gitlint
+        - zuullint
+        - shellcheck
+        - run-tox-si
+        - build-push-docs
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-gate-bat
+        - ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-gate-pdx

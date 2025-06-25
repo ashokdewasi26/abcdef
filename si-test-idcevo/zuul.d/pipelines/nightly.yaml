@@ -1,0 +1,4 @@
+- project:
+    nightly: # This pipeline is executed at 19:00 UTC
+      jobs:
+        - noop

@@ -1,0 +1,26 @@
+- project:
+    nightly-late: # This pipeline is executed at 4:00 UTC.
+      jobs:
+        - idcevo-pu2507-userdebug-SI-performance: &idcevo_pu2507_upload_metrics_jira
+            vars:
+              kpi_upload: true
+              enable_jira_xrayctl_upload: true
+        # - idcevo-pu2507-userdebug-SI-performance-monitoring: *idcevo_pu2507_upload_metrics_jira
+        - idcevo-pu2507-user-SI-kpi-reboots: *idcevo_pu2507_upload_metrics_jira
+        # - idcevo-pu2507-user-STR-SIT-Automated: *idcevo_pu2507_upload_metrics_jira
+        # - idcevo-pu2507-userdebug-SIT-Automated: &idcevo_pu2507_upload_jira
+        #     vars:
+        #       enable_jira_xrayctl_upload: true
+        - idcevo-pu2507-user-SI-lifecycle: &idcevo_pu2507_upload_jira
+            vars:
+              enable_jira_xrayctl_upload: true
+        - idcevo-pu2507-user-SI-long: *idcevo_pu2507_upload_jira
+        # - idcevo-pu2507-user-SI-stability: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-userdebug-SI-diag: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-userdebug-SI-android: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-user-SI-PDX-flashing-stress: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-user-SI: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-user-SI-production: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-user-SI-Multi-Coding-NA: *idcevo_pu2507_upload_jira
+        - idcevo-pu2507-userdebug-SI-SIT-Automated-domains: *idcevo_pu2507_upload_jira
+        # - idcevo-pu2507-user-SI-STR: *idcevo_pu2507_upload_jira  # Deactivated in cleanup IDCEVODEV-448568

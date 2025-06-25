@@ -1,0 +1,10 @@
+elfutils
+lsof
+ltrace
+lz4
+openssl
+opkg
+si-test-idcevo/si_test_package_common
+strace
+sysfsutils
+valgrind

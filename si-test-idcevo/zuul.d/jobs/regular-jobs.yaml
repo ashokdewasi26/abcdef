@@ -1,0 +1,127 @@
+# Multiple inheritance of jobs
+# Each of them brings different set of access credentials and has pre/post-run playbooks we want
+- job:
+    name: base-regular-job-idcevo
+    parent: base-ta-idcevo-sw
+
+- job:
+    name: base-regular-job-idcevo
+    parent: idci-access-cc-confluence
+
+- job:
+    name: base-test-summarizer
+    parent: base-regular-job-idcevo
+    run:
+      - playbooks/run_test_summarizer.yaml
+    vars:
+      src_dir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      test_summarizer_venv_path: .test_summarizer_venv
+      test_summarizer_package_version: "1.0.4"
+      test_summarizer_index_url_default:
+        "https://common.artifactory.cc.bmwgroup.net/artifactory/api/\
+        pypi/software-factory-pypi-dev/simple"
+      test_summarizer_index_url: "{{ pypi_repository | default(test_summarizer_index_url_default) }}"
+      test_summarizer_package_name: test_summarizer
+      netrc_path: "{{ zuul_root_dir }}/.netrc"
+      jira_token_path: "{{ zuul_root_dir }}/.cc-jira-token-mtee"
+      confluence_token_path: "{{ zuul_root_dir }}/.confluence.cc.bmwgroup.net.token"
+      config_path: ""
+      known_issues_path: ""
+      only_check_nightly: true
+      email_notification_on:
+        - "failure"
+      email_from:
+        - apinext-ci@bmw.de
+      email_to:
+        - marcelo.lopes@ctw.bmwgroup.com
+        - Carlos.Fernandes@ctw.bmwgroup.com
+        - Francisco.Monteiro@ctw.bmwgroup.com
+        - Roni.Sabenca@ctw.bmwgroup.com
+        - Leonardo.Miranda@ctw.bmwgroup.com
+
+- job:
+    name: idcevo-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/idcevo_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/idcevo_test_summarizer_known_issues.json"
+
+- job:
+    name: idcevo-sp21-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/idcevo_sp21_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/idcevo_sp21_test_summarizer_known_issues.json"
+
+- job:
+    name: idcevo-pu2507-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/idcevo_pu2507_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/idcevo_pu2507_test_summarizer_known_issues.json"
+
+- job:
+    name: cde-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/cde_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/cde_test_summarizer_known_issues.json"
+
+- job:
+    name: rse26-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/rse26_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/rse26_test_summarizer_known_issues.json"
+
+- job:
+    name: traas-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/traas_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/traas_test_summarizer_known_issues.json"
+
+- job:
+    name: traas-pu2507-test-summarizer
+    parent: base-test-summarizer
+    vars:
+      config_path: "{{ src_dir }}/test-summarizer/config/traas_pu2507_test_summarizer_config.yaml"
+      known_issues_path: "{{ src_dir }}/test-summarizer/known_issues/traas_pu2507_test_summarizer_known_issues.json"
+
+- job:
+    name: si-testing-build-tee-packaging
+    parent: base-regular-job-idcevo
+    roles:
+      - zuul: software-factory/validation-jobs
+      - zuul: idcevo/validation-jobs
+    run:
+      - playbooks/build-tee-test-config/si-test-run-build-tee.yaml
+    vars:
+      test_env_out_dir: "{{ zuul_root_dir }}/logs"
+      build_test_suite_folder: "idcevo"
+      product_type: "idcevo"
+      tee_test_suite: "SI-staging"
+      branch_node0: "idcevo-mainline"
+      si_test_idcevo_si_version: "master"
+      install_si_tests_idcevo: true
+      dltlyse_plugins_version: "master"
+      sysman_testing_version: "master"
+      deletion_handler_version: "master"
+      system_telemetry_version: "master"
+      partition_manager_version: "master"
+      rsu_flasher_tool_version: "master"
+      bat_automation_tests_systemsw_version: "si_job_ready"
+      bat_automation_tests_version: "master"
+      cde_launcher_app_version: "UI_Tests_vcar" # Pinned version due to CDE Launcher App Tests
+      rse_launcher_app_version: "UI_Tests_vcar" # Pinned version due to RSE Launcher App Tests
+      email_always: true # Without this if the job runs on a PR the email won't be sent. Since we want to run on PRs gate pipeline we need it set to true
+      email_notification_on:
+        - "failure"
+      email_from:
+        - apinext-ci@bmw.de
+      email_to:
+        - marcelo.lopes@ctw.bmwgroup.com
+        - Carlos.Fernandes@ctw.bmwgroup.com
+        - Francisco.Monteiro@ctw.bmwgroup.com
+        - Roni.Sabenca@ctw.bmwgroup.com
+        - Leonardo.Miranda@ctw.bmwgroup.com

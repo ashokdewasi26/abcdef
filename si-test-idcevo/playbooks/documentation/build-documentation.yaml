@@ -1,0 +1,54 @@
+- hosts: all
+  environment:
+    PIP_INDEX_URL: https://common.artifactory.cc.bmwgroup.net/artifactory/api/pypi/software-factory-pypi-public/simple/
+  vars:
+    status_message: "Creation of documentation"
+    status_context: "si-test-idcevo/docs"
+    preview_url: "{{ zuul_log_url }}/html/index.html"
+  tasks:
+    - name: Set GitHub status to pending
+      include_role:
+        name: post-comment
+      vars:
+        post_status:
+          state: "pending"
+          message: "{{ status_message }}"
+          context: "{{ status_context }}"
+
+    - block:
+        - name: Generate docs using tox role
+          include_role:
+            name: run-tox-multipython
+          vars:
+            envlist: "{{ toxenv | default('ALL') }}"
+            tox_environment:
+              SPHINX_OUTPUT_DIR: "{{ zuul_logs_dir }}/html"
+
+      rescue:
+        - name: Set GitHub status to failed
+          include_role:
+            name: post-comment
+          vars:
+            post_status:
+              state: "error"
+              message: "{{ status_message }}"
+              context: "{{ status_context }}"
+
+        - name: Failure message
+          fail:
+            msg: Documentation generation failed. See above.
+
+    - name: Determine zuul_log_url
+      include_role:
+        name: zuul-set-log-url
+
+    - name: Add GitHub status with link to documentation
+      include_role:
+        name: post-comment
+      vars:
+        post_comment: "Preview available at: {{ preview_url }}"
+        post_status:
+          state: "success"
+          message: "{{ status_message }}"
+          url: "{{ preview_url }}"
+          context: "{{ status_context }}"

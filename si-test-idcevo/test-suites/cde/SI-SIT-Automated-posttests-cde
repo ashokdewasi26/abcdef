@@ -1,0 +1,7 @@
+si-test-idcevo/si_test_package_common
+!!si-test-idcevo/si_test_package_common/posttests/posttests_trace_load_monitoring_tests.py
+si-test-idcevo/si_test_package_basic
+core-test-suite
+!!core-test-suite/posttests/posttests_extract_metrics_tests.py
+!!core-test-suite/posttests/posttests_post_crash_tests.py
+!!core-test-suite/posttests/posttests_post_recovery_event_tests.py

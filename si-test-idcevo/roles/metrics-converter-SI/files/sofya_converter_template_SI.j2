@@ -1,0 +1,90 @@
+{% macro check_json_null(value) %}
+    {% if value == 'null' %}
+    null
+    {% else %}
+    {{ value | tojson_np }}
+    {% endif %}
+{% endmacro %}
+{% macro process_list(value) %}
+    {% if value | length > 0 and value != 'null' %}
+    {% set val_list = value.replace('[', '').replace(']', '').split(',') %}
+    {% if val_list | length == 1 and val_list[0] == "" %}
+        []
+    {% else %}
+    [{% for val in val_list %}
+    "{{ val.strip().replace("'", '') }}"{{ "," if not loop.last else "" }}
+    {% endfor %}]
+    {%endif %}
+    {% else %}
+    null
+    {% endif %}
+{% endmacro %}
+{%- macro process_dict(dict) -%}
+    {%- if dict | length > 0 and dict != 'null' -%}
+    {%- set items = dict.replace('{', '').replace('}', '').split(',') -%}
+    {
+        {%- for item in items -%}
+        {%- set key, val = item.replace("'", '').split(':') -%}
+        "{{ key }}":"{{ val }}"{{ "," if not loop.last else "" }}
+        {%- endfor -%}
+    }
+    {%- else -%}
+    null
+    {%- endif -%}
+{%- endmacro -%}
+
+    {
+    "header": {{ document.custom_vars.header | tojson_np }},
+    "scm": {
+    {% set scm = document.custom_vars.scm -%}
+    {% for key,val in scm | items -%}
+    {%- if key == "tags" -%}
+    "{{ key }}": {{ process_list(val) }}
+    {%- else -%}
+    "{{ key }}": {{ check_json_null(val) }}
+    {%- endif -%}
+    {{ "," if not loop.last else "" }}
+    {% endfor -%}
+    },
+    "ci": {{ document.custom_vars.ci | tojson_np }},
+    "af": {{ document.custom_vars.af | tojson_np }},
+    {% if document.extra_info is not defined or document.extra_info.software is not defined %}
+        "software": {
+        {% set sw = document.custom_vars.software -%}
+        {% for key,val in sw | items -%}
+        {%- if key == "additional_properties" -%}
+        "{{ key }}": {{ check_json_null(process_dict(val)) }}
+        {%- else -%}
+        "{{ key }}": {{ check_json_null(val) }}
+        {%- endif -%}
+        {{ "," if not loop.last else "" }}
+        {% endfor -%}
+        },
+        "hardware": {
+        {% set hw = document.custom_vars.hardware -%}
+        {% for key,val in hw | items -%}
+        {%- if key == "hardware_properties" -%}
+        "{{ key }}": {{ check_json_null(process_dict(val)) }}
+        {%- else -%}
+        "{{ key }}": {{ val | tojson_np }}
+        {%- endif -%}
+        {{ "," if not loop.last else "" }}
+        {% endfor -%}
+        },
+    {% else %}
+        {% for entry, values in document.extra_info | items %}
+            "{{ entry }}": {
+            {% for key,val in values | items %}
+                {% if key == 'hardware_properties' or key == 'additional_properties' %}
+                "{{ key }}": "{{ val }}"
+                {% else %}
+                "{{ key }}": {{ check_json_null('null' if val=='' else val) }}
+                {% endif %}
+                {{ "," if not loop.last else "" }}
+            {% endfor %}
+            },
+        {% endfor %}
+    {% endif %}
+    "organisation": {{ document.custom_vars.organisation | tojson_np }},
+    "measurements": {{ document.measurements | tojson_np }}
+    }

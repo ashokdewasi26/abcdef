@@ -1,0 +1,164 @@
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-base
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-env
+    required-projects:
+      - idcevo/si-test-idcevo
+    pre-run:
+      - playbooks/build-tee-test-config/si-test-run-build-tee.yaml
+    vars:
+      build_test_suite_folder: "{{ product_type }}"
+      enable_repo_sync: true
+      mtee_apinext_repo_version: "master"
+      src_dir: "{{ zuul_root_dir }}/{{ zuul.project.src_dir }}"
+      si_test_idcevo_base_repo: cc-github.bmwgroup.net/idcevo/si-test-idcevo
+      si_test_idcevo_src_dir: |-
+        {{ zuul_root_dir }}/{{ zuul.projects[si_test_idcevo_base_repo].src_dir }}
+      tee_test_suite: "SI"
+      dltlyse_plugins_version: "686e84f24a4772581cc6a4077cec7c40deaf9a6c" # TEMP_PIN
+      # SI Staging variables - configurable and dealt with on this repo
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will not install the test-suites and test packages, just installs the repo into the docker
+      sysman_testing_version: ""
+      deletion_handler_version: ""
+      system_telemetry_version: ""
+      partition_manager_version: ""
+      rsu_flasher_tool_version: ""
+      cde_launcher_app_version: ""
+      bat_automation_tests_systemsw_version: ""
+      bat_automation_tests_version: ""
+      rse_launcher_app_version: ""
+      # Flag to install si-test-idcevo test packages and test-suites configured on
+      #  "/playbooks/build-tee-test-config/templates/tests-config.yaml.j2"
+      #  with [si_test_idcevo_si_version] or 'master' by default
+      install_si_tests_idcevo: false
+      # List of collector defined in reportings/vars/collector_suites.yaml
+      collector_suite: "{{ tee_test_suite }}"
+      # Upload results to jira
+      enable_jira_xrayctl_upload: false
+      xrayctl_upload_config_path: "playbooks/reporting/files/job_config_si_cde.yaml"
+      mtee_tests_xrayctl_upload_config_path_remote_src: true
+      mtee_tests_xrayctl_upload_config_path: "{{ src_dir }}/{{ xrayctl_upload_config_path }}"
+      # Publish kpi to influx db
+      kpi_upload: false
+      # Appium variables
+      # include_appium: false
+      # appium_server_version: "v1.22.3-p6"
+      # How to test a dirty meta-idcevo image
+      # build_artifacts_file_url: "https://idcevo.artifactory.cc.bmwgroup.net/artifactory/idcevo-platform-build-fg/check/github/idcevo/meta-idcevo/3278/2024-04-16-13-33-06/build_artifacts.yaml"
+      disable_recovery_actions: false
+      # Enable git-lfs
+      has_git_lfs: true
+      enable_job_failure_analyser: true  # Creates overview of failures in zuul-build-result-page
+      # Split dlt file into smaller chunks
+      split_full_dlt_file: true
+      dlt_data_chunks: 199  # size of files in MB
+      dlt_file_pattern: '.*_full_trace.*\.dlt'  # regex pattern for DLT file
+      compress_dlt_files: true  # Compress the dlt files and clean up
+    post-run:
+      - playbooks/reporting/collect-build-env.yaml
+      - playbooks/reporting/report-metrics.yaml
+      - playbooks/split_and_compress.yaml
+      - playbooks/filter-tee-xml-reporting.yaml
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-base
+    vars:
+      tee_test_suite: "SI-SIT-Automated"
+      install_si_tests_idcevo: true
+      download_ver_gen: true
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    timeout: 18000 # 5h
+    vars:
+      tee_test_suite: "SI"
+      partition_manager_version: "master"
+      # should_prepare_pdx_urls: true
+      # rsu_flasher_tool_version: "master"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-long
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    timeout: 28800 # 8h
+    vars:
+      tee_test_suite: "SI-long"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-staging
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-staging"
+      si_test_idcevo_si_version: "pull/{{ zuul.change }}/head" # This will install current PR changes
+      bat_automation_tests_systemsw_version: "si_job_ready"
+      bat_automation_tests_version: "master"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-diag
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-diag"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated-domains
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-SIT-Automated-domains"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-performance
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    timeout: 7200 # 2h
+    vars:
+      tee_test_suite: "SI-performance"
+      include_appium: true
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-performance
+    parent: sofya-cdh-ingest
+    timeout: 7200 # 2h
+    vars:
+      sofya_enabled: true
+      sofya_ignore_errors: false
+      sofya_ingest:
+        - kinesis_chunksize: 10
+          kinesis_pipeline: ito-sofya-resource_consumption-src-prod-p
+          sofya_aws_profile: sofya-swf-prod
+          sofya_lib_version: 0.3.8
+          sofya_lib_module: sofya_lib.projects.resource_consumption.main
+          sofya_in_dir: "{{ zuul_logs_dir }}/SOFYA"
+          sofya_in_glob: "*.json"
+      use_proxy: true
+    post-run:
+      - playbooks/metrics-converter-SI/run-metrics-converter-SI.yaml
+
+- job:
+    name: ta-cde-hw-mtf3-cde-SI-PDX-flashing-stress
+    timeout: 43200 # 12h
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    vars:
+      tee_test_suite: "PDX-stress"
+      should_prepare_pdx_urls: True
+      rsu_flasher_tool_version: "master"
+      svt_file_name_pattern_pdx: "svt_CDE*.xml"
+      svt_with_switch_file_name_pattern_pdx: "svt_CDE*.xml"
+      svt_without_switch_file_name_pattern_pdx: "svt_CDE*.xml"
+      pdx_file_name_pattern_pdx: "CDE_*.pdx"
+      smi_file_name_pattern_pdx: "CDE*.smi"
+      job_environment:
+        TCP_TRACE: "false"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-lifecycle
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    timeout: 10800 # 3h
+    vars:
+      tee_test_suite: "SI-lifecycle"
+
+- job:
+    name: ta-cde-hw-mtf3-flash-and-validate-cde-SI-android
+    parent: ta-cde-hw-mtf3-flash-and-validate-cde-SI-SIT-Automated
+    vars:
+      tee_test_suite: "SI-android"
+      include_appium: true
+      cde_launcher_app_version: "UI_Tests_vcar" # Pinned version due to CDE Launcher App Tests

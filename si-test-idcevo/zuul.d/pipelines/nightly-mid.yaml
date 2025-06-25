@@ -1,0 +1,23 @@
+- project:
+    nightly-mid: # This pipeline is executed at 21:00 UTC
+      jobs:
+        - ee25-traas-Rack-Health-CTW-CR-001
+        - ee25-traas-Rack-Health-CTW-CR-002
+        - ee25-traas-Rack-Health-CTW-CR-003
+        - ee25-traas-Rack-Health-CTW-CR-004
+        - ee25-traas-Rack-Health-CTW-CR-005
+        - ee25-traas-Rack-Health-CTW-CR-006
+        - ee25-traas-Rack-Health-CTW-CR-007
+        - ee25-traas-Rack-Health-CTW-CR-008
+        - ee25-traas-Rack-Health-CTW-CR-009
+        - ee25-traas-Rack-Health-CTW-CR-010
+        - ee25-traas-Rack-Health-CTW-CR-011
+        - ee25-traas-Rack-Health-CTW-CR-012
+        - ee25-traas-Rack-Health-CTW-CR-013
+        - ee25-traas-SI-Perso: &traas_upload_jira
+            vars:
+              enable_jira_xrayctl_upload: true
+        - ee25-traas-SI-Perso-Stability
+        - ee25-traas-SI-Spider:
+            vars:
+              enable_jira_xrayctl_upload: true

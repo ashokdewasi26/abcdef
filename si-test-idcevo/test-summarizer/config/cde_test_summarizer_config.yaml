@@ -1,0 +1,50 @@
+jira_url: "https://jira.cc.bmwgroup.net/"
+test_plans:
+  # CDE
+  - issue: "IDCEVODEV-161762"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI"
+
+  - issue: "IDCEVODEV-169588"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-SIT-Automated"
+
+  - issue: "IDCEVODEV-189781"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-long"
+
+  - issue: "IDCEVODEV-214534"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-diag"
+
+  - issue: "IDCEVODEV-216245"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-SIT-Automated-domains"
+
+  - issue: "IDCEVODEV-274163"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-performance"
+
+  - issue: "IDCEVODEV-277505"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-PDX-flashing-stress"
+
+  - issue: "IDCEVODEV-448752"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "CDE-SI-android"
+
+publisher:
+  confluence:
+    publish: true
+    space_key: "idcevo"
+    parent_page_name: "CDE SIT results"
+    title: "CDE SIT results"
+    confluence_wiki: "https://confluence.cc.bmwgroup.net/"

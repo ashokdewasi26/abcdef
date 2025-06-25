@@ -1,0 +1,207 @@
+version: "2.0"
+
+repositories:
+  functional_tests:
+    type: static_assign
+    folder: Functional tests
+    key: categorization
+    value: functional
+    subfolders: &_jira_subfolder
+      jira_meta_data_feature_cluster:
+        type: dynamic_assign
+        key: ["traceability", "rse26", "FEATURE"]
+        fetch_jira_meta_data_feature_cluster: true
+        subfolders:
+          jira_feature_summary:
+            type: dynamic_assign
+            key: ["traceability", "rse26", "FEATURE"]
+            fetch_jira_issue_summary: true
+            subfolders:
+              jira_subfeature_summary:
+                type: dynamic_assign
+                key: ["traceability", "rse26", "SUBFEATURE"]
+                fetch_jira_issue_summary: true
+
+  integration_tests:
+    type: static_assign
+    folder: Integration Tests
+    key: categorization
+    value: integration
+    subfolders:
+      domain:
+        type: dynamic_assign
+        key: domain
+        subfolders:
+          component:
+            type: dynamic_assign
+            key: component
+
+  non_functional_tests:
+    type: static_assign
+    folder: Non-Functional Tests
+    key: categorization
+    value: non-functional
+    subfolders: {}
+
+jobs:
+  .base: &base
+    target: rse26
+    project_key: IDCEVODEV
+    test_plan_key: <Please define it for each job>
+    build_env_info: &base_build_env_info
+      env_file: 'build\.env'
+      timestamp_files:
+        - 'build\.env'
+        - test_results_simple.html
+      version_info_xml: "^targetmanager.*_test_results.xml"
+      ignore_gl_version_parse_error: False
+    test_exec_render_info: &base_test_exec_render_info
+      summary_template: "{target_upper} - {job} - {gl_version_short}"
+      environments_template:
+        - build-snapshot
+      revision_template: "{gl_version_short}"
+      description_template: &base_description_template
+        job_template: |
+          Job: {job_url}
+          Job build tag: {job_build_tag}
+          Console log: {job_output}
+          Result html: {result_html}
+          Change url: {change_url}
+        env_template: "{build_env}"
+        extra_template: ""
+    patch_test_run_todo: true
+    patch_test_run_todo_status: "ABORTED"
+    update_test:
+      policy: "sequential"
+      request_duration: 0.1
+      link_test:
+        enable: true
+        internal_link:
+          relationship: Test
+    junit_xml_results: &_common_junit_xml_results
+      dltlyse_live:
+        filename: "posttest_live_[a-zA-Z0-9]*_test_results.xml"
+      posttest:
+        filename: '^posttest_targetmanager.*_results_filtered\.xml'
+      coredump_status:
+        filename: "convert_dumps_results.xml"
+    upload_skipped_test_cases: false
+    custom_fields:
+      - name: "Meta Data"
+        fill_type: meta_data_assign
+        item_names:
+          - "component"
+      - name: "Variant 3"
+        fill_type: fixed_value
+        value: "Already automated"
+        option_check: true
+      - name: "Priority"
+        fill_type: mapping
+        value_mapping:
+          "1": "High"
+          "2": "Medium"
+          "3": "Low"
+      - name: "Categorization"
+        fill_type: mapping
+        junit_metadata_field: testtype
+        value_mapping:
+          "functional": "SWE.6"
+          "non-functional": "SYS.4"
+          "integration": "SWE.5"
+      - name: "Project Specific Labels"
+        fill_type: mapping
+        junit_metadata_field: asil
+        value_mapping:
+          "QM": "ASIL-QM"
+          "A": "ASIL-A"
+          "B": "ASIL-B"
+          "C": "ASIL-C"
+          "D": "ASIL-D"
+          "A(B)": "ASIL-A(B)"
+          "A(C)": "ASIL-A(C)"
+          "A(D)": "ASIL-A(D)"
+          "B(C)": "ASIL-B(C)"
+          "B(D)": "ASIL-B(D)"
+          "C(D)": "ASIL-C(D)"
+      - name: "Domain"
+        fill_type: copy
+        junit_metadata_field: domain
+      - name: "Other Text"
+        fill_type: copy
+        junit_metadata_field: othertext
+        option_check: false
+      - name: "Security Level"
+        fill_type: fixed_value
+        value: "Default"
+        option_check: true
+      - name: "Team"
+        fill_type: copy
+        junit_metadata_field: team
+  base_si_tests_rse26: &base_si_tests_rse26
+    <<: *base
+    junit_xml_results:
+      rse26:
+        filename: '^targetmanager.*_results_filtered\.xml'
+      <<: *_common_junit_xml_results
+    attachment:
+      prefix_template: "rse26_{job}_{job_build_tag}_{build_short}"
+      paths:
+        - "*.log"
+        - "*.xml"
+        - "*.json"
+      archive_filename: "simple_test_result.tar.bz2"
+
+  base_si_tests_rse26_with_dlt_attachment: &base_si_tests_rse26_with_dlt_attachment
+    <<: *base_si_tests_rse26
+    attachment:
+      prefix_template: "rse26_{job}_{job_build_tag}_{build_short}"
+      paths:
+        - "*.log"
+        - "split_dlt_files.tar.gz"
+        - "serial_console_IOC.log_non_verbose.dlt"
+        - "*.xml"
+        - "*.json"
+      archive_filename: "simple_test_result.tar.bz2"
+
+
+# RSE26 - Mainline SI jobs
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-139554
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-SIT-Automated:
+    <<: *base_si_tests_rse26_with_dlt_attachment
+    test_plan_key: IDCEVODEV-139555
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-stability:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-139556
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-performance:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-143702
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-long:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-151513
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-staging:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-139552
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-diag:
+    <<: *base_si_tests_rse26_with_dlt_attachment
+    test_plan_key: IDCEVODEV-166897
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-SIT-Automated-domains:
+    <<: *base_si_tests_rse26_with_dlt_attachment
+    test_plan_key: IDCEVODEV-216242
+
+  ta-rse26-hw-mtf3-rse26-SI-PDX-flashing-stress:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-277506
+
+  ta-rse26-hw-mtf3-flash-and-validate-rse26-SI-android:
+    <<: *base_si_tests_rse26
+    test_plan_key: IDCEVODEV-495913

@@ -1,0 +1,258 @@
+- job:
+    name: idcevo-pu2507-userdebug-SIT-Automated
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-SIT-Automated test-suite.
+    vars:
+      tee_test_suite: "SI-SIT-Automated"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+    nodeset:
+      nodes:
+        name: 160gb_storage_nodes
+        label: idcevo-ubuntu2204-16-core
+        # We are overiding this label due to base node only having 80GB of storage and this having 160GB
+
+- job:
+    name: idcevo-pu2507-user-SI
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI test-suite.
+    vars:
+      tee_test_suite: "SI"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-performance
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-performance test-suite.
+    vars:
+      tee_test_suite: "SI-performance"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-stability
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-stability
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-stability test-suite.
+    vars:
+      tee_test_suite: "SI-stability"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-diag
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-diag
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-diag test-suite.
+    vars:
+      tee_test_suite: "SI-diag"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-performance-monitoring
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-performance-monitoring
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-performance-monitoring test-suite.
+    vars:
+      tee_test_suite: "SI-performance-monitoring"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-android
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-android
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-android test-suite.
+    vars:
+      tee_test_suite: "SI-android"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-PDX-flashing-stress
+    parent: ta-idcevo-hw-mtf3-IDCevo-SI-PDX-flashing-stress
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the PDX-stress test-suite.
+    vars:
+      tee_test_suite: "PDX-stress"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+      svt_file_name_pattern_pdx: "SVT_IDCEVO-WITHOUT_SWITCH.xml"
+
+- job:
+    name: idcevo-pu2507-user-SI-long
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-long
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-long test-suite.
+    vars:
+      tee_test_suite: "SI-long"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-lifecycle
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-lifecycle
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-lifecycle test-suite.
+    vars:
+      tee_test_suite: "SI-lifecycle"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-kpi-reboots
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-kpi-reboots
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-kpi-reboots test-suite.
+    vars:
+      tee_test_suite: "SI-kpi-reboots"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-production
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-production
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-production test-suite.
+    vars:
+      tee_test_suite: "SI-production"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+      svt_file_name_pattern_pdx: "SVT_IDCEVO-WITHOUT_SWITCH.xml"
+
+- job:
+    name: idcevo-pu2507-user-SI-Multi-Coding-NA
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-Multi-Coding-NA
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-Multi-Coding-NA test-suite.
+    vars:
+      tee_test_suite: "SI-multi-coding-na"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+      svt_file_name_pattern_pdx: "SVT_IDCEVO-WITHOUT_SWITCH.xml"
+
+- job:
+    name: idcevo-pu2507-user-SI-boot-stability
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-boot-stability
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-boot-stability test-suite.
+    vars:
+      tee_test_suite: "SI-boot-stability"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-staging
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-staging
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-staging test-suite.
+    vars:
+      tee_test_suite: "SI-staging"
+      aosp_build_type_ta: "userdebug"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-SI-STR
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-STR
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-STR test-suite.
+    vars:
+      tee_test_suite: "SI-STR"
+      sysman_testing_version: "master"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-user-STR-SIT-Automated
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-STR-SIT-Automated
+    description: |
+      This job performs the flash of the user build for pu2507 and
+      runs the SI-STR-SIT-Automated test-suite.
+    vars:
+      tee_test_suite: "SI-STR-SIT-Automated"
+      sysman_testing_version: "master"
+      aosp_build_type_ta: "user"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"
+      mtf_config:
+        queue: idcevo_ees25_without_switch # For PU2507 to avoid running on 506
+
+- job:
+    name: idcevo-pu2507-userdebug-SI-SIT-Automated-domains
+    parent: ta-idcevo-hw-mtf3-flash-and-validate-idcevo-SI-SIT-Automated-domains
+    description: |
+      This job performs the flash of the userdebug build for pu2507 and
+      runs the SI-SIT-Automated-domains test-suite.
+    vars:
+      tee_test_suite: "SI-SIT-Automated-domains"
+      branch_node0: "idcevo-pu2507"
+      android_branch: "pu2507"

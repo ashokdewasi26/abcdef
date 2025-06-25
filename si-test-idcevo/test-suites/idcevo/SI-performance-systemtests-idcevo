@@ -1,0 +1,4 @@
+si-test-idcevo/si_test_package_android/systemtests/validate_apps_launching_tests.py
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_performance
+si-test-idcevo/si_test_package_performance_monitoring/systemtests/reboot_measurements_tests.py

@@ -1,0 +1,23 @@
+- job:
+    name: build-docs
+    parent: base-ta-idcevo-hw-mtf3
+    run: playbooks/documentation/build-documentation.yaml
+    nodeset:
+      nodes:
+        - name: ubuntu20_04
+          label: generic-ubuntu2004-2-core
+    vars:
+      toxenv: "docs"
+      use_proxy: true
+
+- job:
+    name: build-push-docs
+    parent: base-ta-idcevo-hw-mtf3
+    run: playbooks/documentation/build-and-push-documentation.yaml
+    nodeset:
+      nodes:
+        - name: ubuntu20_04
+          label: generic-ubuntu2004-2-core
+    vars:
+      toxenv: "docs"
+      use_proxy: true

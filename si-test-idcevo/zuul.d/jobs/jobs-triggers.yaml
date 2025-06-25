@@ -1,0 +1,54 @@
+# Example of tags we receive and want to parse
+#
+# nightly/idcevo/rse26-mainline/24w18.1-1
+# nightly/idcevo/cde-mainline/24w18.1-1
+# nightly/idcevo/idcevo-mainline/24w18.1-1
+#
+# All ECUs will fetch from idcevo folder.
+#
+# Playbook 'check_nightly_post_tag' will set the var triggered_date_pattern with the date pattern: Eg.: 24w18.1-1
+
+- job:
+    name: base_tag_trigger
+    vars:
+      build_frequency: "nightly"
+      build_branch: "master"
+      tag_pattern: "{{ build_frequency }}/idcevo/{{ build_branch }}/"  # Example: nightly/idcevo/master/24w17.2-3
+    run:
+      - playbooks/check_nightly_post_tag.yaml
+    required-projects:
+      - idcevo/si-test-idcevo
+
+
+# ------------------ IDCEVO ---------------------------
+- job:
+    name: idcevo_tag_trigger_mainline
+    parent: base_tag_trigger
+    vars:
+      build_branch: "idcevo-mainline"
+
+- job:
+    name: idcevo_tag_trigger_pu2507
+    parent: base_tag_trigger
+    vars:
+      build_branch: "idcevo-pu2507"
+
+# ------------------ RSE26 ---------------------------
+- job:
+    name: rse_tag_trigger_mainline
+    parent: base_tag_trigger
+    vars:
+      build_branch: "rse26-mainline"
+
+# ------------------ CDE ---------------------------
+- job:
+    name: cde_tag_trigger_mainline
+    parent: base_tag_trigger
+    vars:
+      build_branch: "cde-mainline"
+
+- job:
+    name: cde_tag_trigger_i330
+    parent: base_tag_trigger
+    vars:
+      build_branch: "cde-pu2607_i330"

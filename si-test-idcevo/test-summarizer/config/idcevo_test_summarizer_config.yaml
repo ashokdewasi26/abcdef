@@ -1,0 +1,118 @@
+jira_url: "https://jira.cc.bmwgroup.net/"
+test_plans:
+  # IDCEVO
+  - issue: "IDCEVODEV-10943"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-SIT-Automated"
+
+  - issue: "IDCEVODEV-15657"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-performance"
+
+  - issue: "IDCEVODEV-15682"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-stability"
+
+  - issue: "IDCEVODEV-45506"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-diag"
+
+  - issue: "IDCEVODEV-47733"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-performance-monitoring"
+
+  - issue: "IDCEVODEV-51789"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-android"
+
+  - issue: "IDCEVODEV-68689"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-domains"
+
+  - issue: "IDCEVODEV-74451"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-PDX-flashing-stress"
+
+  - issue: "IDCEVODEV-77302"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI"
+
+  - issue: "IDCEVODEV-88949"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-long"
+
+  - issue: "IDCEVODEV-120045"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-lifecycle"
+
+  - issue: "IDCEVODEV-155143"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-kpi-reboots"
+
+  # This job is currently disabled
+  # - issue: "IDCEVODEV-145361"
+  #   delta_time: 0
+  #   fail_rate_delta_time: 7
+  #   suite: "IDCEVO-SI-rtos-crash-cases"
+
+  - issue: "IDCEVODEV-161687"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-production"
+
+  - issue: "IDCEVODEV-216232"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-SIT-Automated-domains"
+
+  # This job is currently disabled
+  # - issue: "IDCEVODEV-275028"
+  #   delta_time: 0
+  #   fail_rate_delta_time: 7
+  #   suite: "IDCEVO-SI-domains-sys-sw"
+
+  - issue: "IDCEVODEV-291778"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-Multi-Coding-NA"
+
+  - issue: "IDCEVODEV-321257"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-Multi-Coding-G"
+
+  - issue: "IDCEVODEV-302014"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-SI-GED4K"
+
+  # This job is currently disabled
+  # - issue: "IDCEVODEV-438810"
+  #   delta_time: 0
+  #   fail_rate_delta_time: 7
+  #   suite: "IDCEVO-SI-STR"
+
+  - issue: "IDCEVODEV-443812"
+    delta_time: 0
+    fail_rate_delta_time: 7
+    suite: "IDCEVO-STR-SIT-Automated"
+
+publisher:
+  confluence:
+    publish: true
+    space_key: "idcevo"
+    parent_page_name: "IDCEVO SIT results"
+    title: "IDCEVO SIT results"
+    confluence_wiki: "https://confluence.cc.bmwgroup.net/"

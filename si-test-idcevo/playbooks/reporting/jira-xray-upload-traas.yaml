@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - name: Upload test results to jira xray through xrayctl
+      include_role:
+        name: upload-test-result-xrayctl-traas
+      when: (enable_jira_xrayctl_upload | default(false))

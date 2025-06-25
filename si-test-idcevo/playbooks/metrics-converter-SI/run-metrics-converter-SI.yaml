@@ -1,0 +1,14 @@
+- hosts: all
+  tasks:
+    - name: Run metrics-converter role and bypass when failed
+      block:
+        - name: Run metrics-converter-SI
+          include_role:
+            name: metrics-converter-SI
+      rescue:
+        - name: Output fail status
+          debug:
+            msg: >-
+              Metrics conversion: Failed
+              metrics-converter template variables:
+              {{ metrics_envs | default('No metrics_envs defined.') }}

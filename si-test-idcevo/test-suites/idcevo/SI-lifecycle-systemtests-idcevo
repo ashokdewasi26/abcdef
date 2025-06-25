@@ -1,0 +1,16 @@
+lifecycle-components-systemtests/systemtests/boot_mode_tests.py
+lifecycle-components-systemtests/systemtests/fetrafla_mode_tests.py
+lifecycle-components-systemtests/systemtests/lifecycle_nsm_tests.py
+lifecycle-components-systemtests/systemtests/nm_kom_tests.py
+lifecycle-components-systemtests/systemtests/nm_pn_membership_tests.py
+lifecycle-components-systemtests/systemtests/nsm_garage_mode_tests.py
+lifecycle-components-systemtests/systemtests/pwf_diagnostic_functions_tests.py
+lifecycle-components-systemtests/systemtests/pwf_entertainment_mode_tests.py
+lifecycle-components-systemtests/systemtests/pwf_living_driving_tests.py
+lifecycle-components-systemtests/systemtests/pwf_parking_mode_tests.py
+lifecycle-components-systemtests/systemtests/pwf_stationary_functions_tests.py
+lifecycle-components-systemtests/systemtests/shutdown_tests.py
+lifecycle-components-systemtests/systemtests/switch_to_power_tests.py
+lifecycle-components-systemtests/systemtests/wakeup_nm_tests.py
+si-test-idcevo/si_test_package_common
+si-test-idcevo/si_test_package_lifecycle

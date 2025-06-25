@@ -1,0 +1,16 @@
+- name: Create the metric_collector env dir
+  file:
+    path: "{{ metric_collector_venv_path }}"
+    state: directory
+
+- name: Install metric collector virtual environment
+  shell: |
+    set -xe
+    python3 -m venv --clear {{ metric_collector_venv_path }}
+    {{ metric_collector_venv_path }}/bin/pip install --upgrade pip
+    {{ metric_collector_venv_path }}/bin/pip install \
+      "{{ metric_collector_package_name }}=={{ metric_collector_package_version }}"
+  args:
+    executable: /bin/bash
+  environment:
+    PIP_INDEX_URL: "{{ metric_collector_index_url }}"

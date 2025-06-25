@@ -1,0 +1,35 @@
+- name: Filter information of the DLT split files
+  shell: |
+    head -n 10 "{{ item.path }}" > tmp_file.dlt
+  args:
+    chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+
+- name: Get first message timestamp with dlt-convert
+  shell: |
+    dlt-convert -b 0 -e 0 -s tmp_file.dlt | awk '{print $3}'
+  args:
+    chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+  register: dlt_timestamp
+
+- name: Set parsed timestamp
+  set_fact:
+    dlt_timestamp_parsed: "{{ dlt_timestamp.stdout | replace('.','_') | replace(':','_') }}"
+
+- block:
+    - name: Get timestamp with dlt-convert without filtering
+      shell: |
+        dlt-convert -b 0 -e 0 -s {{ item.path }} | awk '{print $3}'
+      args:
+        chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"
+      register: full_dlt_timestamp
+
+    - name: Set parsed timestamp
+      set_fact:
+        dlt_timestamp_parsed: "{{ full_dlt_timestamp.stdout | replace('.','_') | replace(':','_') }}"
+  when: dlt_timestamp_parsed | length == 0
+
+- name: Rename DLT file with timestamp
+  shell: |
+    mv {{ item.path }} "split_dlt_file_{{ dlt_timestamp_parsed }}.dlt"
+  args:
+    chdir: "{{ zuul_logs_dir }}/test-artifacts/results/dlt_split/"

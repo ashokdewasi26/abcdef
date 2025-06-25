@@ -1,0 +1,7 @@
+metric_collector_venv_path: .test_reporting_venv
+metric_collector_package_version: "1.4.1"
+metric_collector_index_url_default:
+  "https://common.artifactory.cc.bmwgroup.net/artifactory/api/\
+  pypi/software-factory-pypi-dev/simple"
+metric_collector_index_url: "{{ pypi_repository | default(metric_collector_index_url_default) }}"
+metric_collector_package_name: metric_collector

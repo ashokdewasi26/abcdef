@@ -1,0 +1,5 @@
+!!core-test-suite/posttests/posttests_extract_metrics_tests.py
+core-test-suite
+si-test-idcevo/si_test_package_basic/posttests/posttests_selinux_tests.py
+si-test-idcevo/si_test_package_rtos/posttests/posttests_ioc_dlt_tests.py
+system-functions/posttests/system_functions_post_tests.py

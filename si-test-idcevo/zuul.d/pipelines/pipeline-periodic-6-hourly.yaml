@@ -1,0 +1,4 @@
+- project:
+    periodic-6-hourly: # This pipeline is executed four times a day: 3:00, 9:00, 15:00 and 21:00 UTC.
+      jobs:
+        - si-testing-build-tee-packaging
