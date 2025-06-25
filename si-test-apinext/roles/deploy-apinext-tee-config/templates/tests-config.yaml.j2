@@ -1,0 +1,162 @@
+
+test-suites:
+  # si-test-mgu22
+  - repo: si-test-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit487.si-test-mgu22
+{% if si_test_mgu22_refspec %}
+    version: "{{ si_test_mgu22_refspec }}"
+{% else %}
+    version: "refs/heads/master"
+{% endif %}
+    path: test-suites/  # Path where files are located in the repository
+    test-suite-list:
+      - SI
+
+tests:
+{% if si_test_mgu22_refspec %}
+  - repo: si-test-mgu22
+    component: si-test-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit487.si-test-mgu22
+    version: "{{ si_test_mgu22_refspec }}"
+    path: si_tests_mgu22/**/systemtests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 2 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: si_tests_mgu22/si_test_helpers  # Origin path of fille or directory. Path relative to package root
+      - from: si_tests_mgu22/si_tests_data  # Origin path of fille or directory. Path relative to package root
+    type: systemtests
+
+  - repo: si-test-mgu22
+    component: si-test-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit487.si-test-mgu22
+    version: "{{ si_test_mgu22_refspec }}"
+    path: si_tests_mgu22/**/posttests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 2 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: si_tests_mgu22/si_test_helpers  # Origin path of fille or directory. Path relative to package root
+      - from: si_tests_mgu22/si_tests_data  # Origin path of fille or directory. Path relative to package root
+    type: posttests
+{% endif %}
+
+{% if lsmf_testing_refspec %}
+  - repo: lsmf_testing
+    component: system-functions-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit475.lsmf.testing
+    version: "{{ lsmf_testing_refspec }}"
+    path: systemtests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 1 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: systemtests/data  # Origin path of fille or directory. Path relative to package root
+        to: system-functions-mgu22/systemtests
+      - from: systemtests/system_functions_helpers  # Origin path of fille or directory. Path relative to package root
+        to: system-functions-mgu22/systemtests
+    type: systemtests
+
+  - repo: lsmf_testing
+    component: system-functions-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit475.lsmf.testing
+    version: "{{ lsmf_testing_refspec }}"
+    path: posttests  # Glob syntax can be used to match all subfolders recursively
+    path_level: 1 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: posttests/*  # Origin path of fille or directory. Path relative to package root
+        to: system-functions-mgu22/posttests
+    type: posttests
+{% endif %}
+
+{% if sysman_testing_refspec %}
+  - repo: sysman_testing
+    component: lifecycle-components-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "lifecycle-components/systemtests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: lifecycle-components-systemtests/systemtests
+    type: systemtests
+
+  - repo: sysman_testing
+    component: lifecycle-components-posttests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "lifecycle-components/posttests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: lifecycle-components-posttests/posttests
+    type: posttests
+
+  - repo: sysman_testing
+    component: diagnostic-log-trace-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "diagnostic-log-trace/systemtests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: diagnostic-log-trace-systemtests/systemtests
+    type: systemtests
+
+  - repo: sysman_testing
+    component: diagnostic-log-trace-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "diagnostic-log-trace/posttests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: diagnostic-log-trace-systemtests/posttests
+    type: posttests
+
+  - repo: sysman_testing
+    component: partition-manager-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "partition-manager/systemtests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: partition-manager-systemtests/systemtests
+    type: systemtests
+
+  - repo: sysman_testing
+    component: recovery-manager-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "recovery-manager/systemtests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: recovery-manager-systemtests/systemtests
+    type: systemtests
+
+  - repo: sysman_testing
+    component: recovery-manager-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "recovery-manager/posttests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: recovery-manager-systemtests/posttests
+    type: posttests
+
+  - repo: sysman_testing
+    component: display-manager-systemtests
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    update_submodules: False
+    path: "display-manager/systemtests/gen22/"  # Glob syntax can be used to match all subfolders recursively
+    path_level: 0 # Number of relative path levels to keep in final packaging, counting from file to root. Defaults to zero.
+    extra_files:
+      - from: helpers/*  # Origin path of fille or directory. Path relative to package root
+        to: display-manager-systemtests/systemtests
+    type: systemtests
+{% endif %}

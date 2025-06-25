@@ -1,0 +1,7 @@
+- project:
+    check-all:
+      jobs:
+        - IDC23_Android_Prod_SI_testing
+        - PaDi_Android_Prod_SI_testing
+        - IDC23_MINI_Android_Prod_SI_testing
+        - noop

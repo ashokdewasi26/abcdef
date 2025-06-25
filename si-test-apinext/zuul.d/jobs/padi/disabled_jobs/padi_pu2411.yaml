@@ -1,0 +1,43 @@
+- project:
+    nightly-post:
+      jobs:
+        - noop
+#        - PaDi_pu2411_ProdSI_trigger
+#        # xray upload
+#        - PaDi_Android_Stress_testing-pu2411: &padi_pu2411_config
+#            dependencies:
+#              - PaDi_pu2411_ProdSI_trigger
+#            vars:
+#              xrayctl_upload: true
+#              nightly_pattern: "{{ triggered_nightly_pattern }}"
+#        - run_prod_si_ecu_reboot_rse_padi-pu2411: *padi_pu2411_config
+#        - run_prod_si_pdx_rse_padi_china-pu2411: *padi_pu2411_config
+#        - run_prod_si_pdx_rse_padi_row-pu2411: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-1: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-2: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-3: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-4: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-5: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-6: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-7: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-8: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-9: *padi_pu2411_config
+#        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-10: *padi_pu2411_config
+#        - RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2411: *padi_pu2411_config
+#        - RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2411: *padi_pu2411_config
+#        # xray upload and metrics upload
+#        - ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2411: &padi_pu2411_metrics_config
+#            dependencies:
+#              - PaDi_pu2411_ProdSI_trigger
+#            vars:
+#              xrayctl_upload: true
+#              publish_metrics: true
+#              nightly_pattern: "{{ triggered_nightly_pattern }}"
+#        - ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2411: *padi_pu2411_metrics_config
+#        - ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2411: *padi_pu2411_metrics_config
+#        - PaDi_Android_Prod_SI_testing-pu2411: *padi_pu2411_metrics_config
+#        - ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2411: *padi_pu2411_metrics_config
+#        - ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2411: *padi_pu2411_metrics_config
+#        - PaDi_Android_Prod_SI_testing-hdmi-pu2411: *padi_pu2411_metrics_config
+#        - run_si_padi_performance_row_D-pu2411: *padi_pu2411_metrics_config
+#        - run_si_padi_performance_china_D-pu2411: *padi_pu2411_metrics_config

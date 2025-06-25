@@ -1,0 +1,172 @@
+# Temporary jobs. Delete when we no longer have the pu2407 branch active
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2407
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2407
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI-long
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2407
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: PaDi_Android_Prod_SI_testing-pu2407
+    parent: PaDi_Android_Prod_SI_testing
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_ecu_reboot_rse_padi-pu2407
+    parent: run_prod_si_ecu_reboot_rse_padi
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_pdx_rse_padi_china-pu2407
+    parent: run_prod_si_pdx_rse_padi_china
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_pdx_rse_padi_row-pu2407
+    parent: run_prod_si_pdx_rse_padi_row
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-1
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT
+    timeout: 9000 # 2.5h
+    vars:
+      branch_ta: pu2407
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-1
+    timeout: 9900
+    vars:
+      minutes_to_wait: 15
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-3
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 10800
+    vars:
+      minutes_to_wait: 30
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-4
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 11700
+    vars:
+      minutes_to_wait: 45
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-5
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 12600
+    vars:
+      minutes_to_wait: 60
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-6
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 13500
+    vars:
+      minutes_to_wait: 75
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-7
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 14400
+    vars:
+      minutes_to_wait: 90
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-8
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 15300
+    vars:
+      minutes_to_wait: 105
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-9
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 16200
+    vars:
+      minutes_to_wait: 120
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-10
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2
+    timeout: 17100
+    vars:
+      minutes_to_wait: 135
+
+- job:
+    name: PaDi_Android_Stress_testing-pu2407
+    parent: PaDi_Android_Stress_testing
+    vars:
+      branch_ta: pu2407
+
+# PaDi test rack setup
+
+- job:
+    name: RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2407
+    parent: RSE22_PADI_pdx_TRAAS_SV_flash_test
+    vars:
+      branch_ta: pu2407
+      old_gl_branch: "release-pu2407"
+
+- job:
+    name: RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2407
+    parent: RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance
+    vars:
+      branch_ta: pu2407
+
+ # PaDi performance jobs
+
+- job:
+    name: run_si_padi_performance_row_D-pu2407
+    parent: run_si_padi_performance_row_D
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 120
+
+- job:
+    name: run_si_padi_performance_china_D-pu2407
+    parent: run_si_padi_performance_china_D
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 120
+
+ # PaDi HDMI variant
+
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2407
+    parent: ta-hw-mtf-padi-flash-and-validate-SI-hdmi
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2407
+    parent: ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: PaDi_Android_Prod_SI_testing-hdmi-pu2407
+    parent: PaDi_Android_Prod_SI_testing-hdmi
+    vars:
+      branch_ta: pu2407

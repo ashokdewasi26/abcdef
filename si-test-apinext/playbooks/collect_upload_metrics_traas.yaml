@@ -1,0 +1,153 @@
+- name: Metrics collection and upload
+  hosts: all
+  roles:
+    - role: zuul-set-log-url
+    - role: ensure-testing-reporting
+  vars:
+    zuul_env_file: "{{ zuul_logs_dir }}/jenkins_job_info.env"
+    results_path: "{{ zuul_logs_dir }}/results/testrun/extracted_files"
+    lc_tarball_file: "{{ results_path }}/lifecycles_analyzer_mgu22_{{ ecu_name }}.tgz"
+    metric_collector_padi_bin_path: "{{ test_reporting_venv_path }}/bin/metric-collector-padi"
+  tasks:
+    - name: Prepare, collect and upload metrics
+      block:
+        - name: Check if targetmanager_test_results exists
+          stat:
+            path: "{{ zuul_logs_dir }}/targetmanager_test_results.xml"
+          register: file_targetmanager_test_results
+
+        - name: Copy targetmanager_test_results file
+          copy:
+            src: "{{ zuul_logs_dir }}/targetmanager_test_results.xml"
+            dest: "{{ zuul_logs_dir }}/results/testrun/targetmanager_test_results.xml"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+            mode: "0644"
+            remote_src: yes
+          when: file_targetmanager_test_results.stat.exists
+
+        - name: "Defining auxiliary variables to determine target_type"
+          set_fact:
+            product_idc: "{{ product_type | regex_search('(?:idc)') }}"
+            product_padi: "{{ product_type | regex_search('(?:padi)') }}"
+
+        - name: "Define product: hu"
+          set_fact:
+            product: "hu"
+          when: product_idc is match("idc")
+
+        - name: "Define product: rse"
+          set_fact:
+            product: "rse"
+          when: product_padi is match("padi")
+
+        - name: Ensure that product is defined
+          assert:
+            that:
+              - product is defined
+            fail_msg: "Product is not defined. Expected product is 'idc' or 'padi'"
+
+        - name: Generate Jenkins env file
+          copy:
+            content: |
+              ansible_host={{ ansible_facts['nodename'] }}
+              build={{ zuul.build }}
+              change_url={{ zuul.change_url }}
+              job={{ zuul.job }}
+              build_number=0
+              product_type={{ product_type }}
+              job_url={{ codecraft.base_url }}/zuul/t/{{ zuul.tenant }}/build/{{ zuul.build }}
+              build_url={{ codecraft.base_url }}/zuul/t/{{ zuul.tenant }}/build/{{ zuul.build }}
+              artifacts_url={{ zuul_log_url }}test-artifacts
+              job_output={{ zuul_log_url }}job-output.txt
+              result_html={{ zuul_log_url }}result.html
+              target_type={{ product }}
+              Image_version={{ flashfiles_url | basename }}
+            dest: "{{ zuul_env_file }}"
+            mode: "0644"
+
+        - name: Copy Jenkins env file
+          become: true
+          become_user: root
+          copy:
+            src: "{{ zuul_logs_dir }}/jenkins_job_info.env"
+            dest: "{{ zuul_logs_dir }}/results/testrun/jenkins_job_info.env"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+            mode: "0644"
+            remote_src: yes
+
+        - name: Untar lifecycles tarbal
+          become: true
+          become_user: root
+          shell: |
+            if [ -f "{{ lc_tarball_file }}" ]; then
+              tar -xvzf "{{ lc_tarball_file }}" -C "{{ results_path }}"
+            else
+              echo "{{ lc_tarball_file }} does not exist"
+            fi
+
+        - name: Check metric-collector-padi path
+          stat:
+            path: "{{ metric_collector_padi_bin_path }}"
+          register: metric_collector_padi_check
+
+        - name: Check if metric-collector-padi is installed
+          fail:
+            msg: Metric collector script is not installed
+          when: not metric_collector_padi_check.stat.exists
+
+        - name: Check collector_type and specific_collectors vars
+          fail:
+            msg: "Expected only one var but both vars were defined"
+          when: collector_type|length > 0 and specific_collectors|length > 0
+
+        - name: Write data to file using collector set
+          become: true
+          become_user: root
+          shell: |
+            "{{ metric_collector_padi_bin_path }}" \
+            --resultdir "{{ zuul_logs_dir }}"/results/testrun/ \
+            --collector-type "{{ collector_type }}" \
+            -o "{{ zuul_logs_dir }}/metrics_SI_influxdb.txt"
+          when: collector_type|length > 0
+
+        - name: Write data to file using specific collector
+          become: true
+          become_user: root
+          shell: |
+            "{{ metric_collector_padi_bin_path }}" \
+            --resultdir "{{ zuul_logs_dir }}"/results/testrun/ \
+            --collectors "{{ specific_collectors }}" \
+            -o "{{ zuul_logs_dir }}/metrics_SI_influxdb.txt"
+          when: specific_collectors|length > 0
+
+        - name: Call collector using collector set
+          become: true
+          become_user: root
+          shell: |
+            "{{ metric_collector_padi_bin_path }}" \
+            --resultdir "{{ zuul_logs_dir }}"/results/testrun/ \
+            --collector-type "{{ collector_type }}" \
+            --influxdb \
+            --database idc23_node0_prod \
+            --url http://mgu-gen22-si-metrics.bmwgroup.net:8086 \
+            --user idc_farm_monitor \
+            --influxdb-password-file "{{ ansible_user_dir }}/.influxdb.pass"
+          when: publish_metrics and collector_type|length > 0
+
+        - name: Call collector using specific collector
+          become: true
+          become_user: root
+          shell: |
+            "{{ metric_collector_padi_bin_path }}" \
+            --resultdir "{{ zuul_logs_dir }}"/results/testrun/ \
+            --collectors "{{ specific_collectors }}" \
+            --influxdb \
+            --database idc23_node0_prod \
+            --url http://mgu-gen22-si-metrics.bmwgroup.net:8086 \
+            --user idc_farm_monitor \
+            --influxdb-password-file "{{ ansible_user_dir }}/.influxdb.pass"
+          when: publish_metrics and specific_collectors|length > 0
+
+      when: collector_type|length > 0 or specific_collectors|length > 0

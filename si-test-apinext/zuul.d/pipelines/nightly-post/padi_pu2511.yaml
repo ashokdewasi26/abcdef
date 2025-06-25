@@ -1,0 +1,30 @@
+- project:
+    nightly-post:
+      jobs:
+        - PaDi_pu2511_ProdSI_trigger
+        # xray upload
+        - PaDi_Android_Prod_SI_testing-pu2511: &padi_pu2511_config
+            dependencies:
+              - PaDi_pu2511_ProdSI_trigger
+            vars:
+              xrayctl_upload: true
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+        - PaDi_Android_Stress_testing-pu2511: *padi_pu2511_config
+        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-1: *padi_pu2511_config
+        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2: *padi_pu2511_config
+        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-3: *padi_pu2511_config
+        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-4: *padi_pu2511_config
+        - ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-5: *padi_pu2511_config
+        # xray upload and metrics upload
+        - ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2511: &padi_pu2511_metrics_config
+            dependencies:
+              - PaDi_pu2511_ProdSI_trigger
+            vars:
+              xrayctl_upload: true
+              publish_metrics: true
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+        - ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2511: *padi_pu2511_metrics_config
+        - ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2511: *padi_pu2511_metrics_config
+        - PaDi_Android_Prod_SI_testing-hdmi-pu2511: *padi_pu2511_metrics_config
+        - run_si_padi_performance_row_D-pu2511: *padi_pu2511_metrics_config
+        - run_si_padi_performance_china_D-pu2511: *padi_pu2511_metrics_config

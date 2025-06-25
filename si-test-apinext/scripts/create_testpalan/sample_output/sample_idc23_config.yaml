@@ -1,0 +1,6 @@
+IDC23_Android_Prod_SI_testing-adarsh:
+  <<: *base_idc23
+  test_plan_key: ABPI-553242
+IDC23_apinext_SI_KPI_testing-adarsh:
+  <<: *base_idc23
+  test_plan_key: ABPI-553243

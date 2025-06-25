@@ -1,0 +1,9 @@
+# Add job names to this file to create test plan tickets for idc23 and padi
+#
+# All lines starting with "#" and empty lines will be ignored
+#IDC23_Android_Prod_SI_testing-adarsh
+#IDC23_apinext_SI_KPI_testing-adarsh
+#PaDi_Android_Prod_SI_testing-pu2407-adarsh
+#run_prod_si_ecu_reboot_rse_padi-pu2407-adarsh
+
+############################################# ADD JOB NAMES BELOW THIS LINE ###########################################

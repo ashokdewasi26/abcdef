@@ -1,0 +1,100 @@
+build:
+  # mtee_core
+{% if mtee_core_refspec %}
+  - repo: mtee_core
+    url: https://gerrit.cc.bmwgroup.net/node0.validation.mtee_core
+    version: "{{ mtee_core_refspec }}"
+{% endif %}
+
+  # mtee_gen22
+{% if mtee_gen22_refspec %}
+  - repo: tee
+    url: https://gerrit.cc.bmwgroup.net/node0.validation.mtee_gen22
+    version: "{{ mtee_gen22_refspec }}"
+    extra_installs:
+      - path: gen22_helpers
+      - path: resources/FA_G070.xml
+        to: resources/FA_G070.xml
+{% endif %}
+
+  # mtee_mgu22
+{% if mtee_mgu22_refspec %}
+  - repo: mtee_mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit487.mtee_mgu22
+    version: "{{ mtee_mgu22_refspec }}"
+    extra_installs:
+        - path: scripts/execute_tests.py
+        - path: scripts/helpers
+        - path: docker-compose.yml
+        - path: resources/*
+          to: resources/
+        - path: mtee_mgu22/config_parser
+{% endif %}
+
+  # dltlyse
+{% if dltlyse_refspec %}
+  - repo: dltlyse
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit098.testing.dltlyse
+    version: "{{ dltlyse_refspec }}"
+{% endif %}
+
+  # diagnose
+{% if diagnose_refspec %}
+  - repo: diagnose
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit467.diagnose
+    version: "{{ diagnose_refspec }}"
+{% endif %}
+
+  # rsu_flasher
+{% if rsu_flasher_refspec %}
+  - repo: rsu_flasher
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit467.rsu-flasher-tool
+    version: "{{ rsu_flasher_refspec }}"
+{% endif %}
+
+  # si_test_gen22
+{% if si_test_gen22_refspec %}
+  - repo: si_test_gen22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit467.si-test-gen22
+    version: "{{ si_test_gen22_refspec }}"
+{% endif %}
+
+  # si-test-mgu22
+{% if si_test_mgu22_refspec %}
+  - repo: si-test-mgu22
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit487.si-test-mgu22
+    version: "{{ si_test_mgu22_refspec }}"
+    extra_installs:
+        - path: test-suites/*
+          to: test-suites/
+        - path: resources/*
+          to: resources/
+{% endif %}
+
+{% if install_si_test_apinext_in_staging %}
+  # si-test-apinext
+  - repo: si-test-apinext
+    url: https://cc-github.bmwgroup.net/apinext/si-test-apinext.git
+    local_path: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext"
+{% endif %}
+
+{% if install_mtee_apinext_in_staging %}
+  # mtee-apinext
+  - repo: mtee-apinext
+    url: git@cc-github.bmwgroup.net:apinext/mtee-apinext.git
+    local_path: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/mtee-apinext"
+{% endif %}
+
+{% if lsmf_testing_refspec %}
+  - repo: lsmf_testing
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit475.lsmf.testing
+    version: "{{ lsmf_testing_refspec }}"
+    install: False
+{% endif %}
+
+{% if sysman_testing_refspec %}
+  - repo: sysman_testing
+    url: https://asc-repo.bmwgroup.net/gerrit/ascgit407.testing
+    version: "{{ sysman_testing_refspec }}"
+    install: False
+{% endif %}

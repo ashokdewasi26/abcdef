@@ -1,0 +1,67 @@
+################## STAGING FOR PADI ##################
+
+# Base job, only has the required/default parameters for staging, doesn't run tests
+- job:
+    name: padi-flash-and-validate-staging
+    parent: padi-base-flash-and-validate-Android-SI
+    roles:
+      - zuul: software-factory/validation-jobs
+    pre-run:
+      - playbooks/build-tee.yaml
+    vars:
+      install_build_tee: true
+      build_tee_artifacts_path: "{{ ansible_user_dir }}/tee/build/test-execution-framework.tar.gz"
+      build_tee_artifacts: "{{ build_tee_artifacts_path if install_build_tee else '' }}"
+      # "" (empty string) leaves the repos unchanged using the ones present on the image
+      # change to "refs/heads/master" to checkout master version
+      diagnose_refspec: ""
+      dltlyse_refspec: ""
+      lsmf_testing_refspec: ""
+      mtee_core_refspec: ""
+      mtee_gen22_refspec: ""
+      mtee_mgu22_refspec: ""
+      rsu_flasher_refspec: ""
+      si_test_gen22_refspec: ""
+      si_test_mgu22_refspec: ""
+      sysman_testing_refspec: ""
+      install_si_test_apinext_in_staging: true
+      install_mtee_apinext_in_staging: false
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-padi-dltlyse-plugins"
+
+# Android job, flashes and runs the tests on si-test-apinext, similar to PaDi_Android_Prod_SI_testing
+- job:
+    name: padi-android-flash-and-prod-SI-staging
+    parent: padi-flash-and-validate-staging
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      collector_type: "SI-android"
+      include_appium: true
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/padi/si_tests_mtee"
+      job_environment_base:
+        SPLIT_LOGCAT: 0
+
+# SUGGESTED TO USE - Basic SI job, flashes target and extension board, runs the test-suite SI, similar to ta-hw-mtf-padi-c1-flash-and-validate-SI
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-staging
+    parent: padi-flash-and-validate-staging
+    timeout: 30600 # 8.5h
+    vars:
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_rse22_padi-{{ branch_ta }}-pdx_{{ aosp_build_type_ta }}*.tar.gz
+      extension_board_flash: false
+      extension_board_dev_flash: true
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      job_environment:
+        RUN_SI: "true"
+        TEST_SUITE: SI
+        PDX_FLASH: "true"
+        IGNORE_DLTLYSE_LIVE_RESULTS_FAILURE: "false"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins"
+        EXTENSION_BOARD_FLASH: "{{ extension_board_flash | default(false) }}"
+        EXTENSION_BOARD_DEV_FLASH: "{{ extension_board_dev_flash | default(false) }}"
+      collector_type: "{{ job_environment.TEST_SUITE }}-android"

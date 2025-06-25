@@ -1,0 +1,211 @@
+########## IDC23 ##########
+
+- job:
+    name: si-idc23-traas-base
+    parent: ta-hw-traas-idc23-b2-flash-and-validate
+    timeout: 25200 # 7h
+    vars:
+      branch_ta: mainline
+      nightly_pattern: "*/bmw_idc23-{{ branch_ta }}"
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}*.tar.gz"
+      extra_args: "--dltlyse-plugins-list SIrack-android-dltlyse-plugins --can-interface can0"
+      ecu_name: "idc"
+      rack_tags: SITA_IDC23
+      collector_type: ""
+      specific_collectors: ""
+      publish_metrics: false  # enable or disable publish metrics to influxDB
+      flash_dev_full: "true"
+      flash_dev: "false"
+      flash_pdx: "true"
+    post-run:
+      - playbooks/collect_upload_metrics_traas.yaml
+    nodeset:
+      nodes:
+        name: traas-dispatcher
+        label: apinext-ubuntu2204-16-core
+        # We are overiding this label due to codecraft issue with muc12 provider
+        # https://support.cc.bmwgroup.net/servicedesk/customer/portal/1/CCSD-39512
+
+- job:
+    name: si-idc23-traas-node0
+    parent: si-idc23-traas-base
+    vars:
+      run_mtee_suite: "true"
+      test_suite: "SIrack"
+      test_packages: "si_test_package_basic"
+
+- job:
+    name: idc23-traas-node0-rsu-update
+    parent: si-idc23-traas-base
+    timeout: 18000 # 5h
+    vars:
+      duration: 240 # TRAAS session 4h
+      branch_ta: pu2407
+      nightly_pattern: "24w11.5-1/bmw_idc23-{{ branch_ta }}"
+      rack_tags: Rack_SITA23_15
+      run_mtee_suite: "false"
+      export_test_dir: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext"
+      run_mtee_custom: "true"
+      test_dir: "si-test-apinext"
+      test_scripts: "si-test-apinext/si_test_apinext/idc23/rsu"
+      with_phonesimu: "false"
+
+- job:
+    name: si-idc23-traas-apinext
+    parent: si-idc23-traas-base
+    vars:
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      export_test_dir: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext"
+      run_mtee_custom: "true"
+      test_dir: "si-test-apinext"
+      test_scripts: "si-test-apinext/si_test_apinext/idc23/traas"
+      extra_prepare_actions: "mtee22:custom_install:si-test-apinext;mtee:control_usb_switch:on"
+      install_target_packages: ""
+      with_phonesimu: "true"
+      collector_type: "SI-android"
+
+- job:
+    name: IDC23_traas_apinext_SI_KPI_testing
+    parent: si-idc23-traas-apinext
+    vars:
+      test_scripts: "si-test-apinext/si_test_apinext/idc23/si_kpi_tests"
+      with_phonesimu: "false"
+      rack_tags: SITA23_audio
+
+- job:
+    name: si-idc23-traas-node0-apinext
+    parent: si-idc23-traas-base
+    vars:
+      run_mtee_suite: "true"
+      test_suite: "SIrack"
+      test_packages: "si_test_package_basic"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      export_test_dir: "{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext"
+      run_mtee_custom: "true"
+      test_dir: "si-test-apinext"
+      test_scripts: "si-test-apinext/si_test_apinext/idc23/traas"
+      extra_prepare_actions: "mtee22:custom_install:si-test-apinext;mtee:control_usb_switch:on"
+      install_target_packages: ""
+      with_phonesimu: "true"
+      collector_type: "SI-android"
+      rack_tags: SITA23_audio
+
+- job:
+    name: si-idc23-traas-pdx-tests
+    parent: si-idc23-traas-base
+    vars:
+      extra_args: "--can-interface can0"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: IDC23_pdx_TRAAS_SV_flash_test
+    description: |
+      PDX flash from last SV release to daily Prod-SI build
+    parent: si-idc23-traas-pdx-tests
+    vars:
+      old_gl_branch: "release"
+      old_gl: "latest_sv_release"
+      run_flash_stress: "true"
+      test_suite: "SIrack"
+
+- job:
+    name: IDC23_pdx_TRAAS_tests_flash_stress_endurance
+    description: |
+      10x PDX flash of the Prod-SI build using TRAAS
+    parent: si-idc23-traas-pdx-tests
+    vars:
+      run_flash_endurance: "true"
+      test_suite: "SIrack"
+
+- job:
+    name: si-idc23-traas-node0-apinext-RealPhone-PORTO
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      test_scripts: "si-test-apinext/si_test_apinext/real_phone/real_phone_tests.py,si-test-apinext/si_test_apinext/idc23/traas/speech"
+      rack_tags: Rack_SITA23_04
+      with_phonesimu: "false"
+
+- job:
+    name: si-idc23-traas-node0-apinext-RealPhone-PORTO-pinned_img
+    parent: si-idc23-traas-node0-apinext-RealPhone-PORTO
+    vars:
+      nightly_pattern: "23w19.2-1/bmw_idc23-{{ branch_ta }}"
+
+#################### STABLE BRANCH ####################
+
+- job:
+    name: si-idc23-traas-pdx-tests-stable
+    parent: si-idc23-traas-pdx-tests
+    vars:
+      branch_ta: stable
+
+- job:
+    name: si-idc23-traas-node0-apinext-stable
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      branch_ta: stable
+
+#################### IDC23 Temporary jobs ####################
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_01
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_01
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_02
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_02
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_03
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_03
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_05
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_05
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_06
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_06
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_07
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_07
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_08
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_08
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_09
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_09
+
+- job:
+    name: si-idc23-traas-node0-apinext-rack-sita23_10
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}-22w39.4-1*.tar.gz"
+      rack_tags: Rack_SITA23_10

@@ -1,0 +1,1 @@
+../../si_tests_mtee/exterior_lighting_test/exterior_lighting_tests.py

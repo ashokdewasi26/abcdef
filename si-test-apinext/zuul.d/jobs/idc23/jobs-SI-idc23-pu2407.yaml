@@ -1,0 +1,273 @@
+# Temporary jobs. Delete when we no longer have the pu2407 branch active
+
+# SI
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    vars:
+      branch_ta: pu2407
+
+# SI-long
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-long
+    vars:
+      branch_ta: pu2407
+
+# SI Lifecycle
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle
+    vars:
+      branch_ta: pu2407
+
+# SI PDX flash
+- job:
+    name: run_prod_si_pdx_idc23_hu_high_C1-pu2407
+    parent: run_prod_si_pdx_idc23_hu_high_C1
+    vars:
+      branch_ta: pu2407
+
+# SI PDX flash premium sample
+- job:
+    name: run_prod_si_pdx_flash_idc23_premium_hu-pu2407
+    parent: run_prod_si_pdx_flash_idc23_premium_hu
+    vars:
+      branch_ta: pu2407
+
+# SI intensive reboot
+- job:
+    name: run_prod_si_ecu_reboot_idc23_hu_high-pu2407
+    parent: run_prod_si_ecu_reboot_idc23_hu_high
+    vars:
+      branch_ta: pu2407
+
+# Android SI test
+- job:
+    name: IDC23_Android_Prod_SI_testing-pu2407
+    parent: IDC23_Android_Prod_SI_testing
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: IDC23_apinext_SI_KPI_testing-pu2407
+    parent: IDC23_apinext_SI_KPI_testing
+    vars:
+      branch_ta: pu2407
+
+# Android MINI SI test
+- job:
+    name: IDC23_MINI_Android_Prod_SI_testing-pu2407
+    parent: IDC23_MINI_Android_Prod_SI_testing
+    vars:
+      branch_ta: pu2407
+
+
+# SI rack
+- job:
+    name: si-idc23-traas-node0-apinext-pu2407
+    parent: si-idc23-traas-node0-apinext
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: si-idc23-traas-apinext_pu2407
+    parent: si-idc23-traas-apinext
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: IDC23_traas_apinext_SI_KPI_testing-pu2407
+    parent: IDC23_traas_apinext_SI_KPI_testing
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2407
+    parent: si-idc23-traas-node0-apinext-RealPhone-PORTO
+    vars:
+      branch_ta: pu2407
+
+# TRAAS stress PDX flash
+- job:
+    name: IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2407
+    parent: IDC23_pdx_TRAAS_tests_flash_stress_endurance
+    vars:
+      branch_ta: pu2407
+
+# TRAAS SV flash
+- job:
+    name: IDC23_pdx_TRAAS_SV_flash_test-pu2407
+    parent: IDC23_pdx_TRAAS_SV_flash_test
+    vars:
+      branch_ta: pu2407
+      old_gl_branch: "release-pu2407"
+
+# BMW Multi-Coding (no Premium)
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs
+    vars:
+      branch_ta: pu2407
+
+# BMW Premium Multi-Coding
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs
+    vars:
+      branch_ta: pu2407
+
+
+# Mini Multi-Coding
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs
+    vars:
+      branch_ta: pu2407
+
+# Android SI stress
+- job:
+    name: IDC23_Android_Stress_testing-pu2407
+    parent: IDC23_Android_Stress_testing
+    vars:
+      branch_ta: pu2407
+
+# SI BEGU
+- job:
+    name: run_si_begu_idc23_hu_high-pu2407
+    parent: run_si_begu_idc23_hu_high
+    vars:
+      branch_ta: pu2407
+
+# SI STR testing
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress
+    vars:
+      branch_ta: pu2407
+
+# SI STR stress
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2407
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium
+    vars:
+      branch_ta: pu2407
+
+# Performance
+- job:
+    name: run_si_idc23_performance_china_hu_high-pu2407
+    parent: run_si_idc23_performance_china_hu_high
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 120
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_si_idc23_performance_china_hu_premium-pu2407
+    parent: run_si_idc23_performance_china_hu_premium
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 1
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_si_idc23_performance_row_hu_high-pu2407
+    parent: run_si_idc23_performance_row_hu_high
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 120
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_si_idc23_performance_row_hu_premium-pu2407
+    parent: run_si_idc23_performance_row_hu_premium
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 1
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_si_idc23_performance_row_hu_mini-pu2407
+    parent: run_si_idc23_performance_row_hu_mini
+    vars:
+      branch_ta: pu2407
+      minutes_to_wait: 1
+    pre-run:
+      - playbooks/sleep.yaml
+
+# NAT (10x)
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-1
+    parent: run_prod_si_NAT_idc23_hu_high-1
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-2
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-3
+    parent: run_prod_si_NAT_idc23_hu_high-3
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-4
+    parent: run_prod_si_NAT_idc23_hu_high-4
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-5
+    parent: run_prod_si_NAT_idc23_hu_high-5
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-6
+    parent: run_prod_si_NAT_idc23_hu_high-6
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-7
+    parent: run_prod_si_NAT_idc23_hu_high-7
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-8
+    parent: run_prod_si_NAT_idc23_hu_high-8
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-9
+    parent: run_prod_si_NAT_idc23_hu_high-9
+    vars:
+      branch_ta: pu2407
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2407-10
+    parent: run_prod_si_NAT_idc23_hu_high-10
+    vars:
+      branch_ta: pu2407

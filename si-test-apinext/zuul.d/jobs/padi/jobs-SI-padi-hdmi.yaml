@@ -1,0 +1,40 @@
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-hdmi
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-hdmi
+    timeout: 30600 # 8.5h
+    vars:
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_rse22*-pdx*.tar.gz
+      ecu_name: "padi"
+      branch_ta: mainline
+      product_type: padi22_c1
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      xrayctl_upload: false
+      collector_type: "SI-android"
+      job_environment:
+        RUN_SI: "true"
+        TEST_SUITE: SI
+        TEST_PACKAGES: "!!lifecycle-components-systemtests/systemtests/fpn_aggregator_tests.py"
+        PDX_FLASH: "true"
+        IGNORE_DLTLYSE_LIVE_RESULTS_FAILURE: "false"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi
+    parent: ta-hw-mtf-padi-flash-and-validate-SI-hdmi
+    vars:
+      job_environment:
+        TEST_SUITE: SI-long
+        TEST_PACKAGES: "!!si-test-mgu22/si_test_package_ecu_reboot,!!lifecycle-components-systemtests/systemtests/fpn_aggregator_tests.py"
+
+- job:
+    name: PaDi_Android_Prod_SI_testing-hdmi
+    parent: PaDi_Android_Prod_SI_testing
+    vars:
+      padi_variant: "hdmi"
+      job_environment:
+        PADI_VARIANT: "{{ padi_variant}}"
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/padi_hdmi"
+      mtf_config:
+        queue: padi_22_china

@@ -1,0 +1,30 @@
+- project:
+    nightly-post:
+      jobs:
+        - IDC23_pu2511_ProdSI_trigger
+        # xray upload
+        - IDC23_Android_Prod_SI_testing-pu2511: &idc23_pu2511_config
+            dependencies:
+              - IDC23_pu2511_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+        - run_prod_si_ecu_reboot_idc23_hu_high-pu2511: *idc23_pu2511_config
+        - run_prod_si_pdx_flash_idc23_premium_hu-pu2511: *idc23_pu2511_config
+        - run_prod_si_NAT_idc23_hu_high-pu2511-1: *idc23_pu2511_config
+        - run_prod_si_NAT_idc23_hu_high-pu2511-2: *idc23_pu2511_config
+        - run_prod_si_NAT_idc23_hu_high-pu2511-3: *idc23_pu2511_config
+        - run_prod_si_NAT_idc23_hu_high-pu2511-4: *idc23_pu2511_config
+        - run_prod_si_NAT_idc23_hu_high-pu2511-5: *idc23_pu2511_config
+        - IDC23_Android_Stress_testing-pu2511: *idc23_pu2511_config
+        - IDC23_traas_apinext_SI_KPI_testing-pu2511: *idc23_pu2511_config
+        # xray upload and metrics upload
+        - ta-hw-mtf-idc23-flash-and-validate-SI-pu2511: &idc23_pu2511_metrics_config
+            dependencies:
+              - IDC23_pu2511_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+              publish_metrics: true
+        - ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2511: *idc23_pu2511_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2511: *idc23_pu2511_metrics_config

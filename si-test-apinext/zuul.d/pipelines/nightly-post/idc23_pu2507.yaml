@@ -1,0 +1,46 @@
+- project:
+    nightly-post:
+      jobs:
+        - IDC23_pu2507_ProdSI_trigger
+        # xray upload
+        - IDC23_Android_Prod_SI_testing-pu2507: &idc23_pu2507_config
+            dependencies:
+              - IDC23_pu2507_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+        - run_prod_si_ecu_reboot_idc23_hu_high-pu2507: *idc23_pu2507_config
+        - run_prod_si_pdx_flash_idc23_premium_hu-pu2507: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-1: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-2: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-3: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-4: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-5: *idc23_pu2507_config
+        - run_prod_si_NAT_idc23_hu_high-pu2507-6: *idc23_pu2507_config
+        - IDC23_Android_Stress_testing-pu2507: *idc23_pu2507_config
+        - run_si_begu_idc23_hu_high-pu2507: *idc23_pu2507_config
+        - IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2507: &idc23_pu2507_traas_config
+            dependencies:
+              - IDC23_pu2507_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+              rack_tags: SI_LTTS_ULM
+        - IDC23_pdx_TRAAS_SV_flash_test-pu2507: *idc23_pu2507_traas_config
+        - IDC23_traas_apinext_SI_KPI_testing-pu2507: *idc23_pu2507_traas_config
+        # xray upload and metrics upload
+        - ta-hw-mtf-idc23-flash-and-validate-SI-pu2507: &idc23_pu2507_metrics_config
+            dependencies:
+              - IDC23_pu2507_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+              publish_metrics: true
+        - ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2507: *idc23_pu2507_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2507: *idc23_pu2507_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2507: *idc23_pu2507_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2507: *idc23_pu2507_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2507: *idc23_pu2507_metrics_config
+        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2507: *idc23_pu2507_metrics_config
+        - run_si_idc23_performance_china_hu_premium-pu2507: *idc23_pu2507_metrics_config
+        - run_si_idc23_performance_row_hu_premium-pu2507: *idc23_pu2507_metrics_config

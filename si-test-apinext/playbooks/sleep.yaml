@@ -1,0 +1,6 @@
+- name: Sleep for N minutes
+  hosts: all
+  tasks:
+    - name: Sleeping for N minutes
+      ansible.builtin.pause:
+        minutes: "{{ minutes_to_wait }}"

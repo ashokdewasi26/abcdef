@@ -1,0 +1,6 @@
+PaDi_Android_Prod_SI_testing-pu2407-adarsh:
+  <<: *base_padi
+  test_plan_key: ABPI-553251
+run_prod_si_ecu_reboot_rse_padi-pu2407-adarsh:
+  <<: *base_padi
+  test_plan_key: ABPI-553252

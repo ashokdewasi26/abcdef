@@ -1,0 +1,64 @@
+{
+    "rsu-protocol" : {
+        "ip-address" : "160.48.199.99",
+        "port" : 8888
+    },
+    "agent" : {
+        "extractSwes" : false
+    },
+    "cobra" : {
+        "stayInRsuImage" : false
+    },
+    "fsm" : {
+        "checkDpmForEnabled" : true,
+        "skipMgu22SelfActivation" : false
+    },
+    "testerOptions" : {
+        "useViprDeveloperMode" : false,
+        "bypassPwfWohnenState" : true,
+        "bypassCarSharingTest" : true,
+        "bypassCertificateRetrieval" : false,
+        "bypassClearInfoMemory" : false,
+        "bypassCustomerAbk" : true,
+        "bypassRsuPadRequest" : true,
+        "ignoreTasklistValidationResult" : false,
+        "bypassProgrammingCounterCheck" : true,
+        "bypassEmarsBatteryCheck" : true,
+        "bypassHvSupportActivation" : true,
+        "bypassHvSupportDeactivation" : true,
+        "bypassFlashMode" : false,
+        "bypassLogAndTrace" : false,
+        "bypassMileage" : false,
+        "bypassPrecondFepm" : true,
+        "bypassPrecondHazardlight" : true,
+        "bypassPrecondHvSupport" : true,
+        "bypassPrecondInclination" : true,
+        "bypassPrecondKey" : true,
+        "bypassPrecondGearbox" : true,
+        "bypassPrecondHandbrake" : true,
+        "bypassPrecondObd" : false,
+        "bypassPrecondTrailer" : true,
+        "bypassPrecondOpticalDrive" : true,
+        "bypassPrecondLampswitch" : true,
+        "bypassPrecondRemoteParking" : true,
+        "bypassPrecondBdcIp" : false,
+        "bypassPrecondZvMasterNotSecuredAfterPad" : false,
+        "bypassPrecondPaDi" : true,
+        "bypassPrecondRoofClosed" : true,
+        "bypassAutomaticEpbActivation" : true,
+        "bypassAutomaticPaDiFold" : true,
+        "bypassRecoveryFepm" : true,
+        "bypassRecoveryZvMasterSecured" : false,
+        "bypassCvnsRequest" : false,
+        "bypassRxswinRequest" : false,
+        "bypassRxswinIntRequest" : false,
+        "bypassSwitchReset": false,
+        "disableDegradation" : false,
+        "enableRecoveryMode" : true,
+        "enableRemoteActivation" : true
+    },
+    "temporaryOptions" : {
+        "bypassTrustedTimeCheck" : false
+
+    }
+}

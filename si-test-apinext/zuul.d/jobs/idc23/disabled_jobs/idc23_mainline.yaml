@@ -1,0 +1,47 @@
+- project:
+    nightly-post:
+      jobs:
+        - noop
+#        - IDC23_mainline_ProdSI_trigger
+#        # xray upload
+#        - IDC23_Android_Stress_testing: &idc23_mainline_config
+#            dependencies:
+#              - IDC23_mainline_ProdSI_trigger
+#            vars:
+#              nightly_pattern: "{{ triggered_nightly_pattern }}"
+#              xrayctl_upload: true
+#        - IDC23_MINI_Android_Prod_SI_testing: *idc23_mainline_config
+#        - run_prod_si_ecu_reboot_idc23_hu_high: *idc23_mainline_config
+#        - run_prod_si_pdx_idc23_hu_high_C1: *idc23_mainline_config
+#        - run_prod_si_pdx_flash_idc23_premium_hu: *idc23_mainline_config
+#        - run_prod_si_NAT_idc23_hu_high-1: *idc23_mainline_config
+#        - run_prod_si_NAT_idc23_hu_high-2: *idc23_mainline_config
+#        - run_prod_si_NAT_idc23_hu_high-3: *idc23_mainline_config
+#        - run_si_begu_idc23_hu_high: *idc23_mainline_config
+#        - ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs: *idc23_mainline_config
+#        # Traas jobs
+#        - IDC23_pdx_TRAAS_tests_flash_stress_endurance: *idc23_mainline_config
+#        - IDC23_pdx_TRAAS_SV_flash_test: *idc23_mainline_config
+#        - IDC23_traas_apinext_SI_KPI_testing: *idc23_mainline_config
+#        - si-idc23-traas-pdx-tests: *idc23_mainline_config
+#        # xray upload and metrics upload
+#        - ta-hw-mtf-idc23-flash-and-validate-SI: &idc23_mainline_metrics_config
+#            dependencies:
+#              - IDC23_mainline_ProdSI_trigger
+#            vars:
+#              xrayctl_upload: true
+#              publish_metrics: true
+#              nightly_pattern: "{{ triggered_nightly_pattern }}"
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-long: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-STR: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs: *idc23_mainline_metrics_config
+#        - ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs: *idc23_mainline_metrics_config
+#        - run_si_idc23_performance_china_hu_high: *idc23_mainline_metrics_config
+#        - run_si_idc23_performance_china_hu_premium: *idc23_mainline_metrics_config
+#        - run_si_idc23_performance_row_hu_high: *idc23_mainline_metrics_config
+#        - run_si_idc23_performance_row_hu_premium: *idc23_mainline_metrics_config
+#        - run_si_idc23_performance_row_hu_mini: *idc23_mainline_metrics_config

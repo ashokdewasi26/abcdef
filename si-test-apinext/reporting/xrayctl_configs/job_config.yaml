@@ -1,0 +1,2259 @@
+version: "1.0"
+
+# Caution: Please use python regular expression to describe your filename.
+#
+# For example:
+#   - Please use ".*_test_results.xml" rather then "*_test_results.xml"
+#
+# These fields are supposed to use python regular expression.
+#   - job.build_env_info.env_file
+#   - job.build_env_info.timestamp_files
+#   - job.build_env_info.version_info_xml
+#   - job.junit_xml_results.filename
+
+jobs:
+  .base: &base
+    project_key: ABPI
+    build_env_info: &base_build_env_info
+      env_file: zuul.env
+      timestamp_files:
+        - zuul.env
+        - result.html
+      version_info_xml: "[a-zA-Z0-9]*_test_results.xml"
+    test_exec_render_info: &base_test_exec_render_info
+      summary_template: "{target_upper} - {job} - {android_release}"
+      environments_template:
+        - "SI-AUTO"
+      revision_template: "{android_release}"
+      description_template: &base_description_template
+        job_template: |
+          Job: {job_url}
+          Artifacts: {artifacts_url}
+          Job Output: {job_output}
+          Result html: {result_html}
+        env_template: "{build_env}"
+        extra_template: ""
+
+  .base_idc23: &base_idc23
+    <<: *base
+    target: idc23
+    junit_xml_results:
+      - test_name: idc23
+        test_set_key: ABPI-38502
+        filename: "(?!p)[a-zA-Z0-9-_]*_test_results.xml"
+      - test_name: mtee_run
+        test_set_key: ABPI-38503
+        filename: "(?!p)[a-zA-Z0-9-_]*_run_results.xml"
+      - test_name: dltlyse_live
+        test_set_key: ABPI-38504
+        filename: "posttest_live_[a-zA-Z0-9]*_test_results.xml"
+      - test_name: posttest
+        test_set_key: ABPI-38505
+        filename: "posttest_[a-zA-Z0-9_-]*_test_results.xml"
+      - test_name: coredump_status
+        test_set_key: ABPI-38506
+        filename: "convert_dumps_results.xml"
+      - test_name: idc23_android
+        test_set_key: ABPI-54888
+        filename: "test_results.xml"
+
+  .base_padi: &base_padi
+    <<: *base
+    target: padi
+    junit_xml_results:
+      - test_name: padi
+        test_set_key: ABPI-50118
+        filename: "(?!p)[a-zA-Z0-9-_]*_test_results.xml"
+      - test_name: mtee_run
+        test_set_key: ABPI-38503
+        filename: "(?!p)[a-zA-Z0-9-_]*_run_results.xml"
+      - test_name: dltlyse_live
+        test_set_key: ABPI-38504
+        filename: "posttest_live_[a-zA-Z0-9]*_test_results.xml"
+      - test_name: posttest
+        test_set_key: ABPI-38505
+        filename: "posttest_[a-zA-Z0-9_-]*_test_results.xml"
+      - test_name: coredump_status
+        test_set_key: ABPI-38506
+        filename: "convert_dumps_results.xml"
+      - test_name: padi_android
+        test_set_key: ABPI-54887
+        filename: "test_results.xml"
+
+# IDC23 - Mainline branch (Test farm setup)
+
+  IDC23_Android_Prod_SI_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-54099
+
+  IDC23_Android_Stress_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-70271
+
+  ta-hw-mtf-idc23-b2-flash-and-validate-BAT:
+    <<: *base_idc23
+    test_plan_key: ABPI-48686
+
+  ta-hw-mtf-idc23-flash-and-validate-SI:
+    <<: *base_idc23
+    test_plan_key: ABPI-37150
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long:
+    <<: *base_idc23
+    test_plan_key: ABPI-37151
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle:
+    <<: *base_idc23
+    test_plan_key: ABPI-111172
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs:
+    <<: *base_idc23
+    test_plan_key: ABPI-72981
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs:
+    <<: *base_idc23
+    test_plan_key: ABPI-197372
+
+  run_prod_si_ecu_reboot_idc23_hu_high:
+    <<: *base_idc23
+    test_plan_key: ABPI-180258
+
+  run_prod_si_BAT_stability_idc23_hu_high-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_BAT_stability_idc23_hu_high-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-180261
+
+  run_prod_si_NAT_idc23_hu_high-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_NAT_idc23_hu_high-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-224286
+
+  run_prod_si_pdx_idc23_hu_high_C1:
+    <<: *base_idc23
+    test_plan_key: ABPI-182879
+
+  run_prod_si_pdx_flash_idc23_premium_hu:
+    <<: *base_idc23
+    test_plan_key: ABPI-445148
+
+  run_si_begu_idc23_hu_high:
+    <<: *base_idc23
+    test_plan_key: ABPI-120669
+
+  run_si_idc23_performance_china_hu_high:
+    <<: *base_idc23
+    test_plan_key: ABPI-185466
+
+  run_si_idc23_performance_china_hu_premium:
+    <<: *base_idc23
+    test_plan_key: ABPI-531032
+
+  run_si_idc23_performance_row_hu_high:
+    <<: *base_idc23
+    test_plan_key: ABPI-185467
+
+  run_si_idc23_performance_row_hu_premium:
+    <<: *base_idc23
+    test_plan_key: ABPI-531034
+
+  run_si_idc23_performance_row_hu_mini:
+    <<: *base_idc23
+    test_plan_key: ABPI-531038
+
+  IDC23_Android_Prod_SI_NAV_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-232795
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR:
+    <<: *base_idc23
+    test_plan_key: ABPI-234431
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation:
+    <<: *base_idc23
+    test_plan_key: ABPI-251883
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium:
+    <<: *base_idc23
+    test_plan_key: ABPI-531920
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress:
+    <<: *base_idc23
+    test_plan_key: ABPI-378052
+
+  IDC23_apinext_SI_KPI_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-338707
+
+  IDC23_Android_SI_Vcar_Replay:
+    <<: *base_idc23
+    test_plan_key: ABPI-364897
+
+# IDC23 - Mainline branch (TRAAS setup)
+
+  si-idc23-traas-node0-apinext:
+    <<: *base_idc23
+    test_plan_key: ABPI-82941
+
+  si-idc23-traas-pdx-tests:
+    <<: *base_idc23
+    test_plan_key: ABPI-146242
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance:
+    <<: *base_idc23
+    test_plan_key: ABPI-180262
+
+  IDC23_pdx_TRAAS_SV_flash_test:
+    <<: *base_idc23
+    test_plan_key: ABPI-180263
+
+  IDC23_traas_apinext_SI_KPI_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-241912
+
+  si-idc23-traas-node0-apinext-RealPhone-PORTO:
+    <<: *base_idc23
+    test_plan_key: ABPI-385383
+
+# IDC23 - Stable branch (Test farm setup)
+
+  IDC23_Android_Prod_SI_testing-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148658
+
+  IDC23_Android_Stress_testing-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-149602
+
+  ta-hw-mtf-idc23-b2-flash-and-validate-BAT-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148660
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148654
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148663
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148667
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148668
+
+# IDC23 - Stable branch (TRAAS setup)
+
+  si-idc23-traas-node0-apinext-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148661
+
+  si-idc23-traas-pdx-tests-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148662
+
+# IDC23 - PU2303 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221343
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221380
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221382
+
+  IDC23_Android_Prod_SI_testing-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221385
+
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221387
+
+  run_prod_si_pdx_idc23_hu_high_C1-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221388
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  run_prod_si_NAT_idc23_hu_high-pu2303-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-221390
+
+  si-idc23-traas-node0-apinext-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221392
+
+  IDC23_pdx_TRAAS_SV_flash_test-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221393
+
+  IDC23_traas_apinext_SI_KPI_testing-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-241914
+
+  IDC23_Android_Stress_testing-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221394
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221396
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221399
+
+  run_si_begu_idc23_hu_high-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-221400
+
+  IDC23_Android_Prod_SI_NAV_testing-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-232797
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-234432
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-255402
+
+  run_si_idc23_performance_china_hu_high-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-271877
+
+  run_si_idc23_performance_row_hu_high-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-271878
+
+  IDC23_apinext_SI_KPI_testing-pu2303:
+    <<: *base_idc23
+    test_plan_key: ABPI-338715
+
+# IDC23 - PU2307 branch (Test farm and test rack configurations)
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344377
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344379
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344380
+
+  run_prod_si_pdx_idc23_hu_high_C1-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344381
+
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344382
+
+  IDC23_Android_Prod_SI_testing-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344383
+
+  si-idc23-traas-node0-apinext-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344384
+
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-385384
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344385
+
+  IDC23_pdx_TRAAS_SV_flash_test-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344386
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344387
+
+  IDC23_Android_Stress_testing-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344388
+
+  run_si_begu_idc23_hu_high-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344389
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344390
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-344391
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-372522
+
+  run_si_idc23_performance_china_hu_high-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-349321
+
+  run_si_idc23_performance_row_hu_high-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-349325
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  run_prod_si_NAT_idc23_hu_high-pu2307-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-344394
+
+  IDC23_apinext_SI_KPI_testing-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-366124
+
+  IDC23_traas_apinext_SI_KPI_testing-pu2307:
+    <<: *base_idc23
+    test_plan_key: ABPI-366131
+
+# IDC23 - PU2311 branch (Test farm and test rack configurations)
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369054
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369055
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369056
+
+  run_prod_si_pdx_idc23_hu_high_C1-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369057
+
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-445150
+
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369058
+
+  IDC23_Android_Prod_SI_testing-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369059
+
+  IDC23_apinext_SI_KPI_testing-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369060
+
+  IDC23_MINI_Android_Prod_SI_testing-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369061
+
+  si-idc23-traas-node0-apinext-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369062
+
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-385385
+
+  si-idc23-traas-apinext_pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369063
+
+  IDC23_traas_apinext_SI_KPI_testing-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369064
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369065
+
+  IDC23_pdx_TRAAS_SV_flash_test-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369066
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369067
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369068
+
+  IDC23_Android_Stress_testing-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369069
+
+  run_si_begu_idc23_hu_high-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369070
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369071
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369072
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-378049
+
+  run_si_idc23_performance_china_hu_high-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369073
+
+  run_si_idc23_performance_row_hu_high-pu2311:
+    <<: *base_idc23
+    test_plan_key: ABPI-369075
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+  run_prod_si_NAT_idc23_hu_high-pu2311-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-369076
+
+# IDC23 - PU2403 branch (Test farm and test rack configurations)
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436396
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436398
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436400
+
+  run_prod_si_pdx_idc23_hu_high_C1-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436402
+
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-445152
+
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436404
+
+  IDC23_Android_Prod_SI_testing-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436405
+
+  IDC23_apinext_SI_KPI_testing-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436406
+
+  IDC23_MINI_Android_Prod_SI_testing-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436407
+
+  si-idc23-traas-node0-apinext-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436408
+
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436409
+
+  si-idc23-traas-apinext_pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436410
+
+  IDC23_traas_apinext_SI_KPI_testing-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436412
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436413
+
+  IDC23_pdx_TRAAS_SV_flash_test-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436415
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436419
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436420
+
+  IDC23_Android_Stress_testing-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436421
+
+  run_si_begu_idc23_hu_high-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436422
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436425
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436428
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-531923
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436432
+
+  run_si_idc23_performance_china_hu_high-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436433
+
+  run_si_idc23_performance_china_hu_premium-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-531044
+
+  run_si_idc23_performance_row_hu_high-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-436434
+
+  run_si_idc23_performance_row_hu_premium-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-531046
+
+  run_si_idc23_performance_row_hu_mini-pu2403:
+    <<: *base_idc23
+    test_plan_key: ABPI-531049
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+  run_prod_si_NAT_idc23_hu_high-pu2403-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-436436
+
+# IDC23 - pu2407 branch (Test farm and test rack configurations)
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545871
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545874
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545875
+
+  run_prod_si_pdx_idc23_hu_high_C1-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545876
+
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545877
+
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545878
+
+  IDC23_Android_Prod_SI_testing-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545879
+
+  IDC23_apinext_SI_KPI_testing-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545880
+
+  IDC23_MINI_Android_Prod_SI_testing-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545881
+
+  si-idc23-traas-node0-apinext-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545882
+
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545883
+
+  si-idc23-traas-apinext_pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545884
+
+  IDC23_traas_apinext_SI_KPI_testing-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545885
+
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545886
+
+  IDC23_pdx_TRAAS_SV_flash_test-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545887
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545888
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545889
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545906
+
+  IDC23_Android_Stress_testing-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545890
+
+  run_si_begu_idc23_hu_high-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545891
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545892
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545893
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545894
+
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545895
+
+  run_si_idc23_performance_china_hu_high-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545896
+
+  run_si_idc23_performance_china_hu_premium-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545897
+
+  run_si_idc23_performance_row_hu_high-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545898
+
+  run_si_idc23_performance_row_hu_premium-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545899
+
+  run_si_idc23_performance_row_hu_mini-pu2407:
+    <<: *base_idc23
+    test_plan_key: ABPI-545900
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+  run_prod_si_NAT_idc23_hu_high-pu2407-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-545901
+
+# IDC23 - pu2411 branch (Test farm and test rack configurations)
+  IDC23_Android_Prod_SI_testing-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567156
+  IDC23_Android_Stress_testing-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567157
+  IDC23_MINI_Android_Prod_SI_testing-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567158
+  IDC23_apinext_SI_KPI_testing-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567159
+  IDC23_pdx_TRAAS_SV_flash_test-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567160
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567161
+  IDC23_traas_apinext_SI_KPI_testing-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567162
+  run_prod_si_NAT_idc23_hu_high-pu2411-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_NAT_idc23_hu_high-pu2411-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-567163
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567164
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567165
+  run_prod_si_pdx_idc23_hu_high_C1-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567166
+  run_si_begu_idc23_hu_high-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567167
+  run_si_idc23_performance_china_hu_high-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567168
+  run_si_idc23_performance_china_hu_premium-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567169
+  run_si_idc23_performance_row_hu_high-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567170
+  run_si_idc23_performance_row_hu_mini-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567171
+  run_si_idc23_performance_row_hu_premium-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567172
+  si-idc23-traas-node0-apinext-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567173
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567437
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567174
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567175
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567176
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567177
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567178
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567179
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567180
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567181
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567182
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2411:
+    <<: *base_idc23
+    test_plan_key: ABPI-567183
+
+# IDC23 - pu2503 branch (Test farm and test rack configurations)
+  IDC23_Android_Prod_SI_testing-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603811
+  IDC23_Android_Stress_testing-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603812
+  IDC23_MINI_Android_Prod_SI_testing-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603813
+  IDC23_apinext_SI_KPI_testing-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603814
+  IDC23_pdx_TRAAS_SV_flash_test-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603815
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603816
+  IDC23_traas_apinext_SI_KPI_testing-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603817
+  run_prod_si_NAT_idc23_hu_high-pu2503-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-7:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-8:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-9:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_NAT_idc23_hu_high-pu2503-10:
+    <<: *base_idc23
+    test_plan_key: ABPI-603818
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603819
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603820
+  run_prod_si_pdx_idc23_hu_high_C1-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603821
+  run_si_begu_idc23_hu_high-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603822
+  run_si_idc23_performance_china_hu_high-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603823
+  run_si_idc23_performance_china_hu_premium-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603824
+  run_si_idc23_performance_row_hu_high-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603825
+  run_si_idc23_performance_row_hu_mini-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603826
+  run_si_idc23_performance_row_hu_premium-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603827
+  si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603828
+  si-idc23-traas-node0-apinext-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603829
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603830
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603831
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603832
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603833
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603834
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603835
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603836
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603837
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603838
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2503:
+    <<: *base_idc23
+    test_plan_key: ABPI-603839
+
+# IDC23 - pu2507 branch (Test farm and test rack configurations)
+  IDC23_Android_Prod_SI_testing-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666598
+  IDC23_Android_Stress_testing-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666967
+  IDC23_pdx_TRAAS_SV_flash_test-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666976
+  IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666977
+  IDC23_traas_apinext_SI_KPI_testing-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666978
+  run_prod_si_NAT_idc23_hu_high-pu2507-1:
+    <<: *base_idc23
+    test_plan_key: ABPI-666979
+  run_prod_si_NAT_idc23_hu_high-pu2507-2:
+    <<: *base_idc23
+    test_plan_key: ABPI-666982
+  run_prod_si_NAT_idc23_hu_high-pu2507-3:
+    <<: *base_idc23
+    test_plan_key: ABPI-666983
+  run_prod_si_NAT_idc23_hu_high-pu2507-4:
+    <<: *base_idc23
+    test_plan_key: ABPI-666984
+  run_prod_si_NAT_idc23_hu_high-pu2507-5:
+    <<: *base_idc23
+    test_plan_key: ABPI-666985
+  run_prod_si_NAT_idc23_hu_high-pu2507-6:
+    <<: *base_idc23
+    test_plan_key: ABPI-666986
+  run_prod_si_ecu_reboot_idc23_hu_high-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666990
+  run_prod_si_pdx_flash_idc23_premium_hu-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666991
+  run_si_begu_idc23_hu_high-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666993
+  run_si_idc23_performance_china_hu_premium-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666995
+  run_si_idc23_performance_row_hu_premium-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-666998
+  ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667001
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667002
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667003
+  ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667005
+  ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667006
+  ta-hw-mtf-idc23-flash-and-validate-SI-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667007
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2507:
+    <<: *base_idc23
+    test_plan_key: ABPI-667010
+
+  # IDC23 Mini - Mainline branch (Test farm setup)
+
+  IDC23_MINI_Android_Prod_SI_testing:
+    <<: *base_idc23
+    test_plan_key: ABPI-106009
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs:
+    <<: *base_idc23
+    test_plan_key: ABPI-107869
+
+# IDC23 Mini - Stable branch (Test farm setup)
+
+  ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-stable:
+    <<: *base_idc23
+    test_plan_key: ABPI-148676
+
+# PaDi - Mainline branch (Test farm setup)
+
+  ta-hw-mtf-padi-b2-flash-and-validate-SI: &ta-hw-mtf-padi-b2-flash-and-validate-SI
+    <<: *base_padi
+    test_plan_key: ABPI-49975
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI:
+    <<: *ta-hw-mtf-padi-b2-flash-and-validate-SI
+
+  ta-hw-mtf-padi-b2-flash-and-validate-SI-long: &ta-hw-mtf-padi-b2-flash-and-validate-SI-long
+    <<: *base_padi
+    test_plan_key: ABPI-49976
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long:
+    <<: *ta-hw-mtf-padi-b2-flash-and-validate-SI-long
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle:
+    <<: *base_padi
+    test_plan_key: ABPI-111178
+
+  ta-hw-mtf-padi-b2-flash-and-validate-BAT:
+    <<: *base_padi
+    test_plan_key: ABPI-52943
+
+  PaDi_Android_Prod_SI_testing:
+    <<: *base_padi
+    test_plan_key: ABPI-54100
+
+  PaDi_Android_Stress_testing:
+    <<: *base_padi
+    test_plan_key: ABPI-128184
+
+  run_prod_si_ecu_reboot_rse_padi:
+    <<: *base_padi
+    test_plan_key: ABPI-180239
+
+  run_prod_si_BAT_stability_rse_padi-1:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-2:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-3:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-4:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-5:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-6:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-7:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-8:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-9:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_BAT_stability_rse_padi-10:
+    <<: *base_padi
+    test_plan_key: ABPI-180241
+
+  run_prod_si_NAT_rse_padi-1:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-2:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-3:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-4:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-5:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-6:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-7:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-8:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-9:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_NAT_rse_padi-10:
+    <<: *base_padi
+    test_plan_key: ABPI-224289
+
+  run_prod_si_pdx_rse_padi_row:
+    <<: *base_padi
+    test_plan_key: ABPI-182875
+
+  run_prod_si_pdx_rse_padi_china:
+    <<: *base_padi
+    test_plan_key: ABPI-182877
+
+  run_si_padi_performance_china_D:
+    <<: *base_padi
+    test_plan_key: SIT-19276
+
+  run_si_padi_performance_row_D:
+    <<: *base_padi
+    test_plan_key: SIT-19275
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi:
+    <<: *base_padi
+    test_plan_key: ABPI-262496
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi:
+    <<: *base_padi
+    test_plan_key: ABPI-262497
+
+  PaDi_Android_Prod_SI_testing-hdmi:
+    <<: *base_padi
+    test_plan_key: ABPI-262499
+
+# PaDi - Mainline branch (TRAAS setup)
+
+  si-padi-traas-node0-apinext:
+    <<: *base_padi
+    test_plan_key: ABPI-198222
+
+  RSE22_PADI_pdx_TRAAS_tests:
+    <<: *base_padi
+    test_plan_key: ABPI-198389
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test:
+    <<: *base_padi
+    test_plan_key: ABPI-198391
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance:
+    <<: *base_padi
+    test_plan_key: ABPI-198393
+
+# PaDi - PU2207 branch (Test farm setup)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2207:
+    <<: *ta-hw-mtf-padi-b2-flash-and-validate-SI
+    test_plan_key: ABPI-145224
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2207:
+    <<: *ta-hw-mtf-padi-b2-flash-and-validate-SI-long
+    test_plan_key: ABPI-145225
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2207:
+    <<: *base_padi
+    test_plan_key: ABPI-145228
+
+  ta-hw-mtf-padi-b2-flash-and-validate-BAT-pu2207:
+    <<: *base_padi
+    test_plan_key: ABPI-145229
+
+  PaDi_Android_Prod_SI_testing-pu2207:
+    <<: *base_padi
+    test_plan_key: ABPI-145223
+
+# PaDi - PU2211 branch (Test farm setup)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-214094
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-214095
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-214101
+
+  ta-hw-mtf-padi-b2-flash-and-validate-BAT-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-214105
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2211-1:
+    <<: *base_padi
+    test_plan_key: ABPI-224293
+
+  PaDi_Android_Prod_SI_testing-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-214106
+
+  PaDi_Android_Stress_testing-pu2211:
+    <<: *base_padi
+    test_plan_key: ABPI-215027
+
+# PaDi - PU2303 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219848
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219849
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219850
+
+  ta-hw-mtf-padi-b2-flash-and-validate-BAT-pu2303-1:
+    <<: *base_padi
+    test_plan_key: ABPI-219852
+
+  ta-hw-mtf-padi-b2-flash-and-validate-BAT-pu2303-2:
+    <<: *base_padi
+    test_plan_key: ABPI-219852
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-1:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-2:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-3:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-4:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-5:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-6:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-7:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-8:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-9:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2303-10:
+    <<: *base_padi
+    test_plan_key: ABPI-224297
+
+  PaDi_Android_Prod_SI_testing-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219856
+
+  PaDi_Android_Stress_testing-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219857
+
+  run_prod_si_ecu_reboot_rse_padi-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219858
+
+  run_prod_si_pdx_rse_padi_row-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219863
+
+  run_prod_si_pdx_rse_padi_china-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219864
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-219865
+
+  run_si_padi_performance_row_D-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-249028
+
+  run_si_padi_performance_china_D-pu2303:
+    <<: *base_padi
+    test_plan_key: ABPI-249029
+
+# PaDi - PU2307 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293296
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293297
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293299
+
+  PaDi_Android_Prod_SI_testing-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293301
+
+  PaDi_Android_Stress_testing-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-299802
+
+  run_prod_si_ecu_reboot_rse_padi-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293303
+
+  run_prod_si_pdx_rse_padi_china-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293311
+
+  run_prod_si_pdx_rse_padi_row-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293313
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-1:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-2:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-3:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-4:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-5:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-6:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-7:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-8:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-9:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2307-10:
+    <<: *base_padi
+    test_plan_key: ABPI-293319
+
+  RSE22_PADI_pdx_TRAAS_tests-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293326
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293329
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293331
+
+  run_si_padi_performance_row_D-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293350
+
+  run_si_padi_performance_china_D-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293333
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293353
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293356
+
+  PaDi_Android_Prod_SI_testing-hdmi-pu2307:
+    <<: *base_padi
+    test_plan_key: ABPI-293361
+
+# PaDi - PU2311 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352292
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352293
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352310
+
+  PaDi_Android_Prod_SI_testing-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352319
+
+  PaDi_Android_Stress_testing-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352320
+
+  run_prod_si_ecu_reboot_rse_padi-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352322
+
+  run_prod_si_pdx_rse_padi_china-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352324
+
+  run_prod_si_pdx_rse_padi_row-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352325
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-1:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-2:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-3:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-4:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-5:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-6:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-7:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-8:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-9:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2311-10:
+    <<: *base_padi
+    test_plan_key: ABPI-352328
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352329
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352330
+
+  run_si_padi_performance_china_D-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352333
+
+  run_si_padi_performance_row_D-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352334
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352337
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352339
+
+  PaDi_Android_Prod_SI_testing-hdmi-pu2311:
+    <<: *base_padi
+    test_plan_key: ABPI-352341
+
+# PaDi - PU2403 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413700
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413701
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413702
+
+  PaDi_Android_Prod_SI_testing-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413703
+
+  run_prod_si_ecu_reboot_rse_padi-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413706
+
+  run_prod_si_pdx_rse_padi_china-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413707
+
+  run_prod_si_pdx_rse_padi_row-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413708
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-1:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-2:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-3:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-4:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-5:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-6:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-7:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-8:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-9:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2403-10:
+    <<: *base_padi
+    test_plan_key: ABPI-413709
+
+  PaDi_Android_Stress_testing-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413704
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413711
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413712
+
+  run_si_padi_performance_china_D-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413717
+
+  run_si_padi_performance_row_D-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413719
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413715
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-425353
+
+  PaDi_Android_Prod_SI_testing-hdmi-pu2403:
+    <<: *base_padi
+    test_plan_key: ABPI-413716
+
+# PaDi - PU2407 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527368
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527376
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527379
+
+  PaDi_Android_Prod_SI_testing-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527380
+
+  run_prod_si_ecu_reboot_rse_padi-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527381
+
+  run_prod_si_pdx_rse_padi_china-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527382
+
+  run_prod_si_pdx_rse_padi_row-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527384
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-1:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-2:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-3:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-4:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-5:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-6:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-7:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-8:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-9:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2407-10:
+    <<: *base_padi
+    test_plan_key: ABPI-527388
+
+  PaDi_Android_Stress_testing-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527389
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527390
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527393
+
+  run_si_padi_performance_china_D-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527394
+
+  run_si_padi_performance_row_D-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527396
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527398
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527400
+
+  PaDi_Android_Prod_SI_testing-hdmi-pu2407:
+    <<: *base_padi
+    test_plan_key: ABPI-527401
+
+# PaDi - PU2411 branch (Test farm and test rack configurations)
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575399
+
+  PaDi_Android_Prod_SI_testing-hdmi-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575402
+
+  PaDi_Android_Prod_SI_testing-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575403
+
+  PaDi_Android_Stress_testing-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575404
+
+  RSE22_PADI_pdx_TRAAS_SV_flash_test-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575405
+
+  RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575406
+
+  run_prod_si_ecu_reboot_rse_padi-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575407
+
+  run_prod_si_pdx_rse_padi_china-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575408
+
+  run_prod_si_pdx_rse_padi_row-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575409
+
+  run_si_padi_performance_china_D-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575410
+
+  run_si_padi_performance_row_D-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575411
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-1:
+    <<: *base_padi
+    test_plan_key: ABPI-575412
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-10:
+    <<: *base_padi
+    test_plan_key: ABPI-575413
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-2:
+    <<: *base_padi
+    test_plan_key: ABPI-575414
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-3:
+    <<: *base_padi
+    test_plan_key: ABPI-575415
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-4:
+    <<: *base_padi
+    test_plan_key: ABPI-575416
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-5:
+    <<: *base_padi
+    test_plan_key: ABPI-575417
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-6:
+    <<: *base_padi
+    test_plan_key: ABPI-575418
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-7:
+    <<: *base_padi
+    test_plan_key: ABPI-575419
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-8:
+    <<: *base_padi
+    test_plan_key: ABPI-575420
+
+  ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2411-9:
+    <<: *base_padi
+    test_plan_key: ABPI-575421
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575422
+
+  ta-hw-mtf-padi-c1-flash-and-validate-SI-long-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575423
+
+  ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575424
+
+  ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2411:
+    <<: *base_padi
+    test_plan_key: ABPI-575425
+
+# PaDi - PU2511 branch (Test farm and test rack configurations)
+
+ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673269
+
+PaDi_Android_Prod_SI_testing-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673273
+
+PaDi_Android_Stress_testing-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673274
+
+ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-1:
+  <<: *base_padi
+  test_plan_key: ABPI-673278
+
+ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2:
+  <<: *base_padi
+  test_plan_key: ABPI-673279
+
+ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-3:
+  <<: *base_padi
+  test_plan_key: ABPI-673280
+
+ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-4:
+  <<: *base_padi
+  test_plan_key: ABPI-673281
+
+ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-5:
+  <<: *base_padi
+  test_plan_key: ABPI-673282
+
+ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673283
+
+ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673284
+
+run_si_padi_performance_row_D-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673276
+
+PaDi_Android_Prod_SI_testing-hdmi-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673272
+
+run_si_padi_performance_china_D-pu2511:
+  <<: *base_padi
+  test_plan_key: ABPI-673275
+
+# IDC23 - PU2511 branch (Test farm and test rack configurations)
+
+ta-hw-mtf-idc23-flash-and-validate-SI-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677192
+
+IDC23_Android_Prod_SI_testing-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677194
+
+IDC23_Android_Stress_testing-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677195
+
+IDC23_traas_apinext_SI_KPI_testing-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677197
+
+run_prod_si_NAT_idc23_hu_high-pu2511-1:
+  <<: *base_idc23
+  test_plan_key: ABPI-677198
+
+run_prod_si_NAT_idc23_hu_high-pu2511-2:
+  <<: *base_idc23
+  test_plan_key: ABPI-677199
+
+run_prod_si_NAT_idc23_hu_high-pu2511-3:
+  <<: *base_idc23
+  test_plan_key: ABPI-677200
+
+run_prod_si_NAT_idc23_hu_high-pu2511-4:
+  <<: *base_idc23
+  test_plan_key: ABPI-677201
+
+run_prod_si_NAT_idc23_hu_high-pu2511-5:
+  <<: *base_idc23
+  test_plan_key: ABPI-677202
+
+run_prod_si_ecu_reboot_idc23_hu_high-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677203
+
+run_prod_si_pdx_flash_idc23_premium_hu-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677204
+
+ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677205
+
+ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2511:
+  <<: *base_idc23
+  test_plan_key: ABPI-677206

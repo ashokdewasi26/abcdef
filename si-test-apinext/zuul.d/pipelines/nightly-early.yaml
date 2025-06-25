@@ -1,0 +1,24 @@
+- project:
+    nightly-early: # This pipeline is executed at 19:00 UTC
+      jobs:
+        # IDC23 Mainline
+        - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation: &xray_metrics_upload
+            vars:
+              xrayctl_upload: true
+              publish_metrics: true
+        - run_si_idc23_performance_china_hu_high: *xray_metrics_upload
+        - run_si_idc23_performance_row_hu_high: *xray_metrics_upload
+
+        # IDC23 PU2503
+        - si-idc23-traas-node0-apinext-RealPhone-PORTO-pu2503:
+            vars:
+              flash_dev_full: "true"
+              flash_dev: "false"
+              flash_pdx: "true"
+              xrayctl_upload: true
+
+        # PADI Mainline
+
+        # PADI PU2307
+
+        # PADI PU2311

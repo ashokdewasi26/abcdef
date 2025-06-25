@@ -1,0 +1,10 @@
+- project:
+    check:
+      jobs:
+        - gitlint
+        - zuullint
+        - shellcheck
+        - run-tox:
+            vars:
+              envlist: "ALL"
+        - noop

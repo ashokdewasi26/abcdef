@@ -1,0 +1,22 @@
+[
+  [
+    "com.bmwgroup.padi",
+    "com.bmwgroup.padi.systemui.MainActivity"
+  ],
+  [
+    "com.bmwgroup.analytics.service",
+    "com.bmwgroup.analytics.service.MainActivity"
+  ],
+  [
+    "com.bmwgroup.rse.opensourcecomplianceapp",
+    "com.bmwgroup.rse.opensourcecomplianceapp.MainActivity"
+  ],
+  [
+    "com.bmwgroup.rse.system.service",
+    "com.bmwgroup.rse.system.service.MainActivity"
+  ],
+  [
+    "org.chromium.webview_shell",
+    "org.chromium.webview_shell.WebViewBrowserActivity"
+  ]
+]

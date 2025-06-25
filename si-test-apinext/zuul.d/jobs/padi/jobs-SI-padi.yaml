@@ -1,0 +1,289 @@
+- job:
+    name: padi-base-flash-and-validate-Android-SI
+    parent: padi-base-flash-and-validate
+    voting: false
+    timeout: 14400
+    vars:
+      ecu_name: "padi"
+      publish_metrics: false  # enable or disable publish metrics to influxDB
+      specific_collectors: ""  # single specific collector or specify a list separated by spaces Ex.: MetricCollectorLogMetrics MetricCollectorCPUUsage
+      collector_type: ""  # collector set Ex.: SI-android
+    post-run:
+      - playbooks/collect_upload_metrics_si_apinext.yaml
+
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI
+    description: |
+      Flash release node0 + nightly android image on padi C1 board and run SI tests
+    parent: padi-base-flash-and-validate-Android-SI
+    timeout: 30600 # 8.5h
+    vars:
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_rse22*-pdx*.tar.gz
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      job_environment:
+        RUN_SI: "true"
+        TEST_SUITE: SI
+        TEST_PACKAGES: "!!lifecycle-components-systemtests/systemtests/fpn_aggregator_tests.py"
+        PDX_FLASH: "true"
+        IGNORE_DLTLYSE_LIVE_RESULTS_FAILURE: "false"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+      product_type: padi22_c1
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-padi-dltlyse-plugins"
+      collector_type: "{{ job_environment.TEST_SUITE }}-android"
+
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-long
+    description: |
+      Flash release node0 + nightly android image on padi C1 board and run SI-long tests
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI
+    vars:
+      job_environment:
+        TEST_SUITE: SI-long
+        TEST_PACKAGES: "!!si-test-mgu22/si_test_package_ecu_reboot,!!lifecycle-components-systemtests/systemtests/fpn_aggregator_tests.py"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle
+    description: |
+      Flash release node0 + nightly android image on padi C1 board and run Lifecycle tests
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI
+    vars:
+      collector_type: "SI-android"
+      job_environment:
+        TEST_SUITE: Lifecycle
+        TEST_PACKAGES: "!!lifecycle-components-systemtests/systemtests/fpn_aggregator_tests.py"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+
+- job:
+    name: PaDi_Android_Prod_SI_testing
+    parent: padi-base-flash-and-validate-Android-SI
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      collector_type: "SI-android"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      include_appium: true
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/padi/si_tests_mtee"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-padi-dltlyse-plugins"
+      job_environment_base:
+        SPLIT_LOGCAT: 0
+
+- job:
+    name: PaDi_Android_Stress_testing
+    description: |
+      SI Android Stress test execution on PaDi target, using Monkey to stress all packages in PaDi target
+    parent: PaDi_Android_Prod_SI_testing
+    vars:
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/padi/stress_tests"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-stress-dltlyse-plugins"
+      collector_type: "Android-Stress"
+
+- job:
+    name: run_prod_si_ecu_reboot_rse_padi
+    description: |
+      Flash release node0 + nightly android image on padi sample and run test package: si-test-mgu22/si_test_package_ecu_reboot
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI-long
+    timeout: 32400 # 9h
+    vars:
+      job_environment:
+        TEST_PACKAGES: "si-test-mgu22/si_test_package_ecu_reboot"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-rse22"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-1
+    description: |
+      BAT stability on PaDi using Prod-SI build. BAT tests are executed 10x over night to ensure stability of BAT runs on PaDi
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-BAT
+    vars:
+      job_environment:
+        EXTENSION_BOARD_DEV_FLASH: "true"
+        DLTLYSE_PLUGIN_LIST: "BAT-dltlyse-plugins"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-2
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-3
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-4
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-5
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-6
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-7
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-8
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-9
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_BAT_stability_rse_padi-10
+    parent: run_prod_si_BAT_stability_rse_padi-1
+
+- job:
+    name: run_prod_si_pdx_rse_padi_row
+    description: |
+      PDX flash for PaDi row target variant
+    parent: ta-hw-mtf-padi-flash-and-validate-pdx-flash
+    vars:
+      job_environment:
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-rse22"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_pdx_rse_padi_china
+    description: |
+      PDX flash for PaDi china target variant
+    parent: ta-hw-mtf-padi-china-flash-and-validate-pdx-flash
+    vars:
+      job_environment:
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-rse22"
+        EXTENSION_BOARD_DEV_FLASH: "true"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_si_padi_performance_china_D
+    description: |
+      SI-performance test suite execution on PaDi D china target
+    parent: padi-base-flash-and-validate-Android-SI
+    timeout: 21600 # 6h
+    vars:
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_rse22_padi-{{ branch_ta }}-pdx_{{ aosp_build_type_ta }}*.tar.gz
+      extension_board_flash: false
+      extension_board_dev_flash: true
+      collector_type: "SI-performance"
+      # Support execution of hybrid mtee & mtee-apinext based system tests
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/common/si_performance_tests"
+      job_environment:
+        EXTENSION_BOARD_FLASH: "{{ extension_board_flash | default(false) }}"
+        EXTENSION_BOARD_DEV_FLASH: "{{ extension_board_dev_flash | default(false) }}"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-rse22"
+        PDX_FLASH: "true"
+      mtf_config:
+        queue: padi_22_china
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      minutes_to_wait: 120
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_si_padi_performance_row_D
+    description: |
+      SI-performance test suite execution on PaDi D row target
+    parent: run_si_padi_performance_china_D
+    vars:
+      extension_board_flash: true
+      extension_board_dev_flash: false
+      mtf_config:
+        queue: padi_22_d1_row
+      minutes_to_wait: 120
+
+# ----------------------------- NAT JOBS disclaimer -------------------------------
+# Since we have a lot of NAT jobs, they were raising this issue on the farm ABPI-272876
+# Due to have many jobs downloading an image at the same time
+# We had the need to delay the jobs and consequently increase the job timeout
+
+- job:
+    name: run_prod_si_NAT_rse_padi-1
+    description: |
+      Flash release node0 + nightly android image on the PADI board and run NAT.
+      NAT is a subset of BAT containing Android relevant tests only.
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT
+    vars:
+      job_environment:
+        EXTENSION_BOARD_DEV_FLASH: "true"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_NAT_rse_padi-2
+    parent: run_prod_si_NAT_rse_padi-1
+    timeout: 6300
+    vars:
+      minutes_to_wait: 15
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_prod_si_NAT_rse_padi-3
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 7200
+    vars:
+      minutes_to_wait: 30
+
+- job:
+    name: run_prod_si_NAT_rse_padi-4
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 8100
+    vars:
+      minutes_to_wait: 45
+
+- job:
+    name: run_prod_si_NAT_rse_padi-5
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 9000
+    vars:
+      minutes_to_wait: 60
+
+- job:
+    name: run_prod_si_NAT_rse_padi-6
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 9900
+    vars:
+      minutes_to_wait: 75
+
+- job:
+    name: run_prod_si_NAT_rse_padi-7
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 10800
+    vars:
+      minutes_to_wait: 90
+
+- job:
+    name: run_prod_si_NAT_rse_padi-8
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 11700
+    vars:
+      minutes_to_wait: 105
+
+- job:
+    name: run_prod_si_NAT_rse_padi-9
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 12600
+    vars:
+      minutes_to_wait: 120
+
+- job:
+    name: run_prod_si_NAT_rse_padi-10
+    parent: run_prod_si_NAT_rse_padi-2
+    timeout: 13500
+    vars:
+      minutes_to_wait: 135
+# ---------------------------------------------------------------------------------------

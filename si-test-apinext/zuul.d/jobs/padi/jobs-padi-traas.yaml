@@ -1,0 +1,57 @@
+########## PaDi ##########
+- job:
+    name: si-padi-traas-base
+    parent: ta-hw-traas-padi-b2-flash-and-validate
+    timeout: 14400 # 4h
+    vars:
+      branch_ta: mainline
+      nightly_pattern: "*/bmw_rse22_padi-{{ branch_ta }}"
+      flashfiles_archive_pattern: "bmw_rse22_padi-{{ branch_ta }}-images_{{ aosp_build_type_ta }}*.tar.gz"
+      rack_tags: SITA_Padi
+      ecu_name: "padi"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      collector_type: ""
+      specific_collectors: ""
+      nodeset:
+        nodes:
+          name: traas-dispatcher
+          label: apinext-ubuntu2204-16-core
+          # We are overiding this label due to codecraft issue with muc12 provider
+          # https://support.cc.bmwgroup.net/servicedesk/customer/portal/1/CCSD-39512
+
+- job:
+    name: RSE22_PADI_pdx_TRAAS_tests
+    description: |
+      Daily PDX flash of Prod-SI build on PaDi target
+    parent: si-padi-traas-base
+    vars:
+      extra_args_rse: "--can-interface can0"
+
+- job:
+    name: RSE22_PADI_pdx_TRAAS_SV_flash_test
+    description: |
+      PDX flash from last SV release to daily Prod-SI build
+    parent: RSE22_PADI_pdx_TRAAS_tests
+    timeout: 25200 # 7h
+    vars:
+      flash_dev_full_rse: "true"
+      flash_dev_rse: "false"
+      old_gl_branch: "release"
+      old_gl: "latest_sv_release"
+      run_flash_stress_rse: "true"
+      test_suite_rse: "SIrack"
+
+- job:
+    name: RSE22_PADI_pdx_TRAAS_tests_flash_stress_endurance
+    timeout: 25200 # 7h
+    description: |
+      10x PDX flash of the Prod-SI build using TRAAS
+    parent: si-padi-traas-base
+    vars:
+      duration: 300 # TRAAS session 5h
+      extra_args_rse: "--can-interface can0"
+      flash_dev_full_rse: "true"
+      flash_dev_rse: "false"
+      flash_pdx_rse: "true"
+      run_flash_endurance_rse: "true"
+      test_suite_rse: "SIrack"

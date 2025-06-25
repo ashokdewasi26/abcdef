@@ -1,0 +1,74 @@
+################## STAGING FOR IDC23 ##################
+
+# Base job, only has the required/default parameters for staging, doesn't run tests
+- job:
+    name: idc23-flash-and-validate-staging
+    parent: idc23-base-flash-and-validate-Android-SI
+    roles:
+      - zuul: software-factory/validation-jobs
+    pre-run:
+      - playbooks/build-tee.yaml
+    vars:
+      install_build_tee: true
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_idc23-{{ branch_ta }}-pdx_{{ aosp_build_type_ta }}*.tar.gz
+      build_tee_artifacts_path: "{{ ansible_user_dir }}/tee/build/test-execution-framework.tar.gz"
+      build_tee_artifacts: "{{ build_tee_artifacts_path if install_build_tee else '' }}"
+      # Support execution of hybrid mtee & mtee-apinext based system tests
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # "" (empty string) leaves the repos unchanged using the ones present on the image
+      # change to "refs/heads/master" to checkout master version
+      diagnose_refspec: ""
+      dltlyse_refspec: ""
+      lsmf_testing_refspec: ""
+      mtee_core_refspec: ""
+      mtee_gen22_refspec: ""
+      mtee_mgu22_refspec: ""
+      rsu_flasher_refspec: ""
+      si_test_gen22_refspec: ""
+      si_test_mgu22_refspec: ""
+      sysman_testing_refspec: ""
+      install_si_test_apinext_in_staging: true
+      install_mtee_apinext_in_staging: false
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-idc-dltlyse-plugins"
+      job_environment:
+        IGNORE_DLTLYSE_LIVE_RESULTS_FAILURE: "false"
+        PDX_FLASH: "true"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-idc23"
+
+# Android job, flashes and runs the tests on si-test-apinext, similar to IDC23_Android_Prod_SI_testing
+- job:
+    name: idc23-android-flash-and-prod-SI-staging
+    parent: idc23-flash-and-validate-staging
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      collector_type: "SI-android"
+      include_appium: true
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee"
+      job_environment_base:
+        SPLIT_LOGCAT: 0
+
+# SUGGESTED TO USE - Basic SI job, flashes target, runs the test-suite SI, similar to ta-hw-mtf-idc23-flash-and-validate-SI
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-staging
+    parent: idc23-flash-and-validate-staging
+    timeout: 30600 # 8.5h
+    vars:
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      job_environment:
+        TEST_SUITE: SI
+        RUN_SI: "true"
+      collector_type: "{{ job_environment.TEST_SUITE }}-android"
+
+# Performance staging job
+- job:
+    name: idc23-flash-and-validate-staging-SI-performance
+    parent: idc23-flash-and-validate-staging
+    vars:
+      include_appium: true
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/common/si_performance_tests"
+      collector_type: "SI-performance"

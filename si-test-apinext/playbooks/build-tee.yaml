@@ -1,0 +1,43 @@
+- name: Verify conditions to execute build-tee
+  hosts: all
+  become: yes
+  vars:
+    test_repos: "{{ lsmf_testing_refspec or sysman_testing_refspec or si_test_mgu22_refspec }}"
+    build_repos_1: "{{ rsu_flasher_refspec or si_test_gen22_refspec or mtee_core_refspec or mtee_gen22_refspec }}"
+    build_repos_2: "{{ si_test_mgu22_refspec or mtee_mgu22_refspec or dltlyse_refspec or diagnose_refspec }}"
+    any_repo_refspec: "{{ test_repos or build_repos_1 or build_repos_2 }}"
+  tasks:
+    - name: No repo refspec was given, setting var to skip build-tee execution
+      set_fact:
+        any_repo: false
+      when: (any_repo_refspec | length == 0) and not install_si_test_apinext_in_staging and not install_mtee_apinext_in_staging
+    - name: Some repo refspec was given, setting var to execute build-tee
+      set_fact:
+        any_repo: true
+      when: (any_repo_refspec | length > 0) or install_si_test_apinext_in_staging or install_mtee_apinext_in_staging
+    - name: Some test config repo refspec was given, setting var test_suites_config_file with test config path
+      set_fact:
+        test_config_file_path: "{{ ansible_user_dir }}/tests_config.yaml"
+      when: test_repos | length > 0
+    - name: No test config repo refspec was given, setting var test_suites_config_file with empty string
+      set_fact:
+        test_config_file_path: ""
+      when: test_repos | length == 0
+
+- name: Deploy and execute build-tee
+  hosts: all
+  environment:
+    PIP_INDEX_URL: https://common.artifactory.cc.bmwgroup.net/artifactory/api/pypi/software-factory-pypi-public/simple
+  roles:
+    - role: ensure-python
+      when: any_repo
+
+    - role: deploy-apinext-tee-config
+      when: any_repo
+
+    - role: run-build-tee
+      tee_config_file: "{{ ansible_user_dir }}/tee_config.yaml"
+      build_tee_version: "1.9.0"
+      test_suites_config_file: "{{ test_config_file_path }}"
+      when: any_repo
+

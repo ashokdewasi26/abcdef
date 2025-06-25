@@ -1,0 +1,68 @@
+- project:
+    nightly-post:
+      jobs:
+        - noop
+        # - IDC23_pu2503_ProdSI_trigger
+        # # xray upload
+        # - IDC23_Android_Prod_SI_testing-pu2503: &idc23_pu2503_config
+        #     dependencies:
+        #       - IDC23_pu2503_ProdSI_trigger
+        #     vars:
+        #       nightly_pattern: "{{ triggered_nightly_pattern }}"
+        #       xrayctl_upload: true
+        # - run_prod_si_ecu_reboot_idc23_hu_high-pu2503: *idc23_pu2503_config
+        # - run_prod_si_pdx_idc23_hu_high_C1-pu2503: *idc23_pu2503_config
+        # - run_prod_si_pdx_flash_idc23_premium_hu-pu2503: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-1: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-2: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-3: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-4: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-5: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-6: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-7: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-8: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-9: *idc23_pu2503_config
+        # - run_prod_si_NAT_idc23_hu_high-pu2503-10: *idc23_pu2503_config
+        # - IDC23_Android_Stress_testing-pu2503: *idc23_pu2503_config
+        # - run_si_begu_idc23_hu_high-pu2503: *idc23_pu2503_config
+        # - IDC23_apinext_SI_KPI_testing-pu2503: *idc23_pu2503_config
+        # - IDC23_MINI_Android_Prod_SI_testing-pu2503: *idc23_pu2503_config
+        # # TRAAS Jobs xray upload & Dedicated SI racks
+        # - si-idc23-traas-node0-apinext-pu2503:
+        #     dependencies:
+        #       - IDC23_pu2503_ProdSI_trigger
+        #     vars:
+        #       nightly_pattern: "{{ triggered_nightly_pattern }}"
+        #       xrayctl_upload: true
+        #       rack_tags: SITA23_audio
+        # - IDC23_pdx_TRAAS_tests_flash_stress_endurance-pu2503: &idc23_pu2503_traas_config
+        #     dependencies:
+        #       - IDC23_pu2503_ProdSI_trigger
+        #     vars:
+        #       nightly_pattern: "{{ triggered_nightly_pattern }}"
+        #       xrayctl_upload: true
+        #       rack_tags: SI_LTTS_ULM
+        # - IDC23_pdx_TRAAS_SV_flash_test-pu2503: *idc23_pu2503_traas_config
+        # - IDC23_traas_apinext_SI_KPI_testing-pu2503: *idc23_pu2503_traas_config
+        # # xray upload and metrics upload
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-pu2503: &idc23_pu2503_metrics_config
+        #     dependencies:
+        #       - IDC23_pu2503_ProdSI_trigger
+        #     vars:
+        #       nightly_pattern: "{{ triggered_nightly_pattern }}"
+        #       xrayctl_upload: true
+        #       publish_metrics: true
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-STR-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-pu2503: *idc23_pu2503_metrics_config
+        # - ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress-pu2503: *idc23_pu2503_metrics_config
+        # - run_si_idc23_performance_china_hu_high-pu2503: *idc23_pu2503_metrics_config
+        # - run_si_idc23_performance_china_hu_premium-pu2503: *idc23_pu2503_metrics_config
+        # - run_si_idc23_performance_row_hu_high-pu2503: *idc23_pu2503_metrics_config
+        # - run_si_idc23_performance_row_hu_premium-pu2503: *idc23_pu2503_metrics_config
+        # - run_si_idc23_performance_row_hu_mini-pu2503: *idc23_pu2503_metrics_config

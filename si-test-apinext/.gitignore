@@ -1,0 +1,22 @@
+*.pyc
+build/*
+docs/build/*
+dist/*
+logs/*
+__pycache__/*
+.vscode/*
+*.egg-info/*
+*.log
+.project
+.pydevproject
+.retry
+.tox
+.pytest_cache
+.coverage
+*,cover
+
+# Assuming these virtual environments
+.env
+
+# ignore self-produced results folder
+results

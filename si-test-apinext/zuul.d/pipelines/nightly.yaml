@@ -1,0 +1,6 @@
+- project:
+    # These jobs are meant to verify the jobs are working correctly so we can early identify any issue with framework
+    nightly:
+      jobs:
+        - ta-hw-mtf-idc23-flash-and-validate-SI-staging
+        - ta-hw-mtf-padi-flash-and-validate-SI-staging

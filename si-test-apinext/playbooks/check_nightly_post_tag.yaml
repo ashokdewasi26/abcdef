@@ -1,0 +1,20 @@
+- name: Check tag and create nightly pattern
+  hosts: all
+  tasks:
+    - name: Fail in case of not found expected tag
+      fail:
+        msg: ProdSI trigger check failed. Tag set was not expected.
+      when: 'tag not in zuul.tag'
+
+    - name: Set nightly pattern
+      set_fact:
+        triggered_nightly_pattern: '{{ zuul.tag | regex_search("\d{2}w\d{2}\.\d-\d") }}/{{ artifactory_folder }}'
+
+    - name: Debug nightly_pattern
+      debug:
+        var: triggered_nightly_pattern
+
+    - name: Set triggered nightly_pattern var to use on downstream jobs
+      zuul_return:
+        data:
+          triggered_nightly_pattern: "{{ triggered_nightly_pattern }}"

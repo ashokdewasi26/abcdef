@@ -1,0 +1,9 @@
+- name: Deploy tee config from file
+  template:
+    src: tee-config.yaml.j2
+    dest: "{{ ansible_user_dir }}/tee_config.yaml"
+
+- name: Deploy tee tests config from file
+  template:
+    src: tests-config.yaml.j2
+    dest: "{{ ansible_user_dir }}/tests_config.yaml"

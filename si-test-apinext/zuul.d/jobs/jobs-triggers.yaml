@@ -1,0 +1,106 @@
+- job:
+    name: base_ProdSI_trigger
+    vars:
+      android_branch: ""
+    run:
+      - playbooks/check_nightly_post_tag.yaml
+    required-projects:
+      - apinext/si-test-apinext
+
+- job:
+    name: IDC23_base_ProdSI_trigger
+    parent: base_ProdSI_trigger
+    vars:
+      tag: "nightly/idc-qcom_sa81x5-{{ android_branch }}/"
+      artifactory_folder: "bmw_idc23-{{ android_branch }}"
+
+- job:
+    name: IDC23_mainline_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "mainline"
+
+- job:
+    name: IDC23_stable_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "stable"
+
+- job:
+    name: IDC23_pu2407_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2407"
+
+- job:
+    name: IDC23_pu2411_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2411"
+
+- job:
+    name: IDC23_pu2503_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2503"
+
+- job:
+    name: IDC23_pu2507_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2507"
+
+- job:
+    name: IDC23_pu2511_ProdSI_trigger
+    parent: IDC23_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2511"
+
+- job:
+    name: PaDi_base_ProdSI_trigger
+    parent: base_ProdSI_trigger
+    vars:
+      tag: "nightly/rse-qcom_sa81x5-{{ android_branch }}/"
+      artifactory_folder: "bmw_rse22_padi-{{ android_branch }}"
+
+- job:
+    name: PaDi_mainline_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "mainline"
+
+- job:
+    name: PaDi_pu2307_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2307"
+
+- job:
+    name: PaDi_pu2311_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2311"
+
+- job:
+    name: PaDi_pu2403_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2403"
+
+- job:
+    name: PaDi_pu2407_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2407"
+
+- job:
+    name: PaDi_pu2411_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2411"
+
+- job:
+    name: PaDi_pu2511_ProdSI_trigger
+    parent: PaDi_base_ProdSI_trigger
+    vars:
+      android_branch: "pu2511"

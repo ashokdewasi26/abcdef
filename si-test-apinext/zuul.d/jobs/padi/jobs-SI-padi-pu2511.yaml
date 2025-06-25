@@ -1,0 +1,93 @@
+# Temporary jobs. Delete when we no longer have the pu2511 branch active
+- job:
+    name: ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle-pu2511
+    parent: ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: PaDi_Android_Prod_SI_testing-pu2511
+    parent: PaDi_Android_Prod_SI_testing
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: PaDi_Android_Stress_testing-pu2511
+    parent: PaDi_Android_Stress_testing
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-1
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT
+    timeout: 9000 # 2.5h
+    vars:
+      branch_ta: pu2511
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-1
+    timeout: 9900
+    vars:
+      minutes_to_wait: 15
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-3
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2
+    timeout: 10800
+    vars:
+      minutes_to_wait: 30
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-4
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2
+    timeout: 11700
+    vars:
+      minutes_to_wait: 45
+
+- job:
+    name: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-5
+    parent: ta-hw-mtf-padi-b2-flash-and-validate-NAT-pu2511-2
+    timeout: 12600
+    vars:
+      minutes_to_wait: 60
+
+
+# PaDi HDMI variant
+
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-hdmi-pu2511
+    parent: ta-hw-mtf-padi-flash-and-validate-SI-hdmi
+    vars:
+      branch_ta: pu2511
+
+# PaDi performance jobs
+
+- job:
+    name: ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi-pu2511
+    parent: ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_si_padi_performance_row_D-pu2511
+    parent: run_si_padi_performance_row_D
+    vars:
+      branch_ta: pu2511
+      minutes_to_wait: 120
+
+- job:
+    name: PaDi_Android_Prod_SI_testing-hdmi-pu2511
+    parent: PaDi_Android_Prod_SI_testing-hdmi
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_si_padi_performance_china_D-pu2511
+    parent: run_si_padi_performance_china_D
+    vars:
+      branch_ta: pu2511
+      minutes_to_wait: 120

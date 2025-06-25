@@ -1,0 +1,431 @@
+- job:
+    name: idc23-base-flash-and-validate-Android-SI
+    parent: idc23-base-flash-and-validate
+    vars:
+      ecu_name: "idc"
+      publish_metrics: false  # enable or disable publish metrics to influxDB
+      specific_collectors: ""  # single specific collector or specify a list separated by spaces Ex.: MetricCollectorLogMetrics MetricCollectorCPUUsage
+      collector_type: ""  # collector set Ex.: SI-android
+    post-run:
+      - playbooks/collect_upload_metrics_si_apinext.yaml
+
+- job:
+    name: IDC23_Android_Prod_SI_testing
+    parent: idc23-base-flash-and-validate-Android-SI
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      branch_ta: mainline
+      nightly_pattern: "*/bmw_idc23-{{ branch_ta }}"
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}*.tar.gz"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-idc-dltlyse-plugins"
+      include_appium: true
+      # Support execution of hybrid mtee & mtee-apinext based system tests
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee"
+      mtf_config:
+        queue: idc23
+      job_environment_base:
+        SPLIT_LOGCAT: 0
+
+- job:
+    name: IDC23_Android_SI_Vcar_Replay
+    parent: IDC23_Android_Prod_SI_testing
+    timeout: 64800 # 18 hours
+    vars:
+      # Enable git-lfs
+      has_git_lfs: true
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/mtee_vcar_tests"
+      enable_nav_without_provisioning: true
+      collector_type: "SI-android"
+      mtf_config:
+        queue: idc23_internet
+        timeout: "{{ zuul.timeout - mtf_timeout_tolerance }}"
+      vcar_version: "2024.3.5.1"
+
+- job:
+    name: IDC23_apinext_SI_KPI_testing
+    parent: IDC23_Android_Prod_SI_testing
+    vars:
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_kpi_tests"
+
+- job:
+    name: IDC23_MINI_Android_Prod_SI_testing
+    parent: IDC23_Android_Prod_SI_testing
+    vars:
+      product_type: idc23_b2_mini
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/mini/si_tests_mtee"
+      job_environment_base:
+        SPLIT_LOGCAT: 0
+
+- job:
+    name: IDC23_Android_Stress_testing
+    parent: IDC23_Android_Prod_SI_testing
+    timeout: 21600 # 6h
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/stress_tests"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-stress-dltlyse-plugins"
+      # Enable back if job env var is accessible at mtee_test env.
+      # monkey_record_video: "true"
+      # monkey_use_script_file: "true"
+      # monkey_save_log: "true"
+      # monkey_verbosity: 3
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI
+    description: |
+      Flash release node0 + nightly android image on IDC23 D board and run SI tests
+    parent: idc23-base-flash-and-validate-Android-SI
+    timeout: 30600 # 8.5h
+    vars:
+      branch_ta: mainline
+      nightly_pattern: "*/bmw_idc23-{{ branch_ta }}"
+      flashfiles_archive_pattern: "bmw_idc23-{{ branch_ta }}-images_{{ aosp_build_type_ta }}*.tar.gz"
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_idc23*-pdx*.tar.gz
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      job_environment:
+        RUN_SI: "true"
+        TEST_SUITE: SI
+        PDX_FLASH: "true"
+        IGNORE_DLTLYSE_LIVE_RESULTS_FAILURE: "false"
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      collector_type: "{{ job_environment.TEST_SUITE }}-android"
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-long
+    description: |
+      Flash release node0 + nightly android image on IDC D board and run SI-long tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    timeout: 36000 # 10h
+    vars:
+      job_environment:
+        TEST_SUITE: SI-long
+        TEST_PACKAGES: "!!si-test-mgu22/si_test_package_ecu_reboot"
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs
+    description: |
+      Flash release node0 + nightly android image on IDC D board and run multicoding BMW FAs tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    vars:
+      collector_type: "SI-android"
+      mtf_config:
+        queue: idc23_high
+      job_environment:
+        TEST_SUITE: SImulticoding
+        TEST_PACKAGES: "si-test-mgu22/si_test_package_pdx"
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs
+    description: |
+      Flash release node0 + nightly android image on IDC D board and run multicoding BMW FAs tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs
+    vars:
+      mtf_config:
+        queue: idc23
+      job_environment:
+        TEST_SUITE: SImulticoding
+        TEST_PACKAGES: "si-test-mgu22/si_test_package_multicoding_mini_idc23"
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-PREMIUM-FAs
+    description: |
+      Flash release node0 + nightly android image on IDC premium and run multicoding premium FAs tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs
+    vars:
+      mtf_config:
+        queue: idc-premium_22_hu
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle
+    description: |
+      Flash release node0 + nightly android image on IDC D board and run Lifecycle tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    timeout: 36000 # 10h
+    vars:
+      collector_type: "SI-android"
+      job_environment:
+        TEST_SUITE: Lifecycle
+
+- job:
+    name: run_prod_si_ecu_reboot_idc23_hu_high
+    description: |
+      Flash release node0 + nightly android image on idc23 sample and run test package: si-test-mgu22/si_test_package_ecu_reboot
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-long
+    timeout: 32400 # 9h
+    vars:
+      job_environment:
+        TEST_PACKAGES: "si-test-mgu22/si_test_package_ecu_reboot"
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-1
+    description: |
+      BAT stability on IDC23 using Prod-SI build. BAT tests are executed 10x over night to ensure stability of BAT runs on IDC23
+    parent: ta-hw-mtf-idc23-b2-flash-and-validate-BAT
+    vars:
+      job_environment:
+        DLTLYSE_PLUGIN_LIST: "BAT-dltlyse-plugins"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-2
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-3
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-4
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-5
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-6
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-7
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-8
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-9
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+- job:
+    name: run_prod_si_BAT_stability_idc23_hu_high-10
+    parent: run_prod_si_BAT_stability_idc23_hu_high-1
+
+# ----------------------------- NAT JOBS disclaimer -------------------------------
+# Since we have a lot of NAT jobs, they were raising this issue on the farm ABPI-272876
+# Due to have many jobs downloading an image at the same time
+# We had the need to delay the jobs and consequently increase the job timeout
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-1
+    description: |
+      Flash release node0 + nightly android image on the IDC23 board and run NAT.
+      NAT is a subset of BAT containing Android relevant tests only.
+    parent: ta-hw-mtf-idc23-b2-flash-and-validate-NAT
+    timeout: 10800
+    vars:
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-2
+    parent: run_prod_si_NAT_idc23_hu_high-1
+    timeout: 11700
+    vars:
+      minutes_to_wait: 15
+    pre-run:
+      - playbooks/sleep.yaml
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-3
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 12600
+    vars:
+      minutes_to_wait: 30
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-4
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 13500
+    vars:
+      minutes_to_wait: 45
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-5
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 14400
+    vars:
+      minutes_to_wait: 60
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-6
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 15300
+    vars:
+      minutes_to_wait: 75
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-7
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 16200
+    vars:
+      minutes_to_wait: 90
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-8
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 17100
+    vars:
+      minutes_to_wait: 105
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-9
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 18000
+    vars:
+      minutes_to_wait: 120
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-10
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    timeout: 18900
+    vars:
+      minutes_to_wait: 135
+# ---------------------------------------------------------------------------------------
+
+- job:
+    name: run_prod_si_pdx_idc23_hu_high_C1
+    description: |
+      Flash release node0 + nightly android image on the IDC23 C1 board and run pdx test to do pdx
+      flash.
+    parent: ta-hw-mtf-idc23-b2-flash-and-validate-pdx-flash
+    vars:
+      job_environment:
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-idc23"
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_prod_si_pdx_flash_idc23_premium_hu
+    description: |
+      Flash release node0 + nightly android image on the IDC23 Premium sample and run pdx test to do pdx
+      flash.
+    parent: run_prod_si_pdx_idc23_hu_high_C1
+    vars:
+      mtf_config:
+        queue: idc-premium_22_hu
+
+- job:
+    name: run_si_begu_idc23_hu_high
+    parent: ta-hw-mtf-idc23-b2-flash-and-validate-pdx-flash
+    timeout: 30600 # 8.5h
+    vars:
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      job_environment:
+        TEST_SUITE: PDX-begu
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+      collector_type: "SI-android"
+
+- job:
+    name: run_si_idc23_performance_china_hu_high
+    description: |
+      SI-performance test suite execution on IDC23 china target
+    parent: idc23-base-flash-and-validate-Android-SI
+    timeout: 28800 # 8h
+    vars:
+      region_variant: china
+      pdx_image_download: true
+      pdx_archive_pattern: bmw_idc23*-pdx*.tar.gz
+      collector_type: "SI-performance"
+      # Support execution of hybrid mtee & mtee-apinext based system tests
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/common/si_performance_tests"
+      mtf_config:
+        queue: idc23_high
+      job_environment:
+        DLTLYSE_PLUGIN_LIST: "SI-android-dltlyse-plugins-idc23"
+        PDX_FLASH: "true"
+      mtf_timeout_tolerance: 1200 # 20 min to allow result transfer in case of timeout
+      xrayctl_config_file: "reporting/xrayctl_configs/job_config.yaml"
+
+- job:
+    name: run_si_idc23_performance_china_hu_premium
+    description: |
+      SI-performance test suite execution on IDC23 premium china target
+    parent: run_si_idc23_performance_china_hu_high
+    vars:
+      mtf_config:
+        queue: idc-premium_22_hu
+
+- job:
+    name: run_si_idc23_performance_row_hu_high
+    description: |
+      SI-performance test suite execution on IDC23 row target
+    parent: run_si_idc23_performance_china_hu_high
+    vars:
+      region_variant: row
+      mtf_config:
+        queue: idc23_high
+
+- job:
+    name: run_si_idc23_performance_row_hu_premium
+    description: |
+      SI-performance test suite execution on IDC23 premium row target
+    parent: run_si_idc23_performance_row_hu_high
+    vars:
+      mtf_config:
+        queue: idc-premium_22_hu
+
+- job:
+    name: run_si_idc23_performance_row_hu_mini
+    description: |
+      SI-performance test suite execution on IDC23 premium row target
+    parent: run_si_idc23_performance_row_hu_high
+    vars:
+      product_type: idc23_b2_mini
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR
+    description: |
+      Flash release node0 + nightly android image on IDC D board and run STR tests
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    vars:
+      collector_type: "SI-android"
+      job_environment:
+        TEST_SUITE: STR
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR
+    timeout: 43200 # 12h
+    required-projects:
+      - apinext/si-test-apinext
+    vars:
+      job_environment:
+        RUN_SI: "false"
+      include_appium: true
+      collector_type: ""
+      specific_collectors: "MetricCollectorLogMetrics"
+      custom_dltlyse_plugin: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/dltlyse-plugins/apinext-idc-dltlyse-plugins"
+      # Support execution of hybrid mtee & mtee-apinext based system tests
+      install_mtee_apinext_in_mgu22_mtee: "true"
+      install_si_test_apinext_in_mgu22_mtee: "true"
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee/STR:{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee/z_post_tests"
+      mtf_config:
+        queue: idc23_high
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-premium
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation
+    vars:
+      mtf_config:
+        queue: idc-premium_22_hu
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation-App-Stress
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-STR-UI-Validation
+    timeout: 64500  # 17.9h (max timeout is 18h)
+    vars:
+      # Path of the hybrid system tests
+      mtee_test_script_dir: "{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee/STR_App_Stress:{{ mtf_current_task_workspace }}{{ zuul_root_dir }}/src/cc-github.bmwgroup.net/apinext/si-test-apinext/si_test_apinext/idc23/si_tests_mtee/z_post_tests"

@@ -1,0 +1,91 @@
+# Temporary jobs. Delete when we no longer have the pu2511 branch active
+
+# SI
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-pu2511
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    vars:
+      branch_ta: pu2511
+
+# SI-long
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-long-pu2511
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-long
+    vars:
+      branch_ta: pu2511
+
+# SI Lifecycle
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-pu2511
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle
+    vars:
+      branch_ta: pu2511
+
+# SI PDX flash premium sample
+- job:
+    name: run_prod_si_pdx_flash_idc23_premium_hu-pu2511
+    parent: run_prod_si_pdx_flash_idc23_premium_hu
+    vars:
+      branch_ta: pu2511
+      mtf_config:
+        queue: idc-premium_22_hu
+
+# SI intensive reboot
+- job:
+    name: run_prod_si_ecu_reboot_idc23_hu_high-pu2511
+    parent: run_prod_si_ecu_reboot_idc23_hu_high
+    vars:
+      branch_ta: pu2511
+
+# Android SI test
+- job:
+    name: IDC23_Android_Prod_SI_testing-pu2511
+    parent: IDC23_Android_Prod_SI_testing
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: IDC23_traas_apinext_SI_KPI_testing-pu2511
+    parent: IDC23_traas_apinext_SI_KPI_testing
+    vars:
+      branch_ta: pu2511
+
+# Android SI stress
+- job:
+    name: IDC23_Android_Stress_testing-pu2511
+    parent: IDC23_Android_Stress_testing
+    vars:
+      branch_ta: pu2511
+      mtf_config:
+        queue: idc-premium_22_hu
+
+# NAT (5x)
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2511-1
+    parent: run_prod_si_NAT_idc23_hu_high-1
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2511-2
+    parent: run_prod_si_NAT_idc23_hu_high-2
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2511-3
+    parent: run_prod_si_NAT_idc23_hu_high-3
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2511-4
+    parent: run_prod_si_NAT_idc23_hu_high-4
+    vars:
+      branch_ta: pu2511
+
+- job:
+    name: run_prod_si_NAT_idc23_hu_high-pu2511-5
+    parent: run_prod_si_NAT_idc23_hu_high-5
+    vars:
+      branch_ta: pu2511

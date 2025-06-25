@@ -1,0 +1,42 @@
+# Temporary jobs. Delete when we no longer have the stable branch active
+- job:
+    name: IDC23_Android_Prod_SI_testing-stable
+    parent: IDC23_Android_Prod_SI_testing
+    vars:
+      branch_ta: stable
+
+- job:
+    name: IDC23_Android_Stress_testing-stable
+    parent: IDC23_Android_Stress_testing
+    vars:
+      branch_ta: stable
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-stable
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI
+    vars:
+      branch_ta: stable
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-long-stable
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-long
+    vars:
+      branch_ta: stable
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs-stable
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-BMW-FAs
+    vars:
+      branch_ta: stable
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs-stable
+    parent: ta-hw-mtf-idc23-flash-and-validate-multicoding-MINI-FAs
+    vars:
+      branch_ta: stable
+
+- job:
+    name: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle-stable
+    parent: ta-hw-mtf-idc23-flash-and-validate-SI-Lifecycle
+    vars:
+      branch_ta: stable

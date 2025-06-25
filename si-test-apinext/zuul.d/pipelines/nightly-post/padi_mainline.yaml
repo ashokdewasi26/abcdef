@@ -1,0 +1,30 @@
+- project:
+    nightly-post:
+      jobs:
+        - PaDi_mainline_ProdSI_trigger
+        # xray upload
+        - PaDi_Android_Prod_SI_testing: &padi_mainline_config
+            dependencies:
+              - PaDi_mainline_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+        - PaDi_Android_Stress_testing: *padi_mainline_config
+        - run_prod_si_NAT_rse_padi-1: *padi_mainline_config
+        - run_prod_si_NAT_rse_padi-2: *padi_mainline_config
+        - run_prod_si_NAT_rse_padi-3: *padi_mainline_config
+        - run_prod_si_NAT_rse_padi-4: *padi_mainline_config
+        - run_prod_si_NAT_rse_padi-5: *padi_mainline_config
+        # xray upload and metrics upload
+        - ta-hw-mtf-padi-c1-flash-and-validate-SI-lifecycle: &padi_mainline_metrics_config
+            dependencies:
+              - PaDi_mainline_ProdSI_trigger
+            vars:
+              nightly_pattern: "{{ triggered_nightly_pattern }}"
+              xrayctl_upload: true
+              publish_metrics: true
+        - ta-hw-mtf-padi-flash-and-validate-SI-hdmi: *padi_mainline_metrics_config
+        - ta-hw-mtf-padi-flash-and-validate-SI-long-hdmi: *padi_mainline_metrics_config
+        - PaDi_Android_Prod_SI_testing-hdmi: *padi_mainline_metrics_config
+        - run_si_padi_performance_row_D: *padi_mainline_metrics_config
+        - run_si_padi_performance_china_D: *padi_mainline_metrics_config
